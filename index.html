@@ -115,6 +115,88 @@ body { font-family: system-ui,-apple-system,sans-serif; background:#0a0a0a; colo
 .fa { font-size:22px; color:rgba(255,255,255,.3); }
 
 .hint { position:fixed; bottom:22px; right:20px; font-size:13px; color:rgba(255,255,255,.2); }
+
+/* ═══════════════════════ MOBILE ═══════════════════════ */
+@media (max-width: 768px) {
+  .slide { padding: 22px 20px 120px; }
+  .slide::after { height: 100px; }
+
+  .c-eye { font-size: 11px; margin-bottom: 14px; letter-spacing:.1em; }
+  .c-title { font-size: 38px; margin-bottom: 18px; }
+  .c-sub { font-size: 17px; margin-bottom: 24px; line-height:1.5; }
+  .c-badges { gap: 8px; }
+  .badge { font-size: 13px; padding: 7px 13px; }
+
+  .st { font-size: 28px; margin-bottom: 8px; }
+  .ss { font-size: 16px; margin-bottom: 18px; }
+
+  .sec-n { font-size: 90px; }
+  .sec-t { font-size: 38px; }
+  .sec-s { font-size: 17px; }
+  .sec-time { font-size: 15px; padding: 8px 18px; }
+
+  .c2, .c3, .prices, .two { grid-template-columns: 1fr; }
+  .cards { gap: 10px; }
+  .card { padding: 18px 16px; border-radius: 12px; }
+  .c-ico { font-size: 28px; margin-bottom: 10px; }
+  .c-ttl { font-size: 18px; margin-bottom: 6px; }
+  .c-bdy { font-size: 16px; line-height:1.6; }
+  .c-url { font-size: 13px; }
+
+  .steps { gap: 10px; }
+  .step { padding: 16px; gap: 14px; border-radius: 12px; }
+  .s-n { width: 34px; height: 34px; min-width: 34px; font-size: 14px; }
+  .s-ttl { font-size: 18px; margin-bottom: 5px; }
+  .s-dsc { font-size: 16px; line-height:1.6; }
+  .s-tip { font-size: 14px; padding: 5px 10px; margin-top: 7px; }
+
+  .tbox { flex-direction: column; gap: 10px; padding: 18px; margin-bottom: 18px; border-radius: 14px; }
+  .tb-ico { font-size: 34px; }
+  .tb-name { font-size: 22px; }
+  .tb-url { font-size: 14px; }
+  .tb-dsc { font-size: 16px; }
+
+  .tl-l { min-width: 60px; }
+  .tl-t { font-size: 14px; }
+  .tl-box { padding: 12px 14px; }
+  .tl-lbl { font-size: 11px; }
+  .tl-name { font-size: 17px; }
+  .tl-tools { font-size: 13px; }
+
+  .p-title { font-size: 26px; }
+  .p-sub { font-size: 14px; margin-bottom: 12px; }
+  .pbox { padding: 16px 18px; border-radius: 12px; }
+  .pbox pre { font-size: 12px; line-height: 1.8; }
+
+  .tag { font-size: 11px; padding: 5px 12px; margin-bottom: 14px; }
+  .warn-box { font-size: 15px; padding: 14px 16px; border-radius: 10px; }
+  .hl { font-size: 16px; padding: 14px 16px; }
+
+  .pc { padding: 22px 18px; border-radius: 14px; }
+  .pc-amt { font-size: 42px; }
+  .pc-desc { font-size: 16px; line-height:1.8; }
+
+  .flow { gap: 6px; margin-top: 16px; }
+  .fi { font-size: 13px; padding: 10px 12px; border-radius: 8px; }
+  .fa { font-size: 16px; }
+
+  .nav { bottom: 16px; gap: 10px; }
+  .nb { width: 46px; height: 46px; font-size: 20px; }
+  .dots { display: none; }
+  .hint { display: none; }
+  .progress { height: 3px; }
+  .counter { font-size: 14px; top: 12px; right: 14px; }
+}
+
+@media (max-width: 420px) {
+  .c-title { font-size: 30px; }
+  .st { font-size: 22px; }
+  .sec-t { font-size: 30px; }
+  .sec-n { font-size: 70px; }
+  .pbox pre { font-size: 11px; }
+  .slide { padding: 18px 16px 120px; }
+  .tbox { padding: 14px; }
+}
 </style>
 </head>
 <body>
@@ -693,6 +775,7 @@ for(let i=0;i<N;i++){
   dc.appendChild(d);
 }
 
+// Teclado
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
   if(e.key==='ArrowLeft'){e.preventDefault();prev();}
@@ -702,6 +785,21 @@ document.addEventListener('keydown',e=>{
       :document.exitFullscreen();
   }
 });
+
+// Swipe táctil para móvil
+let tx=0, ty=0;
+document.addEventListener('touchstart',e=>{
+  tx=e.changedTouches[0].clientX;
+  ty=e.changedTouches[0].clientY;
+},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=tx-e.changedTouches[0].clientX;
+  const dy=ty-e.changedTouches[0].clientY;
+  // Solo swipe horizontal (ignorar scroll vertical)
+  if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>44){
+    dx>0 ? next() : prev();
+  }
+},{passive:true});
 
 document.getElementById('prog').style.width=(1/N*100)+'%';
 document.getElementById('cnt').textContent='1 / '+N;
