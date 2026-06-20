@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketing con IA — Clase Práctica 4 Horas</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui,-apple-system,sans-serif; background:#0a0a0a; color:#fff; height:100vh; overflow:hidden; user-select:none; }
+
+.progress { position:fixed; top:0; left:0; height:4px; background:#f97316; z-index:200; transition:width .35s ease; }
+.counter { position:fixed; top:16px; right:22px; font-size:17px; font-weight:700; color:rgba(255,255,255,0.35); z-index:200; }
+
+.nav { position:fixed; bottom:22px; left:50%; transform:translateX(-50%); display:flex; gap:14px; align-items:center; z-index:200; }
+.nb { width:46px; height:46px; border-radius:50%; border:2px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); color:#fff; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.nb:hover { background:#f97316; border-color:#f97316; }
+.dots { display:flex; gap:7px; }
+.dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.2); cursor:pointer; transition:all .25s; }
+.dot.on { background:#f97316; width:24px; border-radius:4px; }
+
+.slide { position:absolute; inset:0; display:none; padding:52px 72px 130px; overflow-y:auto; }
+.slide.active { display:flex; flex-direction:column; }
+/* Gradient fade at bottom so content doesn't clash with nav */
+.slide::after { content:''; position:fixed; bottom:0; left:0; right:0; height:110px; background:linear-gradient(to top, #0a0a0a 55%, transparent); pointer-events:none; z-index:100; }
+
+.tag { display:inline-block; font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; padding:6px 16px; border-radius:20px; margin-bottom:20px; }
+.to { background:rgba(249,115,22,.15); color:#f97316; border:1px solid rgba(249,115,22,.3); }
+.tb { background:rgba(59,130,246,.15); color:#60a5fa; border:1px solid rgba(59,130,246,.3); }
+.tg { background:rgba(34,197,94,.15); color:#4ade80; border:1px solid rgba(34,197,94,.3); }
+.tp { background:rgba(168,85,247,.15); color:#c084fc; border:1px solid rgba(168,85,247,.3); }
+.tr { background:rgba(239,68,68,.15); color:#f87171; border:1px solid rgba(239,68,68,.3); }
+
+.sec { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+.sec-n { font-size:200px; font-weight:900; color:rgba(249,115,22,.08); line-height:1; }
+.sec-t { font-size:64px; font-weight:900; margin-bottom:14px; }
+.sec-s { font-size:26px; color:rgba(255,255,255,.5); }
+.sec-time { margin-top:28px; padding:10px 24px; background:rgba(249,115,22,.1); border:1.5px solid rgba(249,115,22,.3); border-radius:30px; font-size:20px; color:#f97316; font-weight:700; }
+
+.cover { flex:1; display:flex; flex-direction:column; justify-content:center; }
+.c-eye { font-size:16px; letter-spacing:.15em; text-transform:uppercase; color:#f97316; margin-bottom:24px; font-weight:700; }
+.c-title { font-size:80px; font-weight:900; line-height:1.05; margin-bottom:28px; }
+.c-title b { color:#f97316; }
+.c-sub { font-size:26px; color:rgba(255,255,255,.6); margin-bottom:40px; line-height:1.55; max-width:760px; }
+.c-badges { display:flex; gap:12px; flex-wrap:wrap; }
+.badge { font-size:18px; padding:10px 20px; border-radius:24px; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.65); }
+
+.st { font-size:52px; font-weight:900; margin-bottom:12px; line-height:1.12; }
+.ss { font-size:22px; color:rgba(255,255,255,.5); margin-bottom:28px; line-height:1.4; }
+
+.cards { display:grid; gap:18px; }
+.c2 { grid-template-columns:1fr 1fr; }
+.c3 { grid-template-columns:1fr 1fr 1fr; }
+.card { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:18px; padding:28px; }
+.c-ico { font-size:40px; margin-bottom:14px; }
+.c-ttl { font-size:24px; font-weight:700; color:#fff; margin-bottom:10px; }
+.c-bdy { font-size:19px; color:rgba(255,255,255,.6); line-height:1.6; }
+.c-url { display:inline-block; font-size:15px; margin-top:12px; padding:4px 14px; background:rgba(34,197,94,.1); color:#4ade80; border-radius:12px; border:1px solid rgba(34,197,94,.2); }
+
+.steps { display:flex; flex-direction:column; gap:14px; }
+.step { display:flex; gap:22px; align-items:flex-start; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:22px 26px; }
+.s-n { min-width:42px; width:42px; height:42px; border-radius:50%; background:#f97316; font-size:18px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+.s-ttl { font-size:24px; font-weight:700; color:#fff; margin-bottom:7px; }
+.s-dsc { font-size:19px; color:rgba(255,255,255,.6); line-height:1.65; }
+.s-tip { display:inline-block; font-size:17px; margin-top:9px; padding:6px 14px; background:rgba(249,115,22,.1); border-radius:8px; color:#f97316; line-height:1.4; }
+
+.tbox { background:rgba(249,115,22,.07); border:1.5px solid rgba(249,115,22,.25); border-radius:18px; padding:24px 28px; margin-bottom:26px; display:flex; gap:20px; }
+.tb-ico { font-size:48px; flex-shrink:0; line-height:1; }
+.tb-name { font-size:30px; font-weight:900; }
+.tb-url { font-size:17px; color:#f97316; margin:5px 0 8px; }
+.tb-dsc { font-size:20px; color:rgba(255,255,255,.65); line-height:1.6; }
+
+.tl { display:flex; flex-direction:column; gap:8px; }
+.tl-row { display:flex; gap:22px; }
+.tl-l { min-width:90px; display:flex; flex-direction:column; align-items:center; }
+.tl-t { font-size:17px; font-weight:700; color:#f97316; }
+.tl-ln { flex:1; width:2px; background:rgba(249,115,22,.2); margin:6px 0; }
+.tl-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:14px; padding:18px 24px; flex:1; margin-bottom:10px; }
+.tl-lbl { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:#f97316; margin-bottom:6px; }
+.tl-name { font-size:24px; font-weight:700; }
+.tl-tools { font-size:17px; color:rgba(255,255,255,.4); margin-top:5px; }
+
+/* PROMPT SLIDES */
+.p-slide { display:flex; flex-direction:column; flex:1; min-height:0; }
+.p-head { margin-bottom:20px; flex-shrink:0; }
+.p-title { font-size:46px; font-weight:900; margin-bottom:6px; }
+.p-sub { font-size:20px; color:rgba(255,255,255,.5); }
+.pbox { background:#0f0f0f; border:1.5px solid rgba(255,255,255,.12); border-radius:18px; padding:32px 40px; overflow-y:auto; flex:1; }
+.pbox pre { font-family:'SF Mono','Menlo','Courier New',monospace; font-size:17px; line-height:2; color:#e2e8f0; white-space:pre-wrap; word-wrap:break-word; }
+.or { color:#fb923c; font-weight:700; }
+.gr { color:#4ade80; }
+.bl { color:#60a5fa; }
+.yl { color:#fbbf24; font-weight:700; }
+.pu { color:#c084fc; font-weight:700; }
+.cm { color:rgba(255,255,255,.3); font-style:italic; }
+.hdr { color:#c084fc; font-weight:700; letter-spacing:.04em; }
+
+.warn-box { background:rgba(249,115,22,.08); border:1.5px solid rgba(249,115,22,.3); border-radius:14px; padding:18px 22px; font-size:19px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:20px; flex-shrink:0; }
+.warn-box strong { color:#f97316; }
+
+.hl { background:rgba(249,115,22,.08); border-left:4px solid #f97316; border-radius:0 12px 12px 0; padding:18px 22px; font-size:20px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:18px; }
+
+.two { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+.prices { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+.pc { border-radius:18px; padding:32px 22px; text-align:center; }
+.pc.s { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); }
+.pc.m { background:rgba(249,115,22,.1); border:1.5px solid rgba(249,115,22,.35); }
+.pc.p { background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.35); }
+.pc-lbl { font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.5); margin-bottom:12px; }
+.pc-amt { font-size:56px; font-weight:900; margin-bottom:10px; }
+.pc-desc { font-size:18px; color:rgba(255,255,255,.55); line-height:1.9; }
+
+.flow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:24px; }
+.fi { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:14px 18px; font-size:17px; font-weight:600; text-align:center; line-height:1.5; }
+.fa { font-size:22px; color:rgba(255,255,255,.3); }
+
+.hint { position:fixed; bottom:22px; right:20px; font-size:13px; color:rgba(255,255,255,.2); }
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<div class="counter" id="cnt"></div>
+<div class="hint">← → navegar · F pantalla completa</div>
+
+<!-- SLIDE 1 COVER -->
+<div class="slide active">
+  <div class="cover">
+    <div class="c-eye">Clase Práctica · 4 Horas · 100% Herramientas Gratuitas</div>
+    <div class="c-title">Marketing con <b>IA</b>:<br>Crea y Vende<br>Páginas Web</div>
+    <div class="c-sub">Aprende a encontrar negocios locales que necesitan presencia online, construir su página web con inteligencia artificial y venderles el servicio — sin saber programar.</div>
+    <div class="c-badges">
+      <div class="badge">🆓 Herramientas gratuitas</div>
+      <div class="badge">💻 Sin programar</div>
+      <div class="badge">🎬 Video con IA</div>
+      <div class="badge">💰 Modelo de negocio real</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2 QUÉ APRENDERÁS -->
+<div class="slide">
+  <div class="tag to">Objetivos</div>
+  <div class="st">¿Qué vas a lograr hoy?</div>
+  <div class="ss">Al terminar tienes todo para empezar a conseguir clientes reales</div>
+  <div class="cards c2">
+    <div class="card"><div class="c-ico">🗺</div><div class="c-ttl">Encontrar oportunidades</div><div class="c-bdy">Usar Google Maps para identificar negocios con buenas reseñas pero sin página web. Esos son tus clientes perfectos.</div></div>
+    <div class="card"><div class="c-ico">🎬</div><div class="c-ttl">Crear contenido con IA</div><div class="c-bdy">Generar videos cinematográficos del producto estrella del negocio usando Google Flow — sin cámara, sin producción, sin costo.</div></div>
+    <div class="card"><div class="c-ico">⚡</div><div class="c-ttl">Construir la página web</div><div class="c-bdy">Landing page profesional con video 3D + panel de admin donde el negocio edita sus productos. Sin tocar código.</div></div>
+    <div class="card"><div class="c-ico">💰</div><div class="c-ttl">Cerrar el trato</div><div class="c-bdy">Presentar el sitio terminado al negocio. Saber cuánto cobrar y cómo generar ingresos recurrentes mensuales.</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 3 AGENDA -->
+<div class="slide">
+  <div class="tag tb">Agenda</div>
+  <div class="st">Las 4 horas de hoy</div>
+  <div class="ss">Cada bloque termina con un resultado visible que puedes mostrar</div>
+  <div class="tl">
+    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 1</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 1 — La Oportunidad</div><div class="tl-name">Encontrar el negocio, el producto estrella y crear el video con IA</div><div class="tl-tools">Google Maps · Google Flow · Cloudinary</div></div></div>
+    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 2</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 2 — El Diseño</div><div class="tl-name">Planear el contenido y diseñar la interfaz visual</div><div class="tl-tools">Google Gemini · Google Stitch</div></div></div>
+    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 3</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 3 — La Construcción</div><div class="tl-name">Construir la app completa: landing page + panel de admin</div><div class="tl-tools">Bolt.new · Lovable.dev · GitHub · Publicar</div></div></div>
+    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 4</div></div><div class="tl-box"><div class="tl-lbl">Bloque 4 — La Venta</div><div class="tl-name">Hacer el pitch al negocio y definir el modelo de precios</div><div class="tl-tools">Propuesta · Precios · Ingresos recurrentes</div></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 4 HERRAMIENTAS PARTE 1 -->
+<div class="slide">
+  <div class="tag tg">Herramientas</div>
+  <div class="st">Las herramientas que usaremos</div>
+  <div class="ss">Todas gratuitas · Solo necesitas una cuenta de Google para empezar</div>
+  <div class="cards c3">
+    <div class="card"><div class="c-ico">✨</div><div class="c-ttl">Google Gemini</div><div class="c-bdy">IA de Google para generar todos los textos de la página y los prompts que le daremos a Bolt.</div><div class="c-url">gemini.google.com · Gratis</div></div>
+    <div class="card"><div class="c-ico">🎨</div><div class="c-ttl">Google Stitch</div><div class="c-bdy">Diseña la interfaz visual describiendo lo que quieres. Exporta directo a Bolt con un clic.</div><div class="c-url">stitch.withgoogle.com · 350/mes</div></div>
+    <div class="card"><div class="c-ico">🎬</div><div class="c-ttl">Google Flow</div><div class="c-bdy">Genera videos cinematográficos con IA (Veo 3). Describes el video en palabras y lo crea en 30 segundos.</div><div class="c-url">flow.google.com · 50 créditos/día</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 5 HERRAMIENTAS PARTE 2 -->
+<div class="slide">
+  <div class="tag tg">Herramientas</div>
+  <div class="st">Las herramientas que usaremos</div>
+  <div class="ss">Parte 2 — Los constructores de la página web</div>
+  <div class="cards c3">
+    <div class="card"><div class="c-ico">☁️</div><div class="c-ttl">Cloudinary</div><div class="c-bdy">Sube el video y obtén una URL pública permanente para usarlo en la página. Sin límite de vistas.</div><div class="c-url">cloudinary.com · 25GB gratis</div></div>
+    <div class="card"><div class="c-ico">⚡</div><div class="c-ttl">Bolt.new</div><div class="c-bdy">Constructor de apps con IA. Genera landing page + panel de admin + base de datos desde 1 prompt.</div><div class="c-url">bolt.new · 1M tokens/mes</div></div>
+    <div class="card"><div class="c-ico">💜</div><div class="c-ttl">Lovable.dev</div><div class="c-bdy">Alternativa a Bolt. Mejor base de datos. Publica gratis en lovable.app. Usar cuando Bolt se agote.</div><div class="c-url">lovable.dev · Plan gratis</div></div>
+  </div>
+  <div class="warn-box" style="margin-top:20px">⚠️ <strong>Importante sobre créditos:</strong> Bolt tiene ~300K tokens por día · Lovable tiene ~5 mensajes gratis por día. Por eso usaremos un <strong>Prompt Maestro</strong> que construye TODO de una sola vez.</div>
+</div>
+
+<!-- SLIDE 6 SECCIÓN 1 -->
+<div class="slide">
+  <div class="sec"><div class="sec-n">01</div><div class="sec-t">La Oportunidad</div><div class="sec-s">Encontrar negocios reales que necesitan una página web</div><div class="sec-time">⏱ 60 minutos</div></div>
+</div>
+
+<!-- SLIDE 7 CHATGPT INVESTIGAR -->
+<div class="slide">
+  <div class="tag to">Bloque 1 · Método 1</div>
+  <div class="tbox">
+    <div class="tb-ico">🤖</div>
+    <div><div class="tb-name">ChatGPT — Investigación Profunda</div><div class="tb-url">chatgpt.com · Gratis · GPT-4o con búsqueda web</div><div class="tb-dsc">Usamos ChatGPT para que investigue por nosotros. Le pedimos que busque negocios de un nicho específico en nuestra ciudad que tengan buenas reseñas pero no tengan página web. En minutos tenemos una lista completa de prospectos.</div></div>
+  </div>
+  <div class="cards c2">
+    <div class="card">
+      <div class="c-ttl">¿Por qué usar ChatGPT primero?</div>
+      <div class="c-bdy" style="line-height:2.1">✓ Busca en segundos lo que tomaría horas<br>✓ Analiza reseñas y presencia online<br>✓ Genera una lista organizada<br>✓ Encuentra patrones del mercado<br>✓ Sugiere cuáles son más rentables</div>
+    </div>
+    <div class="card">
+      <div class="c-ttl">Lo que le pedimos a ChatGPT:</div>
+      <div class="c-bdy" style="line-height:2.1">📍 Ciudad o zona específica<br>🏪 Tipo de negocio (nicho)<br>⭐ Con 4+ estrellas en Google<br>🚫 Sin página web propia<br>📱 Solo con redes sociales</div>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-top:16px">💡 <strong>Luego verificamos manualmente</strong> en Google Maps los negocios que ChatGPT nos da, para confirmar que realmente no tienen web y ver su perfil completo.</div>
+</div>
+
+<!-- SLIDE 8 PROMPT CHATGPT CLIENTES -->
+<div class="slide">
+  <div class="p-slide">
+    <div class="p-head">
+      <div class="tag to">Prompt · ChatGPT</div>
+      <div class="p-title">🤖 Prompt para encontrar clientes</div>
+      <div class="p-sub">Abre chatgpt.com · Activa búsqueda web (ícono del globo) · Reemplaza lo que está en [corchetes]</div>
+    </div>
+    <div class="pbox"><pre><span class="or">Actúa como un investigador de mercado especializado en negocios locales.</span>
+<span class="or">Necesito que busques prospectos para mi servicio de páginas web con IA.</span>
+
+<span class="hdr">LO QUE BUSCO:</span>
+Negocios de <span class="yl">[TIPO DE NEGOCIO: restaurantes / barberías / spas / gimnasios / etc.]</span>
+ubicados en <span class="yl">[CIUDAD O ZONA]</span> que cumplan TODAS estas condiciones:
+
+<span class="gr">✓</span> Tienen 4 estrellas o más en Google Maps
+<span class="gr">✓</span> Tienen al menos 20 reseñas de clientes
+<span class="gr">✓</span> NO tienen página web propia (solo tienen redes sociales)
+<span class="gr">✓</span> Están activos (publicaron contenido en los últimos 3 meses)
+
+<span class="hdr">PARA CADA NEGOCIO QUE ENCUENTRES, DIME:</span>
+1. Nombre del negocio
+2. Dirección o zona de la ciudad
+3. Número de estrellas y cantidad de reseñas
+4. Redes sociales disponibles (Instagram, Facebook, etc.)
+5. Por qué crees que necesita una página web
+6. Qué tipo de página web le iría mejor
+
+<span class="hdr">FORMATO DE RESPUESTA:</span>
+Organiza los resultados en una tabla.
+Ordénalos de mayor a menor potencial de venta.
+Incluye al menos <span class="yl">10 negocios</span>.
+
+<span class="hdr">ANÁLISIS FINAL:</span>
+Al terminar la lista, dime:
+- Cuál es el nicho con más oportunidades en esa zona
+- Cuál sería el mensaje de apertura ideal para contactarlos
+- Cuánto podrías cobrar en ese mercado específico
+
+<span class="cm">Usa tu capacidad de búsqueda web para encontrar información real y actualizada.</span></pre></div>
+  </div>
+</div>
+
+<!-- SLIDE 9 GOOGLE MAPS -->
+<div class="slide">
+  <div class="tag to">Bloque 1 · Método 2 (Manual)</div>
+  <div class="st">🗺 Verificar con Google Maps</div>
+  <div class="ss">Confirma los prospectos de ChatGPT y encuentra más opciones</div>
+  <div class="steps">
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Busca un tipo de negocio en Google Maps</div><div class="s-dsc">Ejemplos: "restaurantes", "barberías", "gimnasios", "spas", "ferreterías" en tu ciudad.</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Filtra por 4.5+ estrellas</div><div class="s-dsc">Los negocios bien reseñados ya tienen clientes felices. Más fácil venderles porque tienen algo valioso que mostrar.</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Identifica los que NO tienen sitio web</div><div class="s-dsc">En el perfil de Maps, si no aparece "Sitio web" o dice "Agregar sitio web" — ¡ese es tu prospecto!</div><div class="s-tip">💡 También busca negocios que solo tienen Instagram pero no web propia</div></div></div>
+    <div class="step"><div class="s-n">4</div><div><div class="s-ttl">Anota: nombre, teléfono e Instagram</div><div class="s-dsc">Guarda en Google Sheets. Con 10 prospectos tienes suficiente para empezar a trabajar.</div></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 8 PRODUCTO ESTRELLA -->
+<div class="slide">
+  <div class="tag to">Bloque 1 · Paso 2</div>
+  <div class="st">⭐ Encontrar el producto estrella</div>
+  <div class="ss">Cada negocio tiene un producto que sus clientes aman. Ese va en el hero de la página.</div>
+  <div class="steps">
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Entra al Instagram o Facebook del negocio</div><div class="s-dsc">Observa los posts, reels y stories destacados. ¿Qué tipo de contenido publican más?</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Identifica el post con más likes</div><div class="s-dsc">El contenido con más engagement revela qué aman sus clientes. Ese es el candidato a producto estrella.</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Lee las reseñas de Google Maps</div><div class="s-dsc">Si 8 de 10 reseñas dicen "el pollo asado es increíble" — ese es el producto estrella sin dudas.</div><div class="s-tip">💡 Copia 3 reseñas reales positivas — las usarás como testimonios en la página</div></div></div>
+    <div class="step"><div class="s-n">4</div><div><div class="s-ttl">Anota: nombre del producto + qué lo hace especial + precio</div><div class="s-dsc">Este es el input para Google Flow (el video) y para Gemini (los textos). Tenlo listo.</div></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 9 GOOGLE FLOW -->
+<div class="slide">
+  <div class="tag to">Bloque 1 · Paso 3</div>
+  <div class="tbox">
+    <div class="tb-ico">🎬</div>
+    <div><div class="tb-name">Google Flow</div><div class="tb-url">flow.google.com · Gratis · 50 créditos/día + 100 de bienvenida</div><div class="tb-dsc">Herramienta de AI filmmaking de Google, powered by Veo 3. Describes lo que quieres en palabras y Flow genera un video cinematográfico de 4-8 segundos. Sin cámara ni edición.</div></div>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Entra a flow.google.com con tu cuenta Google</div><div class="s-dsc">Recibes 100 créditos de bienvenida + 50 nuevos cada día. Cada video usa aprox. 8 créditos.</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Click en "Create" y escribe el prompt en inglés</div><div class="s-dsc">Ver siguiente slide para ejemplos completos por tipo de negocio.</div><div class="s-tip">💡 Siempre en inglés — el modelo entiende mucho mejor los prompts en inglés</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Descarga el mejor resultado en MP4</div><div class="s-dsc">Flow genera 2-4 opciones. Elige la mejor. Ese es el video del hero de la página web.</div></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 10 PROMPT GOOGLE FLOW -->
+<div class="slide">
+  <div class="p-slide">
+    <div class="p-head">
+      <div class="tag to">Prompt · Google Flow</div>
+      <div class="p-title">🎬 Prompts por tipo de negocio</div>
+      <div class="p-sub">Copia, adapta y pega en flow.google.com · Siempre en inglés</div>
+    </div>
+    <div class="pbox"><pre><span class="hdr">━━━ RESTAURANTE / COMIDA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="gr">"Cinematic close-up of a perfectly grilled whole golden chicken,
+ steam rising gently, warm amber restaurant lighting,
+ rustic wooden table, bokeh background, 4K food photography"</span>
+
+<span class="cm">→ Cambia "chicken" por: pizza, sushi, tacos, steak, paella...</span>
+
+
+<span class="hdr">━━━ BARBERÍA / PELUQUERÍA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="gr">"Slow-motion close-up of barber hands doing a precise fade haircut,
+ professional barbershop setting, vintage mirrors, warm lighting,
+ cinematic style, shallow depth of field"</span>
+
+
+<span class="hdr">━━━ SPA / BELLEZA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="gr">"Peaceful spa scene, hands gently massaging with aromatic oils,
+ soft candlelight, rose petals, serene atmosphere,
+ ultra-smooth cinematic camera movement, 4K"</span>
+
+
+<span class="hdr">━━━ TIENDA / ROPA / ACCESORIOS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="gr">"Product showcase of stylish athletic shoes rotating slowly,
+ clean white studio background, dramatic side lighting,
+ luxury brand commercial style, slow motion"</span>
+
+
+<span class="hdr">━━━ REGLA DE ORO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="yl">FORMATO: [tipo de toma] + [producto] + [iluminación] + [estilo] + [calidad]</span>
+
+<span class="cm">Palabras clave que mejoran el resultado:</span>
+<span class="bl">cinematic · slow-motion · close-up · bokeh · 4K
+dramatic lighting · golden hour · shallow depth of field · ultra HD</span></pre></div>
+  </div>
+</div>
+
+<!-- SLIDE 11 CLOUDINARY -->
+<div class="slide">
+  <div class="tag to">Bloque 1 · Paso 4</div>
+  <div class="tbox">
+    <div class="tb-ico">☁️</div>
+    <div><div class="tb-name">Cloudinary</div><div class="tb-url">cloudinary.com · Gratis · 25GB de almacenamiento</div><div class="tb-dsc">Plataforma para alojar videos en la nube. Subes tu archivo y obtienes una URL pública permanente para usarla en cualquier página web. Sin límite de visualizaciones.</div></div>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Crea cuenta gratis en cloudinary.com</div><div class="s-dsc">Registro con email o Google. Sin tarjeta de crédito. En 1 minuto estás dentro.</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Sube el video MP4 de Google Flow</div><div class="s-dsc">Arrastra el archivo a la pantalla. El upload tarda segundos.</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Copia la URL del video</div><div class="s-dsc">Click en el video → copia el link. Se ve así:<br><span style="color:#f97316;font-size:16px;font-family:monospace">res.cloudinary.com/tu-cuenta/video/upload/v123/video.mp4</span></div><div class="s-tip">💡 Guarda este link — lo pegarás en el Prompt Maestro de Bolt/Lovable</div></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 12 SECCIÓN 2 -->
+<div class="slide">
+  <div class="sec"><div class="sec-n">02</div><div class="sec-t">El Diseño</div><div class="sec-s">Planear el contenido y diseñar la interfaz con IA</div><div class="sec-time">⏱ 60 minutos</div></div>
+</div>
+
+<!-- SLIDE 13 GEMINI -->
+<div class="slide">
+  <div class="tag tb">Bloque 2 · Paso 1</div>
+  <div class="tbox">
+    <div class="tb-ico">✨</div>
+    <div><div class="tb-name">Google Gemini</div><div class="tb-url">gemini.google.com · Gratis · Gemini 2.5 Flash</div><div class="tb-dsc">El asistente de IA más capaz de Google en el tier gratuito. Más potente que ChatGPT gratis. Genera todos los textos de la página y el prompt maestro para Bolt/Lovable.</div></div>
+  </div>
+  <div class="cards c2">
+    <div class="card"><div class="c-ttl">Gemini genera automáticamente:</div><div class="c-bdy" style="line-height:2.1">✓ Headline principal de la página<br>✓ Subtítulo con beneficio clave<br>✓ 3 características con emoji<br>✓ 3 testimonios realistas<br>✓ Texto del botón de WhatsApp<br>✓ El prompt maestro para Bolt</div></div>
+    <div class="card"><div class="c-ttl">Tú solo personalizas:</div><div class="c-bdy" style="line-height:2.1">✓ Nombre real del negocio<br>✓ Tipo de negocio<br>✓ Ciudad o barrio<br>✓ Producto estrella real<br>✓ Precio real<br>✓ Número de WhatsApp</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 14 PROMPT GEMINI -->
+<div class="slide">
+  <div class="p-slide">
+    <div class="p-head">
+      <div class="tag tb">Prompt · Gemini</div>
+      <div class="p-title">✨ Prompt para generar todo el contenido</div>
+      <div class="p-sub">Abre gemini.google.com · Copia este prompt · Reemplaza lo que está en [corchetes]</div>
+    </div>
+    <div class="pbox"><pre><span class="or">Eres experto en copywriting y marketing digital.
+Necesito crear el contenido completo para la landing page
+de un negocio local.</span>
+
+<span class="hdr">DATOS DEL NEGOCIO:</span>
+- Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
+- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / etc.]</span>
+- Ciudad: <span class="yl">[CIUDAD]</span>
+- Producto estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
+- Precio aproximado: <span class="yl">[PRECIO]</span>
+
+<span class="hdr">CREA LO SIGUIENTE EN ESPAÑOL:</span>
+
+<span class="gr">1. HEADLINE principal</span>
+   Máximo 8 palabras. Muy impactante. Que enganche de inmediato.
+
+<span class="gr">2. SUBTÍTULO</span>
+   Explica el beneficio principal en máximo 15 palabras.
+
+<span class="gr">3. TRES BENEFICIOS con emoji</span>
+   Formato: 🔥 Título (4 palabras): descripción corta (1 oración)
+
+<span class="gr">4. TRES TESTIMONIOS realistas</span>
+   Nombre inventado + ciudad + texto de 2 oraciones muy creíble.
+
+<span class="gr">5. DESCRIPCIÓN del producto estrella</span>
+   2-3 oraciones que hagan querer comprarlo ahora mismo.
+
+<span class="gr">6. TEXTO del botón de WhatsApp</span>
+   Ejemplo: "¡Pedir ahora!" o "¡Reservar mi cita!"
+
+<span class="gr">7. MENSAJE de WhatsApp predeterminado</span>
+   El texto que sale cuando el cliente toca el botón.
+
+<span class="cm">Responde organizado por secciones con etiquetas claras.
+Idioma: español. Tono: cercano y profesional.</span></pre></div>
+  </div>
+</div>
+
+<!-- SLIDE 15 STITCH -->
+<div class="slide">
+  <div class="tag tb">Bloque 2 · Paso 2</div>
+  <div class="tbox">
+    <div class="tb-ico">🎨</div>
+    <div><div class="tb-name">Google Stitch</div><div class="tb-url">stitch.withgoogle.com · Gratis · 350 diseños/mes</div><div class="tb-dsc">Diseña la interfaz de tu página describiendo lo que quieres en palabras. Genera el código visual completo. Exporta con 1 clic directo a Bolt.</div></div>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Describe el diseño en palabras</div><div class="s-dsc">Ejemplo: <em style="color:#f97316">"Landing page para restaurante de comida criolla. Colores: rojo oscuro, dorado y crema. Estilo elegante y moderno."</em></div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Genera las pantallas principales</div><div class="s-dsc">Home, catálogo, contacto, panel de admin. Cada pantalla diseñada en Stitch sirve de referencia visual para Bolt.</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Toma screenshot de las 5 mejores pantallas</div><div class="s-dsc">Esas 5 imágenes son las que subirás a Bolt como referencia visual en el primer mensaje.</div><div class="s-tip">💡 Bolt lee las imágenes y recrea el mismo estilo en la app completa</div></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 16 SECCIÓN 3 -->
+<div class="slide">
+  <div class="sec"><div class="sec-n">03</div><div class="sec-t">La Construcción</div><div class="sec-s">Construir la app completa con panel de administración</div><div class="sec-time">⏱ 60 minutos</div></div>
+</div>
+
+<!-- SLIDE 17 BOLT VS LOVABLE -->
+<div class="slide">
+  <div class="tag tp">Bloque 3 · Herramientas</div>
+  <div class="st">⚡ Bolt.new vs 💜 Lovable.dev</div>
+  <div class="ss">Ambas construyen la misma app — Bolt es el principal, Lovable es el plan B</div>
+  <div class="cards c2" style="margin-bottom:20px">
+    <div class="card" style="border-color:rgba(249,115,22,.3)"><div class="c-ico">⚡</div><div class="c-ttl">Bolt.new — Principal</div><div class="c-bdy">1 millón de tokens gratis por mes. Más rápido. Sube las 5 imágenes de Stitch primero. Publica en bolt.host gratis.</div><div class="c-url">bolt.new · 1M tokens/mes · 300K/día</div></div>
+    <div class="card" style="border-color:rgba(168,85,247,.3)"><div class="c-ico">💜</div><div class="c-ttl">Lovable.dev — Plan B</div><div class="c-bdy">~5 mensajes gratis por día. Mejor integración con Supabase. Publica gratis en lovable.app con 1 clic.</div><div class="c-url">lovable.dev · ~5 mensajes/día</div></div>
+  </div>
+  <div class="warn-box">⚠️ <strong>Estrategia clave:</strong> Dar el <strong>Prompt Maestro completo</strong> en el PRIMER mensaje. Esto construye todo de una sola vez y ahorra créditos. Ver siguiente slide →</div>
+</div>
+
+<!-- SLIDE 18 PROMPT MAESTRO PARTE 1 -->
+<div class="slide">
+  <div class="p-slide">
+    <div class="p-head">
+      <div class="tag tp">Prompt Maestro · Parte 1 de 2</div>
+      <div class="p-title">⚡ El Mega Prompt para Bolt / Lovable</div>
+      <div class="p-sub">Primero sube las 5 imágenes de Stitch → luego pega este prompt completo en el chat</div>
+    </div>
+    <div class="pbox"><pre><span class="or">You are building a complete web app for</span> <span class="yl">[NOMBRE DEL NEGOCIO]</span><span class="or">,
+a</span> <span class="yl">[TIPO DE NEGOCIO]</span> <span class="or">located in</span> <span class="yl">[CIUDAD]</span><span class="or">.</span>
+<span class="or">Use the 5 uploaded screenshots as STRICT visual reference
+for colors, typography, and layout style.</span>
+
+<span class="hdr">━━━ PÁGINAS PÚBLICAS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="gr">HOME ( / )</span>
+  Hero section — fullscreen video background:
+  • <span class="yl">VIDEO URL: [PEGAR URL DE CLOUDINARY AQUÍ]</span>
+  • Autoplay, loop, muted, dark overlay rgba(0,0,0,0.5)
+  • Video stays FIXED while user scrolls (parallax effect)
+  • Headline: <span class="yl">"[HEADLINE DE GEMINI]"</span>
+  • Subtitle: <span class="yl">"[SUBTÍTULO DE GEMINI]"</span>
+  • CTA button: <span class="yl">"[TEXTO DEL BOTÓN]"</span>
+  Below hero:
+  • 3 benefit cards with icons
+  • Featured products grid (loads from database)
+  • Testimonials section — 3 customer reviews
+  • Footer: address, hours, social links
+  • WhatsApp floating button (bottom-right, always visible)
+    <span class="yl">Number: [+NÚMERO DE WHATSAPP]</span>
+    <span class="yl">Message: "[MENSAJE PREDETERMINADO]"</span>
+
+<span class="gr">PRODUCTS ( /productos )</span>
+  • Responsive product grid with image, name, price, category
+  • Filter by category (dropdown) + Search bar
+  • Loads ALL products from Supabase
+
+<span class="gr">CONTACT ( /contacto )</span>
+  • Contact form: name, email, phone, message
+  • Large WhatsApp button
+  • Business address and hours</pre></div>
+  </div>
+</div>
+
+<!-- SLIDE 19 PROMPT MAESTRO PARTE 2 -->
+<div class="slide">
+  <div class="p-slide">
+    <div class="p-head">
+      <div class="tag tp">Prompt Maestro · Parte 2 de 2</div>
+      <div class="p-title">⚡ El Mega Prompt — Admin + Técnico</div>
+      <div class="p-sub">Continúa del slide anterior — es un solo prompt, copiar las dos partes juntas</div>
+    </div>
+    <div class="pbox"><pre><span class="hdr">━━━ PANEL DE ADMINISTRACIÓN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="gr">/auth</span>  →  Login page
+  Admin email: <span class="yl">admin@[negocio].com</span>    Password: <span class="yl">Admin12345!</span>
+
+<span class="gr">/admin</span>  →  Dashboard (redirect to /auth if not logged in)
+  • Stats: number of products, orders, total revenue
+  • Revenue chart — last 7 days
+
+<span class="gr">/admin/products</span>  →  Product manager
+  • Table: image, name, price, category, stock, status
+  • Edit / Delete buttons · "Add Product" button
+
+<span class="gr">/admin/orders</span>  →  Orders list
+  • Customer info · Status dropdown:
+    pending / confirmed / delivered / cancelled
+
+<span class="hdr">━━━ REQUISITOS TÉCNICOS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+Stack: React + Vite + Tailwind CSS + shadcn/ui
+Database: Supabase (PostgreSQL) · Auth: Supabase Auth
+
+Required tables:
+  <span class="bl">products:</span>  id, name, description, price, category,
+             image_url, stock, visible, created_at
+  <span class="bl">orders:</span>    id, customer_name, email, phone, total, status, created_at
+  <span class="bl">order_items:</span> id, order_id, product_id, quantity, price
+
+<span class="yl">CRITICAL RULES — ALL MUST WORK:</span>
+<span class="gr">✓</span> ALL forms save to Supabase and persist after page refresh
+<span class="gr">✓</span> Admin routes redirect to /auth if not logged in
+<span class="gr">✓</span> Products added in /admin appear on public /productos page
+<span class="gr">✓</span> ONLY standard Tailwind colors (no custom color classes)
+<span class="gr">✓</span> Mobile responsive — works on 375px screens
+<span class="gr">✓</span> Show success/error toast after every action
+
+<span class="or">Build the COMPLETE working app. Do everything in this one message.</span></pre></div>
+  </div>
+</div>
+
+<!-- SLIDE 20 PROMPT FIX CRUD -->
+<div class="slide">
+  <div class="p-slide">
+    <div class="p-head">
+      <div class="tag tr">Prompt de Rescate</div>
+      <div class="p-title">🔧 Si el admin no guarda datos</div>
+      <div class="p-sub">Usar cuando los formularios del admin no funcionan · Copia y pega en Bolt o Lovable</div>
+    </div>
+    <div class="pbox"><pre><span class="or">The admin panel forms are not saving data. Fix everything:</span>
+
+<span class="hdr">1. CHECK SUPABASE CONNECTION</span>
+   Verify Supabase URL and anon key are properly connected.
+   Show me the environment variables I need to set.
+
+<span class="hdr">2. CREATE ALL TABLES if they don't exist:</span>
+
+<span class="bl">products:</span>
+  id (uuid, primary key, default gen_random_uuid()),
+  name (text not null), description (text),
+  price (numeric), category (text),
+  image_url (text), stock (integer default 0),
+  visible (boolean default true),
+  created_at (timestamp default now())
+
+<span class="bl">orders:</span>
+  id (uuid, primary key), customer_name (text),
+  email (text), phone (text), total (numeric),
+  status (text default 'pending'),
+  created_at (timestamp default now())
+
+<span class="bl">order_items:</span>
+  id (uuid, primary key),
+  order_id (uuid references orders(id)),
+  product_id (uuid references products(id)),
+  quantity (integer), price (numeric)
+
+<span class="hdr">3. FIX ALL CRUD:</span>
+<span class="gr">✓</span> Add product → saves → appears in list immediately
+<span class="gr">✓</span> Edit product → updates → persists after page refresh
+<span class="gr">✓</span> Delete product → removes from database
+<span class="gr">✓</span> Products from admin appear on public /productos page
+
+<span class="hdr">4. ADD TOAST NOTIFICATIONS:</span>
+<span class="gr">✓</span> Green toast on success · Red toast on error
+
+<span class="cm">Fix everything. Do not ask questions. Just fix it all at once.</span></pre></div>
+  </div>
+</div>
+
+<!-- SLIDE 21 PUBLICAR -->
+<div class="slide">
+  <div class="tag tp">Bloque 3 · Publicar</div>
+  <div class="st">🚀 Poner la página online</div>
+  <div class="ss">En 5 minutos el sitio está en una URL pública que puedes enviar por WhatsApp</div>
+  <div class="steps">
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Click en "Publish" dentro de Bolt o Lovable</div><div class="s-dsc">URL gratuita inmediata: <span style="color:#f97316">tunegocio.bolt.host</span> o <span style="color:#f97316">tunegocio.lovable.app</span> — funciona con HTTPS en segundos.</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Conectar a GitHub para cambios futuros</div><div class="s-dsc">Botón de GitHub → autoriza → repositorio creado automáticamente. Cada cambio que hagas en Bolt actualiza la página online sin repetir el proceso.</div><div class="s-tip">💡 Así cualquier ajuste futuro tarda segundos, no horas</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Dominio propio — opcional (~$9/año)</div><div class="s-dsc">Comprar en porkbun.com → conectar en la configuración de Bolt/Lovable → el negocio tiene su propia <span style="color:#f97316">sunegocio.com</span>. Este es el servicio premium que cobras aparte.</div></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 22 SECCIÓN 4 -->
+<div class="slide">
+  <div class="sec"><div class="sec-n">04</div><div class="sec-t">La Propuesta</div><div class="sec-s">Presentar el sitio al negocio y cerrar el trato</div><div class="sec-time">⏱ 30 minutos</div></div>
+</div>
+
+<!-- SLIDE 23 EL PITCH -->
+<div class="slide">
+  <div class="tag tg">Bloque 4 · La Estrategia</div>
+  <div class="st">💬 El pitch perfecto</div>
+  <div class="ss">Tu ventaja: llegas con la página YA HECHA. No vendes promesas — muestras algo real.</div>
+  <div class="steps">
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Contacta por WhatsApp o en persona</div><div class="s-dsc"><em style="color:rgba(255,255,255,.75)">"Hola [nombre], soy [tu nombre]. Me encanta tu negocio, vi las reseñas en Google. Preparé algo para ustedes, ¿tienes 5 minutos?"</em></div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Muestra la página en tu teléfono</div><div class="s-dsc">Abre la URL. Deja que la vean funcionar. No expliques cómo la hiciste — enfócate en cómo les ayuda a conseguir más clientes.</div><div class="s-tip">💡 "Ahora cualquier persona que busque [negocio] en Google los encuentra y escribe por WhatsApp"</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Ofrece mantenimiento mensual</div><div class="s-dsc">No solo la página — vende el servicio de mantenerla: cambiar precios, agregar productos, actualizar fotos. Ahí está el ingreso fijo mensual.</div></div></div>
+    <div class="step"><div class="s-n">4</div><div><div class="s-ttl">Primeros 2-3 clientes: precio reducido</div><div class="s-dsc">A cambio de testimonios reales y referidos. Con 5 clientes en mantenimiento ya tienes ingreso fijo mensual garantizado.</div></div></div>
+  </div>
+</div>
+
+<!-- SLIDE 24 PRICING -->
+<div class="slide">
+  <div class="tag tg">Bloque 4 · Precios</div>
+  <div class="st">💰 ¿Cuánto cobrar?</div>
+  <div class="ss">Precios sugeridos para comenzar · Ajusta según tu mercado local</div>
+  <div class="prices">
+    <div class="pc s"><div class="pc-lbl">Básico</div><div class="pc-amt">$150</div><div class="pc-desc">Landing page sencilla<br>Sin panel de admin<br>URL gratuita<br><br>+ $30/mes mantenimiento</div></div>
+    <div class="pc m"><div class="pc-lbl" style="color:#f97316">Profesional</div><div class="pc-amt" style="color:#f97316">$350</div><div class="pc-desc">Landing + panel admin<br>Video con IA incluido<br>Dominio .com propio<br><br>+ $60/mes mantenimiento</div></div>
+    <div class="pc p"><div class="pc-lbl" style="color:#c084fc">Premium</div><div class="pc-amt" style="color:#c084fc">$600+</div><div class="pc-desc">E-commerce completo<br>Catálogo de productos<br>Videos e imágenes IA<br><br>+ $100/mes mantenimiento</div></div>
+  </div>
+  <div class="hl" style="margin-top:20px">💡 <strong>Fórmula:</strong> 5 clientes × $60/mes = <strong>$300/mes fijo</strong> · 10 clientes = <strong>$600/mes</strong> · 20 clientes = <strong>$1,200/mes</strong></div>
+</div>
+
+<!-- SLIDE 25 FLUJO COMPLETO -->
+<div class="slide">
+  <div class="tag to">Resumen Final</div>
+  <div class="st">El flujo completo de trabajo</div>
+  <div class="ss">De la idea al cliente — todo gratis, todo con IA</div>
+  <div class="flow">
+    <div class="fi">🗺 Google Maps<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Prospecto</span></div><div class="fa">→</div>
+    <div class="fi">📱 Redes Sociales<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Producto estrella</span></div><div class="fa">→</div>
+    <div class="fi">🎬 Google Flow<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Crear video</span></div><div class="fa">→</div>
+    <div class="fi">☁️ Cloudinary<br><span style="font-size:14px;color:rgba(255,255,255,.4)">URL del video</span></div><div class="fa">→</div>
+    <div class="fi">✨ Gemini<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Copy + Prompt</span></div><div class="fa">→</div>
+    <div class="fi">🎨 Stitch<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Diseñar UI</span></div><div class="fa">→</div>
+    <div class="fi">⚡ Bolt / Lovable<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Construir app</span></div><div class="fa">→</div>
+    <div class="fi">🚀 Publicar<br><span style="font-size:14px;color:rgba(255,255,255,.4)">URL online</span></div><div class="fa">→</div>
+    <div class="fi">💰 El pitch<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Cerrar cliente</span></div>
+  </div>
+  <div class="hl" style="margin-top:22px">🎯 <strong>Meta de hoy:</strong> Salir con una página real publicada en una URL pública, lista para mostrarle HOY a un negocio real de tu ciudad.</div>
+  <div class="cards c3" style="margin-top:16px">
+    <div class="card" style="text-align:center"><div style="font-size:34px;margin-bottom:8px">🆓</div><div class="c-ttl">Inversión inicial</div><div class="c-bdy">$0 para empezar</div></div>
+    <div class="card" style="text-align:center"><div style="font-size:34px;margin-bottom:8px">⏱</div><div class="c-ttl">Tiempo por cliente</div><div class="c-bdy">2 a 4 horas</div></div>
+    <div class="card" style="text-align:center"><div style="font-size:34px;margin-bottom:8px">💰</div><div class="c-ttl">Primer ingreso posible</div><div class="c-bdy">$150 a $600</div></div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav">
+  <button class="nb" onclick="prev()">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="nb" onclick="next()">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const N = slides.length;
+let cur = 0;
+
+function go(i) {
+  slides[cur].classList.remove('active');
+  cur = Math.max(0, Math.min(N-1, i));
+  slides[cur].classList.add('active');
+  document.getElementById('prog').style.width = ((cur+1)/N*100)+'%';
+  document.getElementById('cnt').textContent = (cur+1)+' / '+N;
+  document.querySelectorAll('.dot').forEach((d,j) => d.classList.toggle('on', j===cur));
+}
+function next() { go(cur+1); }
+function prev() { go(cur-1); }
+
+const dc = document.getElementById('dots');
+for(let i=0;i<N;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' on':'');
+  d.onclick=()=>go(i);
+  dc.appendChild(d);
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+  if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+  if(e.key==='f'||e.key==='F'){
+    !document.fullscreenElement
+      ?document.documentElement.requestFullscreen()
+      :document.exitFullscreen();
+  }
+});
+
+document.getElementById('prog').style.width=(1/N*100)+'%';
+document.getElementById('cnt').textContent='1 / '+N;
+</script>
+</body>
+</html>
