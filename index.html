@@ -22,7 +22,6 @@ body {
 .nav { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; z-index:300; }
 .nb  { width:44px; height:44px; border-radius:50%; border:2px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07); color:#fff; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all .2s; -webkit-tap-highlight-color:transparent; }
 .nb:hover, .nb:active { background:#f97316; border-color:#f97316; }
-/* Dots: ocultos por default (móvil) — visibles en desktop */
 .dots { display:none; gap:6px; }
 .dot  { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.2); cursor:pointer; transition:all .25s; }
 .dot.on { background:#f97316; width:20px; border-radius:4px; }
@@ -101,7 +100,7 @@ body {
 
 /* ── PROMPT SLIDES ───────────────────────── */
 .p-slide { display:flex; flex-direction:column; flex:1; min-height:0; }
-.p-head  { margin-bottom:14px; flex-shrink:0; }
+.p-head  { margin-bottom:10px; flex-shrink:0; }
 .p-title { font-size:24px; font-weight:900; margin-bottom:4px; }
 .p-sub   { font-size:14px; color:rgba(255,255,255,.5); }
 .pbox    { background:#0f0f0f; border:1.5px solid rgba(255,255,255,.12); border-radius:14px; padding:16px 18px; overflow-y:auto; flex:1; }
@@ -112,6 +111,28 @@ body {
 .yl  { color:#fbbf24; font-weight:700; }
 .cm  { color:rgba(255,255,255,.3); font-style:italic; }
 .hdr { color:#c084fc; font-weight:700; letter-spacing:.04em; }
+
+/* ── COPY BUTTON ─────────────────────────── */
+.copy-btn {
+  align-self:flex-end;
+  background:rgba(249,115,22,.1);
+  border:1.5px solid rgba(249,115,22,.35);
+  color:#f97316;
+  padding:8px 18px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s;
+  font-family:system-ui,-apple-system,sans-serif;
+  margin-bottom:10px;
+  flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.copy-btn:active { transform:scale(.95); }
+.copy-btn.ok { background:rgba(34,197,94,.12); border-color:rgba(34,197,94,.4); color:#4ade80; }
 
 /* ── WARN / HIGHLIGHT ────────────────────── */
 .warn-box { background:rgba(249,115,22,.08); border:1.5px solid rgba(249,115,22,.3); border-radius:12px; padding:14px 16px; font-size:14px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:16px; flex-shrink:0; }
@@ -210,6 +231,8 @@ body {
   .flow   { gap:10px; margin-top:24px; }
   .fi     { font-size:17px; padding:14px 18px; border-radius:12px; }
   .fa     { font-size:22px; }
+
+  .copy-btn { font-size:16px; padding:10px 26px; }
 }
 </style>
 </head>
@@ -252,9 +275,9 @@ body {
   <div class="st">Las 4 horas de hoy</div>
   <div class="ss">Cada bloque termina con un resultado visible que puedes mostrar</div>
   <div class="tl">
-    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 1</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 1 — La Oportunidad</div><div class="tl-name">Encontrar el negocio, el producto estrella y crear el video con IA</div><div class="tl-tools">Google Maps · Google Flow · Cloudinary</div></div></div>
-    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 2</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 2 — El Diseño</div><div class="tl-name">Planear el contenido y diseñar la interfaz visual</div><div class="tl-tools">Google Gemini · Google Stitch</div></div></div>
-    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 3</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 3 — La Construcción</div><div class="tl-name">Construir la app completa: landing page + panel de admin</div><div class="tl-tools">Bolt.new · Lovable.dev · GitHub · Publicar</div></div></div>
+    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 1</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 1 — La Oportunidad</div><div class="tl-name">Encontrar el negocio, el producto estrella y crear el video con IA</div><div class="tl-tools">Google Maps · ChatGPT · Google Flow · Cloudinary</div></div></div>
+    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 2</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 2 — El Diseño</div><div class="tl-name">Planear el contenido y diseñar la interfaz visual</div><div class="tl-tools">Google Gemini → Google Stitch</div></div></div>
+    <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 3</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque 3 — La Construcción</div><div class="tl-name">Construir la app completa: landing page + panel de admin</div><div class="tl-tools">Gemini → Bolt.new · Lovable.dev · Publicar</div></div></div>
     <div class="tl-row"><div class="tl-l"><div class="tl-t">Hora 4</div></div><div class="tl-box"><div class="tl-lbl">Bloque 4 — La Venta</div><div class="tl-name">Hacer el pitch al negocio y definir el modelo de precios</div><div class="tl-tools">Propuesta · Precios · Ingresos recurrentes</div></div></div>
   </div>
 </div>
@@ -265,7 +288,7 @@ body {
   <div class="st">Las herramientas que usaremos</div>
   <div class="ss">Todas gratuitas · Solo necesitas una cuenta de Google para empezar</div>
   <div class="cards c3">
-    <div class="card"><div class="c-ico">✨</div><div class="c-ttl">Google Gemini</div><div class="c-bdy">IA de Google para generar todos los textos de la página y los prompts que le daremos a Bolt.</div><div class="c-url">gemini.google.com · Gratis</div></div>
+    <div class="card"><div class="c-ico">✨</div><div class="c-ttl">Google Gemini</div><div class="c-bdy">IA de Google. Genera todos los textos de la página y los prompts para Bolt y Stitch.</div><div class="c-url">gemini.google.com · Gratis</div></div>
     <div class="card"><div class="c-ico">🎨</div><div class="c-ttl">Google Stitch</div><div class="c-bdy">Diseña la interfaz visual describiendo lo que quieres. Exporta directo a Bolt con un clic.</div><div class="c-url">stitch.withgoogle.com · 350/mes</div></div>
     <div class="card"><div class="c-ico">🎬</div><div class="c-ttl">Google Flow</div><div class="c-bdy">Genera videos cinematográficos con IA (Veo 3). Describes el video en palabras y lo crea en 30 segundos.</div><div class="c-url">flow.google.com · 50 créditos/día</div></div>
   </div>
@@ -281,7 +304,7 @@ body {
     <div class="card"><div class="c-ico">⚡</div><div class="c-ttl">Bolt.new</div><div class="c-bdy">Constructor de apps con IA. Genera landing page + panel de admin + base de datos desde 1 prompt.</div><div class="c-url">bolt.new · 1M tokens/mes</div></div>
     <div class="card"><div class="c-ico">💜</div><div class="c-ttl">Lovable.dev</div><div class="c-bdy">Alternativa a Bolt. Mejor base de datos. Publica gratis en lovable.app. Usar cuando Bolt se agote.</div><div class="c-url">lovable.dev · Plan gratis</div></div>
   </div>
-  <div class="warn-box" style="margin-top:20px">⚠️ <strong>Importante sobre créditos:</strong> Bolt tiene ~300K tokens por día · Lovable tiene ~5 mensajes gratis por día. Por eso usaremos un <strong>Prompt Maestro</strong> que construye TODO de una sola vez.</div>
+  <div class="warn-box" style="margin-top:20px">⚠️ <strong>Importante sobre créditos:</strong> Bolt tiene ~300K tokens por día · Lovable tiene ~5 mensajes gratis por día. Por eso usaremos <strong>Gemini para preparar el prompt</strong> que construye TODO de una sola vez.</div>
 </div>
 
 <!-- SLIDE 6 SECCIÓN 1 -->
@@ -317,6 +340,7 @@ body {
       <div class="p-title">🤖 Prompt para encontrar clientes</div>
       <div class="p-sub">Abre chatgpt.com · Activa búsqueda web (ícono del globo) · Reemplaza lo que está en [corchetes]</div>
     </div>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
     <div class="pbox"><pre><span class="or">Actúa como un investigador de mercado especializado en negocios locales.</span>
 <span class="or">Necesito que busques prospectos para mi servicio de páginas web con IA.</span>
 
@@ -365,7 +389,7 @@ Al terminar la lista, dime:
   </div>
 </div>
 
-<!-- SLIDE 8 PRODUCTO ESTRELLA -->
+<!-- SLIDE 10 PRODUCTO ESTRELLA -->
 <div class="slide">
   <div class="tag to">Bloque 1 · Paso 2</div>
   <div class="st">⭐ Encontrar el producto estrella</div>
@@ -378,7 +402,7 @@ Al terminar la lista, dime:
   </div>
 </div>
 
-<!-- SLIDE 9 GOOGLE FLOW -->
+<!-- SLIDE 11 GOOGLE FLOW -->
 <div class="slide">
   <div class="tag to">Bloque 1 · Paso 3</div>
   <div class="tbox">
@@ -392,7 +416,7 @@ Al terminar la lista, dime:
   </div>
 </div>
 
-<!-- SLIDE 10 PROMPT GOOGLE FLOW -->
+<!-- SLIDE 12 PROMPT GOOGLE FLOW -->
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
@@ -400,6 +424,7 @@ Al terminar la lista, dime:
       <div class="p-title">🎬 Prompts por tipo de negocio</div>
       <div class="p-sub">Copia, adapta y pega en flow.google.com · Siempre en inglés</div>
     </div>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
     <div class="pbox"><pre><span class="hdr">━━━ RESTAURANTE / COMIDA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 
 <span class="gr">"Cinematic close-up of a perfectly grilled whole golden chicken,
@@ -440,7 +465,7 @@ dramatic lighting · golden hour · shallow depth of field · ultra HD</span></p
   </div>
 </div>
 
-<!-- SLIDE 11 CLOUDINARY -->
+<!-- SLIDE 13 CLOUDINARY -->
 <div class="slide">
   <div class="tag to">Bloque 1 · Paso 4</div>
   <div class="tbox">
@@ -454,32 +479,33 @@ dramatic lighting · golden hour · shallow depth of field · ultra HD</span></p
   </div>
 </div>
 
-<!-- SLIDE 12 SECCIÓN 2 -->
+<!-- SLIDE 14 SECCIÓN 2 -->
 <div class="slide">
   <div class="sec"><div class="sec-n">02</div><div class="sec-t">El Diseño</div><div class="sec-s">Planear el contenido y diseñar la interfaz con IA</div><div class="sec-time">⏱ 60 minutos</div></div>
 </div>
 
-<!-- SLIDE 13 GEMINI -->
+<!-- SLIDE 15 GEMINI -->
 <div class="slide">
   <div class="tag tb">Bloque 2 · Paso 1</div>
   <div class="tbox">
     <div class="tb-ico">✨</div>
-    <div><div class="tb-name">Google Gemini</div><div class="tb-url">gemini.google.com · Gratis · Gemini 2.5 Flash</div><div class="tb-dsc">El asistente de IA más capaz de Google en el tier gratuito. Más potente que ChatGPT gratis. Genera todos los textos de la página y el prompt maestro para Bolt/Lovable.</div></div>
+    <div><div class="tb-name">Google Gemini</div><div class="tb-url">gemini.google.com · Gratis · Gemini 2.5 Flash</div><div class="tb-dsc">El asistente de IA más capaz de Google en el tier gratuito. Lo usamos para DOS cosas: generar los textos de la página Y preparar los prompts para Stitch y Lovable con los datos del negocio ya rellenados.</div></div>
   </div>
   <div class="cards c2">
-    <div class="card"><div class="c-ttl">Gemini genera automáticamente:</div><div class="c-bdy" style="line-height:2.1">✓ Headline principal de la página<br>✓ Subtítulo con beneficio clave<br>✓ 3 características con emoji<br>✓ 3 testimonios realistas<br>✓ Texto del botón de WhatsApp<br>✓ El prompt maestro para Bolt</div></div>
-    <div class="card"><div class="c-ttl">Tú solo personalizas:</div><div class="c-bdy" style="line-height:2.1">✓ Nombre real del negocio<br>✓ Tipo de negocio<br>✓ Ciudad o barrio<br>✓ Producto estrella real<br>✓ Precio real<br>✓ Número de WhatsApp</div></div>
+    <div class="card"><div class="c-ttl">Gemini genera automáticamente:</div><div class="c-bdy" style="line-height:2.1">✓ Headline principal de la página<br>✓ Subtítulo con beneficio clave<br>✓ 3 características con emoji<br>✓ 3 testimonios realistas<br>✓ El prompt para Stitch (diseño)<br>✓ El prompt para Lovable (app)</div></div>
+    <div class="card"><div class="c-ttl">Tú solo personalizas:</div><div class="c-bdy" style="line-height:2.1">✓ Nombre real del negocio<br>✓ Tipo de negocio<br>✓ Ciudad o barrio<br>✓ Producto estrella real<br>✓ Precio real<br>✓ URL del video de Cloudinary</div></div>
   </div>
 </div>
 
-<!-- SLIDE 14 PROMPT GEMINI -->
+<!-- SLIDE 16 PROMPT GEMINI CONTENIDO -->
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
       <div class="tag tb">Prompt · Gemini</div>
-      <div class="p-title">✨ Prompt para generar todo el contenido</div>
-      <div class="p-sub">Abre gemini.google.com · Copia este prompt · Reemplaza lo que está en [corchetes]</div>
+      <div class="p-title">✨ Prompt para generar el contenido</div>
+      <div class="p-sub">Abre gemini.google.com · Reemplaza los [corchetes] · Gemini te da todos los textos de la página</div>
     </div>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
     <div class="pbox"><pre><span class="or">Eres experto en copywriting y marketing digital.
 Necesito crear el contenido completo para la landing page
 de un negocio local.</span>
@@ -511,15 +537,12 @@ de un negocio local.</span>
 <span class="gr">6. TEXTO del botón de WhatsApp</span>
    Ejemplo: "¡Pedir ahora!" o "¡Reservar mi cita!"
 
-<span class="gr">7. MENSAJE de WhatsApp predeterminado</span>
-   El texto que sale cuando el cliente toca el botón.
-
 <span class="cm">Responde organizado por secciones con etiquetas claras.
 Idioma: español. Tono: cercano y profesional.</span></pre></div>
   </div>
 </div>
 
-<!-- SLIDE 15 STITCH -->
+<!-- SLIDE 17 STITCH -->
 <div class="slide">
   <div class="tag tb">Bloque 2 · Paso 2</div>
   <div class="tbox">
@@ -527,18 +550,76 @@ Idioma: español. Tono: cercano y profesional.</span></pre></div>
     <div><div class="tb-name">Google Stitch</div><div class="tb-url">stitch.withgoogle.com · Gratis · 350 diseños/mes</div><div class="tb-dsc">Diseña la interfaz de tu página describiendo lo que quieres en palabras. Genera el código visual completo. Exporta con 1 clic directo a Bolt.</div></div>
   </div>
   <div class="steps">
-    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Describe el diseño en palabras</div><div class="s-dsc">Ejemplo: <em style="color:#f97316">"Landing page para restaurante de comida criolla. Colores: rojo oscuro, dorado y crema. Estilo elegante y moderno."</em></div></div></div>
-    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Genera las pantallas principales</div><div class="s-dsc">Home, catálogo, contacto, panel de admin. Cada pantalla diseñada en Stitch sirve de referencia visual para Bolt.</div></div></div>
-    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Toma screenshot de las 5 mejores pantallas</div><div class="s-dsc">Esas 5 imágenes son las que subirás a Bolt como referencia visual en el primer mensaje.</div><div class="s-tip">💡 Bolt lee las imágenes y recrea el mismo estilo en la app completa</div></div></div>
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Dale el prompt de Stitch a Gemini primero</div><div class="s-dsc">En el siguiente slide tienes el prompt para Gemini. Gemini rellena los datos del negocio y te da el prompt listo para Stitch.</div><div class="s-tip">💡 Así Stitch ya sabe el nombre, colores y tipo de negocio desde el inicio</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Pega la respuesta de Gemini en Stitch</div><div class="s-dsc">Copia lo que Gemini te dio y pégalo en el chat de Stitch. Genera las 8 pantallas del proyecto.</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Toma screenshot de las 5 mejores pantallas</div><div class="s-dsc">Esas 5 imágenes son las que subirás a Lovable como referencia visual en el primer mensaje.</div><div class="s-tip">💡 Lovable lee las imágenes y recrea el mismo estilo en la app completa</div></div></div>
   </div>
 </div>
 
-<!-- SLIDE 16 SECCIÓN 3 -->
+<!-- SLIDE 18 PROMPT GEMINI → STITCH -->
+<div class="slide">
+  <div class="p-slide">
+    <div class="p-head">
+      <div class="tag tb">Para Gemini → Stitch</div>
+      <div class="p-title">🎨 Prompt para diseñar en Stitch</div>
+      <div class="p-sub">Paso 1: rellena los [corchetes] → dáselo a Gemini · Paso 2: copia la respuesta de Gemini → pégala en Stitch</div>
+    </div>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
+    <div class="pbox"><pre><span class="or">Eres experto en UI/UX y diseño de apps web para negocios locales.
+Voy a darte los datos de un negocio y tú vas a generar el prompt
+listo para pegar en Google Stitch que diseñe TODAS las pantallas.</span>
+
+<span class="hdr">DATOS DEL NEGOCIO:</span>
+- Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
+- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / etc.]</span>
+- Ciudad: <span class="yl">[CIUDAD]</span>
+- Producto estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
+- Colores: <span class="yl">[COLOR 1]</span> y <span class="yl">[COLOR 2]</span>
+- Estilo visual: <span class="yl">[moderno / elegante / colorido / rústico / minimalista]</span>
+
+<span class="hdr">INSTRUCCIÓN CRÍTICA:</span>
+<span class="or">No cambies la estructura del prompt de salida. Solo rellena los datos
+del negocio. El prompt de salida debe estar listo para pegarse en Stitch
+SIN ningún texto adicional. No pongas explicaciones ni comentarios.
+Solo el prompt en inglés.</span>
+
+<span class="hdr">GENERA EXACTAMENTE ESTE PROMPT:</span>
+---
+<span class="cm">Create a complete web app design for [NOMBRE], a [TIPO] in [CIUDAD].
+Color palette: [COLORES]. Visual style: [ESTILO]. Language: Spanish.
+Generate exactly 8 screens in 2 groups:</span>
+
+<span class="gr">GROUP A — USER SCREENS (5 screens):</span>
+Screen 1 — Home: hero video placeholder + headline + subtitle + WhatsApp button.
+  Below: 3 benefit cards with emoji for [TIPO].
+Screen 2 — Products: grid of [PRODUCTO ESTRELLA] cards with photo, name,
+  description, price. Category tabs at top.
+Screen 3 — Product Detail: large photo, name, price, WhatsApp button, 2 reviews.
+Screen 4 — Contact: Google Maps placeholder, address in [CIUDAD], Instagram link.
+Screen 5 — Order Form: name, product dropdown, quantity, notes field.
+  Large green "Enviar por WhatsApp" button. Minimal layout.
+
+<span class="gr">GROUP B — ADMIN SCREENS (3 screens):</span>
+Screen 6 — Admin Login: email + password. Title "Panel Admin — [NOMBRE]".
+Screen 7 — Admin Dashboard: 4 stat cards (pedidos, productos, mensajes, ingresos).
+  Recent orders table. Left sidebar navigation.
+Screen 8 — Product Manager: product list with photo, name, price, active toggle,
+  Edit and Delete buttons. "+ Agregar Producto" button.
+  Modal form: photo upload, name, description, price, category, visibility toggle.
+
+<span class="bl">DESIGN RULES:</span>
+Primary: [COLOR 1]. Accent: [COLOR 2]. 12px border radius. Mobile-first.
+Admin uses sidebar. All text in Spanish. Buttons minimum 48px height.
+---</pre></div>
+  </div>
+</div>
+
+<!-- SLIDE 19 SECCIÓN 3 -->
 <div class="slide">
   <div class="sec"><div class="sec-n">03</div><div class="sec-t">La Construcción</div><div class="sec-s">Construir la app completa con panel de administración</div><div class="sec-time">⏱ 60 minutos</div></div>
 </div>
 
-<!-- SLIDE 17 BOLT VS LOVABLE -->
+<!-- SLIDE 20 BOLT VS LOVABLE -->
 <div class="slide">
   <div class="tag tp">Bloque 3 · Herramientas</div>
   <div class="st">⚡ Bolt.new vs 💜 Lovable.dev</div>
@@ -547,102 +628,136 @@ Idioma: español. Tono: cercano y profesional.</span></pre></div>
     <div class="card" style="border-color:rgba(249,115,22,.3)"><div class="c-ico">⚡</div><div class="c-ttl">Bolt.new — Principal</div><div class="c-bdy">1 millón de tokens gratis por mes. Más rápido. Sube las 5 imágenes de Stitch primero. Publica en bolt.host gratis.</div><div class="c-url">bolt.new · 1M tokens/mes · 300K/día</div></div>
     <div class="card" style="border-color:rgba(168,85,247,.3)"><div class="c-ico">💜</div><div class="c-ttl">Lovable.dev — Plan B</div><div class="c-bdy">~5 mensajes gratis por día. Mejor integración con Supabase. Publica gratis en lovable.app con 1 clic.</div><div class="c-url">lovable.dev · ~5 mensajes/día</div></div>
   </div>
-  <div class="warn-box">⚠️ <strong>Estrategia clave:</strong> Dar el <strong>Prompt Maestro completo</strong> en el PRIMER mensaje. Esto construye todo de una sola vez y ahorra créditos. Ver siguiente slide →</div>
+  <div class="warn-box">⚠️ <strong>Estrategia clave:</strong> Primero dale los datos a <strong>Gemini</strong> → Gemini genera el prompt perfecto → lo pegas en Lovable/Bolt con las 5 fotos de Stitch. Todo se construye en UN solo mensaje.</div>
 </div>
 
-<!-- SLIDE 18 PROMPT MAESTRO PARTE 1 -->
+<!-- SLIDE 21 PROMPT GEMINI → LOVABLE PARTE 1 -->
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
-      <div class="tag tp">Prompt Maestro · Parte 1 de 2</div>
-      <div class="p-title">⚡ El Mega Prompt para Bolt / Lovable</div>
-      <div class="p-sub">Primero sube las 5 imágenes de Stitch → luego pega este prompt completo en el chat</div>
+      <div class="tag tp">Para Gemini → Lovable · Parte 1 de 2</div>
+      <div class="p-title">⚡ Prompt Maestro — vía Gemini</div>
+      <div class="p-sub">Copia las 2 partes juntas → dáselas a Gemini → sube 5 fotos de Stitch en Lovable → pega la respuesta de Gemini</div>
     </div>
-    <div class="pbox"><pre><span class="or">You are building a complete web app for</span> <span class="yl">[NOMBRE DEL NEGOCIO]</span><span class="or">,
-a</span> <span class="yl">[TIPO DE NEGOCIO]</span> <span class="or">located in</span> <span class="yl">[CIUDAD]</span><span class="or">.</span>
-<span class="or">Use the 5 uploaded screenshots as STRICT visual reference
-for colors, typography, and layout style.</span>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar Parte 1</button>
+    <div class="pbox"><pre><span class="or">Eres un experto en desarrollo web con IA. Voy a darte los datos de un negocio
+y tú vas a generar un prompt extenso en inglés y en formato de párrafos para
+pegar en Lovable.dev. El prompt debe ser tan completo que Lovable construya
+toda la aplicación correctamente en un solo mensaje, sin correcciones.</span>
 
-<span class="hdr">━━━ PÁGINAS PÚBLICAS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span class="hdr">DATOS DEL NEGOCIO:</span>
+- Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
+- Tipo de negocio: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / etc.]</span>
+- Ciudad: <span class="yl">[CIUDAD]</span>
+- Producto estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
+- Precio del producto: <span class="yl">[PRECIO]</span>
+- Descripción: <span class="yl">[DESCRIPCIÓN DE 2 ORACIONES]</span>
+- Link del video MP4 en Cloudinary: <span class="yl">[URL COMPLETA DEL VIDEO]</span>
+- Color principal: <span class="yl">[COLOR 1]</span>  ·  Color secundario: <span class="yl">[COLOR 2]</span>
+- Estilo visual: <span class="yl">[moderno / elegante / colorido / rústico / minimalista]</span>
 
-<span class="gr">HOME ( / )</span>
-  Hero section — fullscreen video background:
-  • <span class="yl">VIDEO URL: [PEGAR URL DE CLOUDINARY AQUÍ]</span>
-  • Autoplay, loop, muted, dark overlay rgba(0,0,0,0.5)
-  • Video stays FIXED while user scrolls (parallax effect)
-  • Headline: <span class="yl">"[HEADLINE DE GEMINI]"</span>
-  • Subtitle: <span class="yl">"[SUBTÍTULO DE GEMINI]"</span>
-  • CTA button: <span class="yl">"[TEXTO DEL BOTÓN]"</span>
-  Below hero:
-  • 3 benefit cards with icons
-  • Featured products grid (loads from database)
-  • Testimonials section — 3 customer reviews
-  • Footer: address, hours, social links
-  • WhatsApp floating button (bottom-right, always visible)
-    <span class="yl">Number: [+NÚMERO DE WHATSAPP]</span>
-    <span class="yl">Message: "[MENSAJE PREDETERMINADO]"</span>
+<span class="hdr">INSTRUCCIÓN CRÍTICA:</span>
+<span class="or">Genera el prompt en INGLÉS. Sin texto antes ni después. Sin explicaciones.
+Usa párrafos largos, no listas. Empieza directo con la descripción.
+No cambies la estructura, solo rellena los datos del negocio.</span>
 
-<span class="gr">PRODUCTS ( /productos )</span>
-  • Responsive product grid with image, name, price, category
-  • Filter by category (dropdown) + Search bar
-  • Loads ALL products from Supabase
+<span class="hdr">GENERA ESTE PROMPT (completando los datos):</span>
+---
+<span class="cm">I am uploading 5 screenshots of the complete UI design for this project and
+you must use them as strict visual reference throughout the entire application.
+Every screen must match the colors, typography, spacing, border radius, card
+styles and overall aesthetic in those screenshots. Do not deviate from them.
 
-<span class="gr">CONTACT ( /contacto )</span>
-  • Contact form: name, email, phone, message
-  • Large WhatsApp button
-  • Business address and hours</pre></div>
+Build a complete, production-ready, fully functional web application for
+[NOMBRE], a [TIPO] located in [CIUDAD]. All interface text must be in Spanish.
+Tech stack: React with TypeScript, Tailwind CSS, Supabase for database and
+authentication, React Router for navigation. Primary color: [COLOR 1].
+Accent color: [COLOR 2]. Apply consistently across all screens.
+
+The application has two sections: a public website and a protected admin panel.
+
+For the public home page, open with a full-screen hero. Set the video element
+with attributes autoplay, muted, loop and playsinline — all four required for
+autoplay on iPhone and Android. Set the video to position fixed, top 0, left 0,
+width 100vw, height 100vh, object-fit cover, z-index 0 so it stays locked in
+the background while the user scrolls. Place a dark overlay div with same fixed
+position, background rgba(0,0,0,0.5), z-index 1. Hero content: position relative,
+height 100vh, z-index 2. Every section below hero must have position relative,
+z-index 2, solid background color to cover the fixed video as user scrolls.
+Do not use background-attachment fixed — use position fixed on the video.
+Video source URL: [URL DEL VIDEO].
+
+Over the hero overlay: headline "[HEADLINE 6 PALABRAS EN ESPAÑOL]", subtitle
+"[SUBTÍTULO 12 PALABRAS EN ESPAÑOL]", and a large green button
+"¡Contáctanos por WhatsApp!" with the WhatsApp icon — visual placeholder only,
+no link or phone number assigned. Below hero: 3 benefit cards with emoji for
+[TIPO]. Featured product: [PRODUCTO ESTRELLA], price [PRECIO],
+description "[DESCRIPCIÓN]", green WhatsApp placeholder button.
+Testimonials: 3 realistic reviews with name, city and stars.
+Footer: business name, city, Instagram placeholder, WhatsApp placeholder.
+All WhatsApp buttons are visual placeholders — green style, WhatsApp icon,
+no href or phone number anywhere in the app.</span>
+---
+<span class="cm">→ Continúa en Parte 2 — copiar ambas partes juntas y darlas a Gemini</span></pre></div>
   </div>
 </div>
 
-<!-- SLIDE 19 PROMPT MAESTRO PARTE 2 -->
+<!-- SLIDE 22 PROMPT GEMINI → LOVABLE PARTE 2 -->
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
-      <div class="tag tp">Prompt Maestro · Parte 2 de 2</div>
-      <div class="p-title">⚡ El Mega Prompt — Admin + Técnico</div>
-      <div class="p-sub">Continúa del slide anterior — es un solo prompt, copiar las dos partes juntas</div>
+      <div class="tag tp">Para Gemini → Lovable · Parte 2 de 2</div>
+      <div class="p-title">⚡ Prompt Maestro — Admin + Técnico</div>
+      <div class="p-sub">Parte 2 de 2 · Junto con la Parte 1 forma el mensaje completo que le das a Gemini</div>
     </div>
-    <div class="pbox"><pre><span class="hdr">━━━ PANEL DE ADMINISTRACIÓN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar Parte 2</button>
+    <div class="pbox"><pre><span class="cm">Catalog page: grid of products from Supabase — photo, name, description, price,
+green WhatsApp placeholder button. Category filter tabs at top. Product detail
+page loads by ID: large photo, name, full description, price, WhatsApp placeholder
+button, 2 sample review cards. Contact page: business name, [CIUDAD], Google Maps
+placeholder image, WhatsApp placeholder button, Instagram placeholder button.
 
-<span class="gr">/auth</span>  →  Login page
-  Admin email: <span class="yl">admin@[negocio].com</span>    Password: <span class="yl">Admin12345!</span>
+For the admin section, login page at /admin/login: centered card with title
+"Panel Admin — [NOMBRE]", email field, password field, "Iniciar sesión" button
+using Supabase Auth. Wrong credentials show a Spanish error message. Successful
+login redirects to /admin/dashboard. Every admin route must be protected by a
+route guard — redirect to /admin/login if no active Supabase session. Do not
+show any admin content to unauthenticated users under any circumstance.
 
-<span class="gr">/admin</span>  →  Dashboard (redirect to /auth if not logged in)
-  • Stats: number of products, orders, total revenue
-  • Revenue chart — last 7 days
+Admin dashboard at /admin/dashboard: left sidebar on desktop, bottom nav on
+mobile. Sidebar: links to Dashboard, Productos, Pedidos, Configuración and a
+"Cerrar sesión" button that calls Supabase signOut and redirects to /admin/login.
+Main area: 4 stat cards (active products from Supabase, orders today from
+Supabase, 2 static placeholders). Table of 5 most recent orders: client name,
+product, date, status badge (Pendiente yellow, Confirmado blue, Entregado green).
 
-<span class="gr">/admin/products</span>  →  Product manager
-  • Table: image, name, price, category, stock, status
-  • Edit / Delete buttons · "Add Product" button
+Product manager at /admin/productos: table of all products — photo thumbnail,
+name, price, category, active toggle, Editar and Eliminar buttons. "+ Agregar
+Producto" button at top right in [COLOR 1]. Clicking opens a modal with: photo
+upload to Supabase Storage returning a public URL, name field, description
+textarea, price field, category field, active toggle. Create inserts into
+Supabase products table and refreshes immediately. Edit updates the row.
+Delete shows Spanish confirmation dialog then removes from Supabase.
+All 4 CRUD operations must persist in real time after page refresh.
 
-<span class="gr">/admin/orders</span>  →  Orders list
-  • Customer info · Status dropdown:
-    pending / confirmed / delivered / cancelled
+Supabase tables — products: id (uuid, gen_random_uuid()), name (text not null),
+description (text), price (numeric), category (text), photo_url (text), active
+(boolean default true), created_at (timestamp default now()). orders: id (uuid),
+client_name (text), product_id (uuid FK products.id), quantity (int default 1),
+notes (text), status (text default Pendiente), created_at (timestamp).
+Seed 3 sample products for [TIPO DE NEGOCIO] so the catalog is not empty.
 
-<span class="hdr">━━━ REQUISITOS TÉCNICOS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
-
-Stack: React + Vite + Tailwind CSS + shadcn/ui
-Database: Supabase (PostgreSQL) · Auth: Supabase Auth
-
-Required tables:
-  <span class="bl">products:</span>  id, name, description, price, category,
-             image_url, stock, visible, created_at
-  <span class="bl">orders:</span>    id, customer_name, email, phone, total, status, created_at
-  <span class="bl">order_items:</span> id, order_id, product_id, quantity, price
-
-<span class="yl">CRITICAL RULES — ALL MUST WORK:</span>
-<span class="gr">✓</span> ALL forms save to Supabase and persist after page refresh
-<span class="gr">✓</span> Admin routes redirect to /auth if not logged in
-<span class="gr">✓</span> Products added in /admin appear on public /productos page
-<span class="gr">✓</span> ONLY standard Tailwind colors (no custom color classes)
-<span class="gr">✓</span> Mobile responsive — works on 375px screens
-<span class="gr">✓</span> Show success/error toast after every action
-
-<span class="or">Build the COMPLETE working app. Do everything in this one message.</span></pre></div>
+All pages fully responsive at 375px minimum width. Tap targets minimum 48px.
+Video hero autoplays on mobile same as desktop. Admin sidebar collapses to
+bottom nav under 768px. Product grid: 2 columns mobile, 3-4 desktop.
+All modals scrollable on mobile. Use uploaded screenshots as design reference
+at every step. Build everything in one implementation without asking questions.
+The application must be complete and ready to publish when you finish.</span>
+---</pre></div>
   </div>
 </div>
 
-<!-- SLIDE 20 PROMPT FIX CRUD -->
+<!-- SLIDE 23 PROMPT FIX CRUD -->
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
@@ -650,6 +765,7 @@ Required tables:
       <div class="p-title">🔧 Si el admin no guarda datos</div>
       <div class="p-sub">Usar cuando los formularios del admin no funcionan · Copia y pega en Bolt o Lovable</div>
     </div>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
     <div class="pbox"><pre><span class="or">The admin panel forms are not saving data. Fix everything:</span>
 
 <span class="hdr">1. CHECK SUPABASE CONNECTION</span>
@@ -691,7 +807,47 @@ Required tables:
   </div>
 </div>
 
-<!-- SLIDE 21 PUBLICAR -->
+<!-- SLIDE 24 PROMPT FIX VIDEO -->
+<div class="slide">
+  <div class="p-slide">
+    <div class="p-head">
+      <div class="tag tr">Prompt de Rescate</div>
+      <div class="p-title">🎬 Si el video no reproduce en móvil</div>
+      <div class="p-sub">Usar cuando el video no hace autoplay en iPhone o Android · Copia y pega en Lovable o Bolt</div>
+    </div>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
+    <div class="pbox"><pre><span class="or">The hero video is not autoplaying on mobile devices. Fix it completely.</span>
+
+<span class="hdr">1. ADD ALL FOUR REQUIRED ATTRIBUTES:</span>
+The video element must have autoplay, muted, loop and playsinline all set
+at the same time. Without all four together the video will not autoplay
+on iPhone or Android.
+
+<span class="hdr">2. USE POSITION FIXED FOR THE SCROLL EFFECT:</span>
+Set the video element to position fixed, top 0, left 0, width 100vw,
+height 100vh, object-fit cover, z-index 0. This locks the video in the
+background at all times.
+
+Place a dark overlay div with the same position fixed, background
+rgba(0,0,0,0.5), z-index 1.
+
+The hero content div must be position relative, height 100vh, z-index 2
+so it sits above the overlay.
+
+Every section below the hero must have position relative, z-index 2, and
+a solid background color so those sections cover the fixed video as the
+user scrolls down the page.
+
+<span class="hdr">3. DO NOT USE background-attachment fixed:</span>
+<span class="yl">background-attachment: fixed does not work on mobile browsers.</span>
+Use position fixed on the video element as described above —
+it works on all devices including iOS Safari and Android Chrome.
+
+<span class="cm">Fix this without changing anything else. Do not ask questions.</span></pre></div>
+  </div>
+</div>
+
+<!-- SLIDE 25 PUBLICAR -->
 <div class="slide">
   <div class="tag tp">Bloque 3 · Publicar</div>
   <div class="st">🚀 Poner la página online</div>
@@ -703,12 +859,12 @@ Required tables:
   </div>
 </div>
 
-<!-- SLIDE 22 SECCIÓN 4 -->
+<!-- SLIDE 26 SECCIÓN 4 -->
 <div class="slide">
   <div class="sec"><div class="sec-n">04</div><div class="sec-t">La Propuesta</div><div class="sec-s">Presentar el sitio al negocio y cerrar el trato</div><div class="sec-time">⏱ 30 minutos</div></div>
 </div>
 
-<!-- SLIDE 23 EL PITCH -->
+<!-- SLIDE 27 EL PITCH -->
 <div class="slide">
   <div class="tag tg">Bloque 4 · La Estrategia</div>
   <div class="st">💬 El pitch perfecto</div>
@@ -721,7 +877,7 @@ Required tables:
   </div>
 </div>
 
-<!-- SLIDE 24 PRICING -->
+<!-- SLIDE 28 PRICING -->
 <div class="slide">
   <div class="tag tg">Bloque 4 · Precios</div>
   <div class="st">💰 ¿Cuánto cobrar?</div>
@@ -734,19 +890,19 @@ Required tables:
   <div class="hl" style="margin-top:20px">💡 <strong>Fórmula:</strong> 5 clientes × $60/mes = <strong>$300/mes fijo</strong> · 10 clientes = <strong>$600/mes</strong> · 20 clientes = <strong>$1,200/mes</strong></div>
 </div>
 
-<!-- SLIDE 25 FLUJO COMPLETO -->
+<!-- SLIDE 29 FLUJO COMPLETO -->
 <div class="slide">
   <div class="tag to">Resumen Final</div>
   <div class="st">El flujo completo de trabajo</div>
   <div class="ss">De la idea al cliente — todo gratis, todo con IA</div>
   <div class="flow">
-    <div class="fi">🗺 Google Maps<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Prospecto</span></div><div class="fa">→</div>
-    <div class="fi">📱 Redes Sociales<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Producto estrella</span></div><div class="fa">→</div>
+    <div class="fi">🤖 ChatGPT<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Prospectos</span></div><div class="fa">→</div>
+    <div class="fi">🗺 Google Maps<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Verificar</span></div><div class="fa">→</div>
     <div class="fi">🎬 Google Flow<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Crear video</span></div><div class="fa">→</div>
     <div class="fi">☁️ Cloudinary<br><span style="font-size:14px;color:rgba(255,255,255,.4)">URL del video</span></div><div class="fa">→</div>
-    <div class="fi">✨ Gemini<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Copy + Prompt</span></div><div class="fa">→</div>
+    <div class="fi">✨ Gemini<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Prompts + copy</span></div><div class="fa">→</div>
     <div class="fi">🎨 Stitch<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Diseñar UI</span></div><div class="fa">→</div>
-    <div class="fi">⚡ Bolt / Lovable<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Construir app</span></div><div class="fa">→</div>
+    <div class="fi">⚡ Lovable<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Construir app</span></div><div class="fa">→</div>
     <div class="fi">🚀 Publicar<br><span style="font-size:14px;color:rgba(255,255,255,.4)">URL online</span></div><div class="fa">→</div>
     <div class="fi">💰 El pitch<br><span style="font-size:14px;color:rgba(255,255,255,.4)">Cerrar cliente</span></div>
   </div>
@@ -789,6 +945,33 @@ for(let i=0;i<N;i++){
   dc.appendChild(d);
 }
 
+// Copiar prompt al portapapeles
+function copyPre(btn) {
+  const slide = btn.closest('.p-slide');
+  const pre = slide.querySelector('.pbox pre');
+  const txt = pre.textContent.trim();
+  navigator.clipboard.writeText(txt).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('ok'); }, 2500);
+  }).catch(() => {
+    try {
+      const range = document.createRange();
+      range.selectNodeContents(pre);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      document.execCommand('copy');
+      sel.removeAllRanges();
+    } catch(e) {}
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('ok'); }, 2500);
+  });
+}
+
 // Teclado
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
@@ -809,7 +992,6 @@ document.addEventListener('touchstart',e=>{
 document.addEventListener('touchend',e=>{
   const dx=tx-e.changedTouches[0].clientX;
   const dy=ty-e.changedTouches[0].clientY;
-  // Solo swipe horizontal (ignorar scroll vertical)
   if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>44){
     dx>0 ? next() : prev();
   }
