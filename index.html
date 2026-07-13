@@ -134,6 +134,61 @@ body {
 .copy-btn:active { transform:scale(.95); }
 .copy-btn.ok { background:rgba(34,197,94,.12); border-color:rgba(34,197,94,.4); color:#4ade80; }
 
+/* ── SELECTOR MODO / DÍA ─────────────────── */
+.ov {
+  position:fixed; inset:0; z-index:500;
+  display:flex; align-items:center; justify-content:center;
+  background:#0a0a0a; padding:28px 20px;
+}
+.ov-box { width:100%; max-width:540px; display:flex; flex-direction:column; align-items:center; gap:22px; text-align:center; }
+.ov-title { font-size:22px; font-weight:900; }
+.ov-sub   { font-size:14px; color:rgba(255,255,255,.4); margin-top:4px; }
+
+.mode-cards { display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; }
+.mc {
+  background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.1);
+  border-radius:16px; padding:22px 14px; cursor:pointer; transition:all .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.mc:hover,.mc:active { border-color:rgba(249,115,22,.5); background:rgba(249,115,22,.08); }
+.mc-ico   { font-size:34px; margin-bottom:10px; }
+.mc-title { font-size:17px; font-weight:900; margin-bottom:6px; }
+.mc-desc  { font-size:12px; color:rgba(255,255,255,.45); line-height:1.55; }
+
+.day-cards { display:flex; flex-direction:column; gap:10px; width:100%; }
+.dc {
+  background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.1);
+  border-radius:14px; padding:16px 18px; cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; gap:14px; text-align:left;
+  -webkit-tap-highlight-color:transparent;
+}
+.dc:hover,.dc:active { border-color:rgba(249,115,22,.4); background:rgba(249,115,22,.07); }
+.dc-n     { font-size:13px; font-weight:900; color:#f97316; min-width:36px; flex-shrink:0; }
+.dc-title { font-size:15px; font-weight:700; margin-bottom:3px; }
+.dc-desc  { font-size:12px; color:rgba(255,255,255,.4); line-height:1.4; }
+.ov-back  {
+  background:none; border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.4); padding:8px 18px; border-radius:20px;
+  font-size:13px; cursor:pointer; font-family:inherit;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* Botón home + badge día (modo 3 días) */
+.home-btn {
+  position:fixed; top:10px; left:12px; z-index:400;
+  background:rgba(249,115,22,.12); border:1.5px solid rgba(249,115,22,.3);
+  color:#f97316; width:40px; height:40px; border-radius:50%;
+  font-size:17px; cursor:pointer; display:none; align-items:center; justify-content:center;
+  -webkit-tap-highlight-color:transparent; transition:all .2s;
+}
+.home-btn:hover { background:rgba(249,115,22,.25); }
+.day-badge {
+  position:fixed; top:13px; left:58px; z-index:400; display:none;
+  background:rgba(249,115,22,.12); border:1.5px solid rgba(249,115,22,.3);
+  color:#f97316; padding:5px 12px; border-radius:20px;
+  font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+}
+
 /* ── WARN / HIGHLIGHT ────────────────────── */
 .warn-box { background:rgba(249,115,22,.08); border:1.5px solid rgba(249,115,22,.3); border-radius:12px; padding:14px 16px; font-size:14px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:16px; flex-shrink:0; }
 .warn-box strong { color:#f97316; }
@@ -233,6 +288,18 @@ body {
   .fa     { font-size:22px; }
 
   .copy-btn { font-size:16px; padding:10px 26px; }
+
+  .ov-title { font-size:34px; }
+  .ov-sub   { font-size:18px; }
+  .mc { padding:32px 22px; }
+  .mc-ico   { font-size:44px; }
+  .mc-title { font-size:22px; }
+  .mc-desc  { font-size:15px; }
+  .day-cards { flex-direction:row; }
+  .dc { flex-direction:column; text-align:center; align-items:center; flex:1; }
+  .dc-n { min-width:auto; }
+  .home-btn { width:46px; height:46px; top:14px; left:14px; font-size:20px; }
+  .day-badge { top:16px; left:66px; font-size:13px; }
 }
 </style>
 </head>
@@ -240,6 +307,62 @@ body {
 <div class="progress" id="prog"></div>
 <div class="counter" id="cnt"></div>
 <div class="hint">← → navegar · F pantalla completa</div>
+
+<!-- SELECTOR DE MODO -->
+<div class="ov" id="modeOv">
+  <div class="ov-box">
+    <div>
+      <div class="ov-title">Marketing con IA</div>
+      <div class="ov-sub">¿Cómo quieres enseñar la clase?</div>
+    </div>
+    <div class="mode-cards">
+      <div class="mc" onclick="setMode('1day')">
+        <div class="mc-ico">📚</div>
+        <div class="mc-title">1 Día</div>
+        <div class="mc-desc">Presentación completa<br>4 horas · 29 slides</div>
+      </div>
+      <div class="mc" onclick="setMode('3days')">
+        <div class="mc-ico">📅</div>
+        <div class="mc-title">3 Días</div>
+        <div class="mc-desc">2.5 horas por sesión<br>3 clases separadas</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SELECTOR DE DÍA (modo 3 días) -->
+<div class="ov" id="dayOv" style="display:none">
+  <div class="ov-box">
+    <div>
+      <div class="ov-title">Selecciona el día</div>
+      <div class="ov-sub">2.5 horas por sesión</div>
+    </div>
+    <div class="day-cards">
+      <div class="dc" onclick="setDay(1)">
+        <div class="dc-n">Día 1</div>
+        <div>
+          <div class="dc-title">La Oportunidad</div>
+          <div class="dc-desc">ChatGPT + Maps + Flow + Cloudinary · 13 slides</div>
+        </div>
+      </div>
+      <div class="dc" onclick="setDay(2)">
+        <div class="dc-n">Día 2</div>
+        <div>
+          <div class="dc-title">El Diseño</div>
+          <div class="dc-desc">Gemini + Stitch + Prompt Maestro · 9 slides</div>
+        </div>
+      </div>
+      <div class="dc" onclick="setDay(3)">
+        <div class="dc-n">Día 3</div>
+        <div>
+          <div class="dc-title">Publicar y Vender</div>
+          <div class="dc-desc">Rescates + Publicar + Pitch + Precios · 7 slides</div>
+        </div>
+      </div>
+    </div>
+    <button class="ov-back" onclick="document.getElementById('dayOv').style.display='none';document.getElementById('modeOv').style.display='flex'">← Cambiar modo</button>
+  </div>
+</div>
 
 <!-- SLIDE 1 COVER -->
 <div class="slide active">
@@ -816,34 +939,37 @@ The application must be complete and ready to publish when you finish.</span>
       <div class="p-sub">Usar cuando el video no hace autoplay en iPhone o Android · Copia y pega en Lovable o Bolt</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">The hero video is not autoplaying on mobile devices. Fix it completely.</span>
+    <div class="pbox"><pre><span class="or">The hero video has two problems. Fix both completely.</span>
 
-<span class="hdr">1. ADD ALL FOUR REQUIRED ATTRIBUTES:</span>
-The video element must have autoplay, muted, loop and playsinline all set
-at the same time. Without all four together the video will not autoplay
-on iPhone or Android.
+<span class="hdr">PROBLEM 1 — VIDEO NOT AUTOPLAYING ON MOBILE:</span>
+The video element must have all four attributes at the same time:
+<span class="yl">autoplay  muted  loop  playsinline</span>
+Without all four together the video will NOT autoplay on iPhone or Android.
 
-<span class="hdr">2. USE POSITION FIXED FOR THE SCROLL EFFECT:</span>
-Set the video element to position fixed, top 0, left 0, width 100vw,
-height 100vh, object-fit cover, z-index 0. This locks the video in the
-background at all times.
+<span class="hdr">PROBLEM 2 — VIDEO VISIBLE THROUGH ALL SECTIONS WHEN SCROLLING:</span>
+The video has position fixed so it stays locked behind the entire page.
+Every section AFTER the hero is showing the video through it because
+those sections have transparent or missing background colors.
 
-Place a dark overlay div with the same position fixed, background
-rgba(0,0,0,0.5), z-index 1.
+<span class="gr">Fix the z-index stack like this:</span>
+  Video element  →  position fixed, top 0, left 0, width 100vw,
+                    height 100vh, object-fit cover, z-index 0
+  Dark overlay   →  position fixed, same position,
+                    background rgba(0,0,0,0.5), z-index 1
+  Hero content   →  position relative, height 100vh, z-index 2
 
-The hero content div must be position relative, height 100vh, z-index 2
-so it sits above the overlay.
+<span class="gr">Fix every section AFTER the hero:</span>
+  Benefits section, products section, testimonials section,
+  contact section, footer — ALL of them must have:
+  <span class="yl">position: relative</span>
+  <span class="yl">z-index: 2</span>
+  <span class="yl">background-color: [the site's main background color]</span>
+  NOT transparent. NOT inherit. A real solid color.
 
-Every section below the hero must have position relative, z-index 2, and
-a solid background color so those sections cover the fixed video as the
-user scrolls down the page.
+<span class="hdr">DO NOT USE background-attachment: fixed</span>
+<span class="or">It does not work on mobile. Use position fixed on the video only.</span>
 
-<span class="hdr">3. DO NOT USE background-attachment fixed:</span>
-<span class="yl">background-attachment: fixed does not work on mobile browsers.</span>
-Use position fixed on the video element as described above —
-it works on all devices including iOS Safari and Android Chrome.
-
-<span class="cm">Fix this without changing anything else. Do not ask questions.</span></pre></div>
+<span class="cm">Fix both problems without changing anything else. Do not ask questions.</span></pre></div>
   </div>
 </div>
 
@@ -921,22 +1047,67 @@ it works on all devices including iOS Safari and Android Chrome.
   <button class="nb" onclick="next()">→</button>
 </div>
 
+<button class="home-btn" id="homeBtn" onclick="showDayOv()">⌂</button>
+<div class="day-badge" id="dayBadge"></div>
+
 <script>
 const slides = document.querySelectorAll('.slide');
 const N = slides.length;
 let cur = 0;
+let mode = '';   // '1day' | '3days'
+let activeDay = 0;
+
+// Día 1: slides 1-13 (índices 0-12)
+// Día 2: slides 14-22 (índices 13-21)
+// Día 3: slides 23-29 (índices 22-28)
+const DAY = { 1:[0,12], 2:[13,21], 3:[22,28] };
+
+function setMode(m) {
+  mode = m;
+  document.getElementById('modeOv').style.display = 'none';
+  if (m === '3days') {
+    document.getElementById('dayOv').style.display = 'flex';
+  } else {
+    activeDay = 0;
+    document.getElementById('homeBtn').style.display = 'none';
+    document.getElementById('dayBadge').style.display = 'none';
+    document.body.classList.remove('mode3');
+    go(0);
+  }
+}
+
+function setDay(d) {
+  activeDay = d;
+  document.getElementById('dayOv').style.display = 'none';
+  document.getElementById('homeBtn').style.display = 'flex';
+  const badge = document.getElementById('dayBadge');
+  badge.textContent = 'Día ' + d;
+  badge.style.display = 'block';
+  document.body.classList.add('mode3');
+  go(DAY[d][0]);
+}
+
+function showDayOv() {
+  document.getElementById('dayOv').style.display = 'flex';
+}
 
 function go(i) {
+  let mn = 0, mx = N-1;
+  if (mode === '3days' && activeDay) { mn = DAY[activeDay][0]; mx = DAY[activeDay][1]; }
   slides[cur].classList.remove('active');
-  cur = Math.max(0, Math.min(N-1, i));
+  cur = Math.max(mn, Math.min(mx, i));
   slides[cur].classList.add('active');
-  document.getElementById('prog').style.width = ((cur+1)/N*100)+'%';
-  document.getElementById('cnt').textContent = (cur+1)+' / '+N;
-  document.querySelectorAll('.dot').forEach((d,j) => d.classList.toggle('on', j===cur));
+  const total = mx - mn + 1;
+  const pos   = cur - mn + 1;
+  document.getElementById('prog').style.width = (pos/total*100)+'%';
+  document.getElementById('cnt').textContent  = pos+' / '+total;
+  document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('on',j===cur));
 }
+
 function next() { go(cur+1); }
 function prev() { go(cur-1); }
 
+// Dots
 const dc = document.getElementById('dots');
 for(let i=0;i<N;i++){
   const d=document.createElement('div');
@@ -945,10 +1116,14 @@ for(let i=0;i<N;i++){
   dc.appendChild(d);
 }
 
+// Ocultar dots en modo 3 días
+const styleMode3 = document.createElement('style');
+styleMode3.textContent = '.mode3 .dots { display:none !important; }';
+document.head.appendChild(styleMode3);
+
 // Copiar prompt al portapapeles
 function copyPre(btn) {
-  const slide = btn.closest('.p-slide');
-  const pre = slide.querySelector('.pbox pre');
+  const pre = btn.closest('.p-slide').querySelector('.pbox pre');
   const txt = pre.textContent.trim();
   navigator.clipboard.writeText(txt).then(() => {
     const orig = btn.textContent;
@@ -960,8 +1135,7 @@ function copyPre(btn) {
       const range = document.createRange();
       range.selectNodeContents(pre);
       const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
+      sel.removeAllRanges(); sel.addRange(range);
       document.execCommand('copy');
       sel.removeAllRanges();
     } catch(e) {}
@@ -983,20 +1157,16 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-// Swipe táctil para móvil
+// Swipe táctil
 let tx=0, ty=0;
-document.addEventListener('touchstart',e=>{
-  tx=e.changedTouches[0].clientX;
-  ty=e.changedTouches[0].clientY;
-},{passive:true});
+document.addEventListener('touchstart',e=>{ tx=e.changedTouches[0].clientX; ty=e.changedTouches[0].clientY; },{passive:true});
 document.addEventListener('touchend',e=>{
   const dx=tx-e.changedTouches[0].clientX;
   const dy=ty-e.changedTouches[0].clientY;
-  if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>44){
-    dx>0 ? next() : prev();
-  }
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>44){ dx>0?next():prev(); }
 },{passive:true});
 
+// Inicializar barra (la overlay cubre todo hasta que el usuario elija modo)
 document.getElementById('prog').style.width=(1/N*100)+'%';
 document.getElementById('cnt').textContent='1 / '+N;
 </script>
