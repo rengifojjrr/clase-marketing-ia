@@ -788,65 +788,146 @@ Incluye entre <span class="yl">10 y 15 negocios</span>.
   </div>
 </div>
 
-<!-- SLIDE 16 PROMPT GEMINI CONTENIDO -->
+<!-- SLIDE 16 PROMPT MAESTRO UNIFICADO GEMINI -->
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
-      <div class="tag tb">Prompt · Gemini</div>
-      <div class="p-title">✨ Prompt para generar el contenido</div>
-      <div class="p-sub">Abre gemini.google.com · Reemplaza los [corchetes] · Gemini te da todos los textos de la página</div>
+      <div class="tag tb">Prompt Maestro · Gemini</div>
+      <div class="p-title">✨ Un prompt — todo generado</div>
+      <div class="p-sub">Rellena los [corchetes] UNA sola vez → Gemini genera el contenido + el prompt de Stitch + el prompt de Lovable</div>
     </div>
-    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">Eres experto en copywriting persuasivo y marketing digital para negocios locales.
-Voy a darte los datos de un negocio y necesito que generes el contenido
-completo y optimizado para su landing page en español.</span>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt maestro</button>
+    <div class="pbox"><pre><span class="or">Eres experto en copywriting, diseño UI/UX y desarrollo web para negocios locales.
+Con los datos de abajo generarás 3 outputs en una sola respuesta.
+Sin preguntas. Sin explicaciones. Solo los 3 outputs etiquetados en orden.</span>
 
-<span class="hdr">DATOS DEL NEGOCIO:</span>
+<span class="hdr">DATOS DEL NEGOCIO — rellena solo los [corchetes]:</span>
 - Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
-- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / clínica / veterinaria / etc.]</span>
+- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / etc.]</span>
 - Ciudad: <span class="yl">[CIUDAD]</span>
-- Producto o servicio estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
-- Precio del producto estrella: <span class="yl">[PRECIO]</span>
-- Qué lo hace diferente: <span class="yl">[DIFERENCIADOR — qué tiene que otros no tienen]</span>
+- Producto estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
+- Precio: <span class="yl">[PRECIO]</span>
+- Qué lo hace especial: <span class="yl">[UNA ORACIÓN — qué tiene que otros no tienen]</span>
 - Cliente típico: <span class="yl">[TIPO DE PERSONA QUE SUELE COMPRARLES]</span>
+- Color primario: <span class="yl">[COLOR 1 con hex — ej: naranja quemado #E85D04]</span>
+- Color secundario: <span class="yl">[COLOR 2 con hex — ej: crema cálida #FFF8F0]</span>
+- Estilo visual: <span class="yl">[moderno / elegante / colorido / rústico / minimalista / oscuro]</span>
+- URL del video (Cloudinary): <span class="yl">[URL COMPLETA DEL VIDEO .MP4]</span>
 
-<span class="hdr">GENERA EN ESPAÑOL CADA UNO DE ESTOS ELEMENTOS:</span>
+<span class="hdr">━━━ OUTPUT 1 — CONTENIDO DE LA PÁGINA (en español) ━━━</span>
+<span class="gr">1. HEADLINE:</span> 5-8 palabras. Promesa clara. Sin "calidad", "experiencia" ni "los mejores".
+<span class="gr">2. SUBTÍTULO:</span> Máx. 18 palabras. Complementa el headline, no lo repite.
+<span class="gr">3. BENEFICIO 1 · 2 · 3:</span> → [EMOJI] [Título 3 palabras]: [descripción 12 palabras exactas]
+<span class="gr">4. TESTIMONIO 1 · 2 · 3:</span> → Nombre · Ciudad · texto 20-25 palabras de resultado real.
+<span class="gr">5. DESCRIPCIÓN DEL PRODUCTO:</span> 3 oraciones. Empieza por los sentidos. Termina con urgencia suave.
+<span class="gr">6. TEXTO BOTÓN WHATSAPP:</span> Máx. 4 palabras. Da 3 opciones para elegir.
+<span class="gr">7. META DESCRIPCIÓN SEO:</span> Máx. 155 caracteres. Nombre + ciudad + beneficio + CTA.
 
-<span class="gr">1. HEADLINE PRINCIPAL</span>
-   5 a 8 palabras. Que despierte emoción o haga una promesa clara.
-   Sin palabras vacías: nada de "calidad", "experiencia" o "los mejores".
-   Formato: "El [X] que [ciudad] no olvidará" o "Donde [beneficio] es garantía"
+<span class="hdr">━━━ OUTPUT 2 — PROMPT PARA STITCH (en inglés) ━━━</span>
+<span class="cm">Completa este prompt con los datos del negocio y el headline del Output 1.
+Sin texto antes ni después. Solo el prompt terminado, listo para copiar a Stitch:
 
-<span class="gr">2. SUBTÍTULO</span>
-   Máximo 18 palabras. Responde: ¿qué hace, para quién y qué resultado obtienes?
-   No repitas el headline — suma información nueva y concreta.
+Create a complete professional web app design for [NOMBRE], a [TIPO] in [CIUDAD].
+All interface text in Spanish. Color palette: Primary [COLOR 1], Accent [COLOR 2].
+Style: [ESTILO]. Border radius: 12px. Mobile-first. Tap targets min 48px. 8 screens.
 
-<span class="gr">3. TRES BENEFICIOS CON EMOJI</span>
-   Formato exacto por cada uno:
-   [EMOJI específico] [Título en 3 palabras]: [1 oración de 12 palabras exactas]
-   Los emojis deben ser específicos para el tipo de negocio.
+GROUP A — PUBLIC WEBSITE (5 screens):
+Screen 1 — Home: full-width hero, dark overlay, video placeholder, bold headline
+"[HEADLINE DEL OUTPUT 1]", subtitle, green WhatsApp CTA (#25D366) with icon.
+Below hero: 3 benefit cards with emoji for [TIPO], featured product section
+with photo of [PRODUCTO ESTRELLA] + price + WhatsApp button, 3 testimonial cards,
+footer with business name, [CIUDAD], Instagram and WhatsApp icons.
+Screen 2 — Catalog: "Nuestros productos", category filter tabs, product grid
+2-col mobile / 3-col desktop. Card: photo, name, price in [COLOR 1], CTA button.
+Screen 3 — Product detail: large hero photo, name as h1, price in [COLOR 1],
+description, WhatsApp CTA. 2 review cards with 5 stars.
+Screen 4 — Contact: [NOMBRE], [CIUDAD], map placeholder, hours. WhatsApp + Instagram buttons.
+Screen 5 — Order form: name, product selector, quantity, notes, submit button.
 
-<span class="gr">4. TRES TESTIMONIOS REALISTAS</span>
-   Para cada uno: Nombre creíble · Ciudad · Texto de 2-3 oraciones.
-   Menciona algo específico del producto estrella o del lugar.
-   Debe sonar como un cliente real — sin palabras de marketing.
+GROUP B — ADMIN PANEL (3 screens):
+Screen 6 — Login: centered card, "Panel Admin — [NOMBRE]", email, password, "Iniciar sesión".
+Screen 7 — Dashboard: sidebar (desktop) / bottom nav (mobile), 4 stat cards, orders table.
+Screen 8 — Products: table with photo, name, price, active toggle, edit/delete.
+Modal add/edit with photo upload. All labels in Spanish. Primary color [COLOR 1].
+Global: [COLOR 1] on all primary buttons. All prices in local currency.</span>
 
-<span class="gr">5. DESCRIPCIÓN DEL PRODUCTO ESTRELLA</span>
-   3 oraciones que generen deseo inmediato.
-   Empieza con los sentidos — lo que se ve, huele, siente o saborea.
-   Termina con urgencia suave o razón para actuar hoy.
+<span class="hdr">━━━ OUTPUT 3 — PROMPT PARA LOVABLE (en inglés) ━━━</span>
+<span class="cm">Completa este prompt con TODOS los datos, el contenido del Output 1 y la URL del video.
+Sin texto antes ni después. Listo para copiar a Lovable.dev con las 5 fotos de Stitch:
 
-<span class="gr">6. TEXTO DEL BOTÓN DE WHATSAPP</span>
-   Máximo 4 palabras que activen la acción de inmediato.
-   Da 3 opciones distintas para elegir la mejor.
+I am uploading 5 screenshots of the complete UI design. Use them as strict visual
+reference — match exactly colors, typography, spacing, border radius, card styles.
 
-<span class="gr">7. DESCRIPCIÓN META (SEO)</span>
-   Exactamente 155 caracteres o menos. Nombre + ciudad + beneficio + CTA.
-   Ejemplo: "[Nombre] en [Ciudad] — [beneficio en 5 palabras]. [CTA de 3 palabras]."
+Build a complete production-ready web application for [NOMBRE], a [TIPO] in [CIUDAD].
+All interface text in Spanish. Stack: React + TypeScript, Tailwind CSS, Supabase,
+React Router. CSS at :root: --color-primary: [COLOR 1]; --color-accent: [COLOR 2].
 
-<span class="cm">Responde con etiquetas claras para cada sección numerada.
-Idioma: español. Tono: cercano, auténtico y directo.
-Evita palabras genéricas. Usa detalles específicos del negocio.</span></pre></div>
+Two sections: public site at / /productos /detalle/:id /contacto, and admin
+panel at /admin/login /admin/dashboard /admin/productos /admin/pedidos.
+
+Home page hero: implement scroll-driven video scrubbing. Create div hero-scroll-wrapper
+height 400vh. Inside: div hero-sticky position:sticky top:0 height:100vh overflow:hidden.
+Video inside hero-sticky: muted playsinline, NO autoplay. Source: [URL DEL VIDEO].
+Add after page loads: const video=document.querySelector('.hero-sticky video');
+const wrapper=document.querySelector('.hero-scroll-wrapper'); if(video&&wrapper){
+video.pause(); video.preload='auto'; const scrub=()=>{const rect=wrapper.getBoundingClientRect();
+const p=Math.max(0,Math.min(1,-rect.top/(wrapper.offsetHeight-window.innerHeight)));
+if(video.duration)video.currentTime=p*video.duration;};
+video.addEventListener('loadedmetadata',scrub);
+window.addEventListener('scroll',scrub,{passive:true});}
+Dark overlay same size: background:rgba(0,0,0,0.5) z-index:1. Content z-index:2.
+Every section below hero: position:relative z-index:2 solid background — never transparent.
+Never place images as page backgrounds behind text — always in their own layout area.
+
+Hero shows: headline "[HEADLINE OUTPUT 1]", subtitle "[SUBTÍTULO OUTPUT 1]",
+green WhatsApp button #25D366 "[TEXTO BOTÓN OUTPUT 1]" — no href, placeholder only.
+Benefits: [BENEFICIO 1], [BENEFICIO 2], [BENEFICIO 3].
+Featured product: photo placeholder, [PRODUCTO ESTRELLA], [PRECIO],
+[DESCRIPCIÓN DEL PRODUCTO OUTPUT 1], WhatsApp placeholder.
+Testimonials: [TESTIMONIO 1], [TESTIMONIO 2], [TESTIMONIO 3] — 5 stars each.
+Footer: [NOMBRE], [CIUDAD], Instagram placeholder, WhatsApp placeholder.
+All WhatsApp elements: green #25D366, icon, no href, no phone number anywhere.
+
+/productos: fetch Supabase products where active=true. Category filter real-time.
+Grid 2-col mobile, 3-col desktop. Card: photo, name, price var(--color-primary),
+description, WhatsApp CTA. Skeleton loading. Empty state "No hay productos disponibles."
+
+/detalle/:id: fetch by ID. Hero photo, name h1, price var(--color-primary),
+description, WhatsApp CTA. 2 static reviews 5 stars referencing [PRODUCTO ESTRELLA].
+Back button to /productos.
+
+/contacto: [NOMBRE], [CIUDAD], Maps placeholder, hours static.
+WhatsApp #25D366 and Instagram gradient buttons. No href.
+
+Admin: Supabase Auth email+password. Row Level Security enabled, permissive policies
+for authenticated users on products and orders tables.
+
+/admin/login: centered white card, dark bg, "[NOMBRE] Admin", email+password,
+"Iniciar sesión" var(--color-primary). Error: "Email o contraseña incorrectos."
+onAuthStateChange for session persistence. Route guard on all /admin/* routes.
+
+/admin/dashboard: sticky sidebar desktop / bottom nav mobile: Dashboard, Productos,
+Pedidos, Configuración, red "Cerrar sesión" (signOut + redirect login).
+4 stat cards: active products live, orders today live, 2 static placeholders.
+Orders table: client, product, date, quantity, status (Pendiente=yellow/Confirmado=blue/Entregado=green).
+
+/admin/productos: "Gestión de Productos" + "+ Agregar Producto" var(--color-primary).
+Table: photo 50px, name, category, price, active toggle (immediate Supabase), Editar, Eliminar.
+Modal: photo upload preview → Supabase Storage → save photo_url. Fields: name required,
+description textarea 3 rows, price number, category, active toggle.
+"Guardar" var(--color-primary), "Cancelar". Full CRUD persists after page refresh.
+Confirm delete: "¿Eliminar este producto?" → remove + refresh.
+
+Supabase schema — products: id uuid pk default gen_random_uuid(), name text not null,
+description text, price numeric, category text, photo_url text, active boolean default true,
+created_at timestamptz default now(). orders: id uuid pk default gen_random_uuid(),
+client_name text, product_id uuid references products(id), quantity int default 1,
+notes text, status text default 'Pendiente', created_at timestamptz default now().
+Seed 3 sample products for [TIPO DE NEGOCIO].
+
+All pages min-width 375px. Tap targets min 48px. Admin modals scroll on small screens.
+Toast top-right: green "Guardado correctamente" / red "Error al guardar" — 3 sec.
+Build complete in one message. No clarifying questions.</span></pre></div>
   </div>
 </div>
 
@@ -858,9 +939,9 @@ Evita palabras genéricas. Usa detalles específicos del negocio.</span></pre></
     <div><div class="tb-name">Google Stitch</div><div class="tb-url">stitch.withgoogle.com · Gratis · 350 diseños/mes</div><div class="tb-dsc">Diseña la interfaz de tu página describiendo lo que quieres en palabras. Genera el código visual completo. Exporta con 1 clic directo a Bolt.</div></div>
   </div>
   <div class="steps">
-    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Dale el prompt de Stitch a Gemini primero</div><div class="s-dsc">En el siguiente slide tienes el prompt para Gemini. Gemini rellena los datos del negocio y te da el prompt listo para Stitch.</div><div class="s-tip">💡 Así Stitch ya sabe el nombre, colores y tipo de negocio desde el inicio</div></div></div>
-    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Pega la respuesta de Gemini en Stitch</div><div class="s-dsc">Copia lo que Gemini te dio y pégalo en el chat de Stitch. Genera las 8 pantallas del proyecto.</div></div></div>
-    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Toma screenshot de las 5 mejores pantallas</div><div class="s-dsc">Esas 5 imágenes son las que subirás a Lovable como referencia visual en el primer mensaje.</div><div class="s-tip">💡 Lovable lee las imágenes y recrea el mismo estilo en la app completa</div></div></div>
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Copia el OUTPUT 2 de la respuesta de Gemini</div><div class="s-dsc">El Prompt Maestro ya le pidió a Gemini que generara el prompt de Stitch. Búscalo en la respuesta bajo "OUTPUT 2 — PROMPT PARA STITCH".</div><div class="s-tip">💡 Ya viene con tu nombre, colores y headline — no tienes que rellenar nada más</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Pega el Output 2 en Stitch</div><div class="s-dsc">Abre stitch.withgoogle.com → pega el prompt en el chat → Stitch genera las 8 pantallas del proyecto completo.</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Toma screenshot de las 5 mejores pantallas</div><div class="s-dsc">Esas 5 imágenes son las que subirás a Lovable junto con el Output 3 de Gemini como referencia visual.</div><div class="s-tip">💡 Lovable lee las imágenes y recrea el mismo estilo en la app completa</div></div></div>
   </div>
 </div>
 
@@ -963,9 +1044,9 @@ Admin panel uses sidebar on desktop, bottom navigation on mobile.
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
-      <div class="tag tp">Para Gemini → Lovable · Parte 1 de 2</div>
-      <div class="p-title">⚡ Prompt Maestro — vía Gemini</div>
-      <div class="p-sub">Copia las 2 partes juntas → dáselas a Gemini → sube 5 fotos de Stitch en Lovable → pega la respuesta de Gemini</div>
+      <div class="tag tp">Prompt Alterno · Lovable · Parte 1 de 2</div>
+      <div class="p-title">⚡ Prompt alterno — Landing Page</div>
+      <div class="p-sub">Usa esto solo si necesitas regenerar Lovable por separado · En el flujo normal el Output 3 del Prompt Maestro ya incluye todo</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar Parte 1</button>
     <div class="pbox"><pre><span class="or">Eres experto en desarrollo de aplicaciones web. Voy a darte los datos de un
@@ -1081,9 +1162,9 @@ the WhatsApp icon but absolutely no href, no tel:, no phone number assigned.</sp
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
-      <div class="tag tp">Para Gemini → Lovable · Parte 2 de 2</div>
-      <div class="p-title">⚡ Prompt Maestro — Admin + Técnico</div>
-      <div class="p-sub">Parte 2 de 2 · Junto con la Parte 1 forma el mensaje completo que le das a Gemini</div>
+      <div class="tag tp">Prompt Alterno · Lovable · Parte 2 de 2</div>
+      <div class="p-title">⚡ Prompt alterno — Admin + Técnico</div>
+      <div class="p-sub">Usa esto solo si necesitas regenerar Lovable por separado · En el flujo normal el Output 3 del Prompt Maestro ya incluye todo</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar Parte 2</button>
     <div class="pbox"><pre><span class="cm">Build the products catalog page at /productos: fetch all active products from
