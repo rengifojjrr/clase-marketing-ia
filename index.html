@@ -134,6 +134,14 @@ body {
 .copy-btn:active { transform:scale(.95); }
 .copy-btn.ok { background:rgba(34,197,94,.12); border-color:rgba(34,197,94,.4); color:#4ade80; }
 
+/* ── FLOW PROMPT BLOCKS ──────────────────── */
+.fpb { margin-bottom:12px; }
+.fpb-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.fpb-label { font-size:11px; font-weight:700; color:#f97316; text-transform:uppercase; letter-spacing:.08em; }
+.fpb-tip { font-size:11px; color:rgba(255,255,255,.3); font-style:italic; padding-top:4px; line-height:1.5; }
+.fpb-head .copy-btn { margin-bottom:0; align-self:auto; padding:5px 12px; font-size:11px; flex-shrink:0; }
+.fpb-formula { background:rgba(249,115,22,.06); border:1px solid rgba(249,115,22,.2); border-radius:10px; padding:12px 14px; margin-top:4px; }
+
 /* ── SELECTOR MODO / DÍA ─────────────────── */
 .ov {
   position:fixed; inset:0; z-index:500;
@@ -288,6 +296,10 @@ body {
   .fa     { font-size:22px; }
 
   .copy-btn { font-size:16px; padding:10px 26px; }
+  .fpb-label { font-size:14px; }
+  .fpb-tip { font-size:15px; }
+  .fpb-head .copy-btn { font-size:13px; padding:6px 16px; }
+  .fpb-formula { padding:18px 22px; border-radius:14px; }
 
   .ov-title { font-size:34px; }
   .ov-sub   { font-size:18px; }
@@ -555,63 +567,58 @@ Incluye entre <span class="yl">10 y 15 negocios</span>.
     <div class="p-head">
       <div class="tag to">Prompt · Google Flow</div>
       <div class="p-title">🎬 Prompts por tipo de negocio</div>
-      <div class="p-sub">Copia, adapta y pega en flow.google.com · Siempre en inglés</div>
+      <div class="p-sub">Copia el del negocio de tu cliente → pégalo directo en flow.google.com</div>
     </div>
-    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="hdr">━━━ RESTAURANTE / COMIDA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 
-<span class="gr">"Cinematic extreme close-up of a perfectly golden rotisserie chicken,
- crispy skin glistening under warm amber restaurant lighting,
- steam rising gently, rustic wooden table, bokeh background, 4K"</span>
+    <div class="fpb">
+      <div class="fpb-head"><div class="fpb-label">🍗 Restaurante / Comida</div><button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button></div>
+      <div class="pbox"><pre>"Primer plano extremo cinematográfico de un pollo asado perfectamente dorado,
+ piel crujiente brillando bajo iluminación ámbar cálida de restaurante,
+ vapor subiendo suavemente, mesa de madera rústica, fondo desenfocado, 4K"</pre></div>
+      <div class="fpb-tip">→ Cambia "pollo" por: pizza, tacos, sushi, carne asada, paella, ramen, hamburguesa...</div>
+    </div>
 
-<span class="cm">→ Cambia "chicken" por: pizza, tacos, sushi, steak, paella, ramen, burger...</span>
+    <div class="fpb">
+      <div class="fpb-head"><div class="fpb-label">✂️ Barbería / Peluquería</div><button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button></div>
+      <div class="pbox"><pre>"Primer plano en cámara lenta de manos expertas de barbero haciendo un degradado preciso,
+ interior de barbería vintage, bombillas Edison cálidas, silla de cuero,
+ herramientas clásicas en mostrador de mármol, estética de película cinematográfica, 4K"</pre></div>
+    </div>
 
+    <div class="fpb">
+      <div class="fpb-head"><div class="fpb-label">💆 Spa / Estética / Belleza</div><button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button></div>
+      <div class="pbox"><pre>"Tratamiento de spa lujoso, manos elegantes aplicando aceite tibio en piel relajada,
+ pétalos de rosa flotando en un tazón de piedra, luz suave de velas,
+ movimiento de cámara ultra suave, ambiente sereno, cinematográfico 4K"</pre></div>
+    </div>
 
-<span class="hdr">━━━ BARBERÍA / PELUQUERÍA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+    <div class="fpb">
+      <div class="fpb-head"><div class="fpb-label">💪 Gimnasio / Fitness</div><button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button></div>
+      <div class="pbox"><pre>"Toma dinámica de seguimiento dentro de un gimnasio moderno,
+ atleta levantando pesas con expresión concentrada, iluminación dramática de contorno,
+ cámara lenta, atmósfera cinematográfica motivacional, alto contraste, 4K"</pre></div>
+    </div>
 
-<span class="gr">"Slow-motion close-up of skilled barber hands doing a precise fade,
- vintage barbershop interior, warm Edison bulbs, leather chair,
- classic tools on marble counter, cinematic film look, 4K"</span>
+    <div class="fpb">
+      <div class="fpb-head"><div class="fpb-label">🥐 Panadería / Cafetería</div><button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button></div>
+      <div class="pbox"><pre>"Primer plano extremo de croissant recién horneado siendo partido,
+ capas doradas y hojaldradas reveladas, vapor subiendo,
+ luz cálida de mañana entrando por la ventana, panadería acogedora, cinematográfico 4K"</pre></div>
+    </div>
 
+    <div class="fpb">
+      <div class="fpb-head"><div class="fpb-label">👟 Tienda / Ropa / Accesorios</div><button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button></div>
+      <div class="pbox"><pre>"Muestra de producto rotando lentamente, zapatillas premium en plataforma flotante,
+ estudio blanco limpio, iluminación direccional dramática,
+ estilo comercial de marca de lujo, ultra nítido, 4K cámara lenta"</pre></div>
+    </div>
 
-<span class="hdr">━━━ SPA / ESTÉTICA / BELLEZA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
-
-<span class="gr">"Luxurious spa treatment, elegant hands applying warm oil on relaxed
- skin, rose petals floating in a stone bowl, soft candlelight,
- ultra-smooth camera glide, serene atmosphere, 4K cinematic"</span>
-
-
-<span class="hdr">━━━ GIMNASIO / FITNESS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
-
-<span class="gr">"Dynamic tracking shot inside a modern gym, athlete lifting weights
- with focused expression, dramatic rim lighting, slow motion,
- motivational cinematic feel, high contrast, 4K"</span>
-
-
-<span class="hdr">━━━ PANADERÍA / CAFETERÍA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
-
-<span class="gr">"Extreme close-up of freshly baked croissant being torn open,
- golden flaky layers revealed, steam rising,
- warm morning light through window, cozy bakery, 4K cinematic"</span>
-
-
-<span class="hdr">━━━ TIENDA / ROPA / ACCESORIOS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
-
-<span class="gr">"Slow rotating product showcase of premium sneakers on floating platform,
- clean white studio, dramatic directional lighting, luxury brand
- commercial style, ultra crisp 4K slow motion"</span>
-
-
-<span class="hdr">━━━ FÓRMULA UNIVERSAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
-
-<span class="yl">[TIPO DE TOMA] + [PRODUCTO ESTRELLA] + [ILUMINACIÓN] + [AMBIENTE] + [ESTILO]</span>
-
-<span class="cm">Palabras que mejoran SIEMPRE el resultado:</span>
-<span class="bl">cinematic · slow-motion · extreme close-up · bokeh · 4K · film look
-dramatic lighting · golden hour · shallow depth of field
-tracking shot · smooth camera movement · ultra HD</span>
-
-<span class="cm">⚡ Veo 3 genera audio ambiente automáticamente — el video lleva sonido real</span></pre></div>
+    <div class="fpb-formula">
+      <div class="fpb-label" style="margin-bottom:6px">📐 Fórmula universal</div>
+      <div style="font-size:12px;color:#f97316;font-weight:700;margin-bottom:6px">[TIPO DE TOMA] + [PRODUCTO] + [ILUMINACIÓN] + [AMBIENTE] + [ESTILO]</div>
+      <div class="fpb-tip" style="padding-top:0;margin-bottom:3px">Palabras que siempre mejoran: cinematográfico · cámara lenta · primer plano · 4K · hora dorada · luz dramática · desenfocado</div>
+      <div class="fpb-tip" style="padding-top:0">⚡ Veo 3 genera audio ambiente automáticamente — el video lleva sonido real</div>
+    </div>
   </div>
 </div>
 
@@ -1324,6 +1331,30 @@ document.head.appendChild(styleMode3);
 // Copiar prompt al portapapeles
 function copyPre(btn) {
   const pre = btn.closest('.p-slide').querySelector('.pbox pre');
+  const txt = pre.textContent.trim();
+  navigator.clipboard.writeText(txt).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('ok'); }, 2500);
+  }).catch(() => {
+    try {
+      const range = document.createRange();
+      range.selectNodeContents(pre);
+      const sel = window.getSelection();
+      sel.removeAllRanges(); sel.addRange(range);
+      document.execCommand('copy');
+      sel.removeAllRanges();
+    } catch(e) {}
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('ok'); }, 2500);
+  });
+}
+
+function copyFpb(btn) {
+  const pre = btn.closest('.fpb').querySelector('pre');
   const txt = pre.textContent.trim();
   navigator.clipboard.writeText(txt).then(() => {
     const orig = btn.textContent;
