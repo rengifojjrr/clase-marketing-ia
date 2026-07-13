@@ -464,38 +464,48 @@ body {
       <div class="p-sub">Abre chatgpt.com · Activa búsqueda web (ícono del globo) · Reemplaza lo que está en [corchetes]</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">Actúa como un investigador de mercado especializado en negocios locales.</span>
-<span class="or">Necesito que busques prospectos para mi servicio de páginas web con IA.</span>
+    <div class="pbox"><pre><span class="or">Actúa como investigador de mercado experto en negocios locales.
+Mi objetivo es construir una lista de prospectos para mi servicio
+de páginas web hechas con inteligencia artificial.</span>
+
+<span class="hdr">CONTEXTO DE MI SERVICIO:</span>
+Ofrezco páginas web con IA a negocios que no tienen presencia online.
+Precio: $150–$600 USD + cuota mensual de $30–$100 por mantenimiento.
+Cliente ideal: negocio con clientes felices que no aparece en Google.
 
 <span class="hdr">LO QUE BUSCO:</span>
-Negocios de <span class="yl">[TIPO DE NEGOCIO: restaurantes / barberías / spas / gimnasios / etc.]</span>
-ubicados en <span class="yl">[CIUDAD O ZONA]</span> que cumplan TODAS estas condiciones:
+Negocios de <span class="yl">[TIPO: restaurantes / barberías / spas / gimnasios / ferreterías / veterinarias / panaderías / etc.]</span>
+en <span class="yl">[CIUDAD O ZONA ESPECÍFICA]</span> que cumplan TODAS estas condiciones:
 
-<span class="gr">✓</span> Tienen 4 estrellas o más en Google Maps
-<span class="gr">✓</span> Tienen al menos 20 reseñas de clientes
-<span class="gr">✓</span> NO tienen página web propia (solo tienen redes sociales)
-<span class="gr">✓</span> Están activos (publicaron contenido en los últimos 3 meses)
+<span class="gr">✓</span> 4.0 estrellas o más en Google Maps
+<span class="gr">✓</span> Mínimo 15 reseñas reales de clientes en Google
+<span class="gr">✓</span> NO tienen página web propia — solo Instagram, Facebook o TikTok
+<span class="gr">✓</span> Siguen activos — publicaron contenido en los últimos 2 meses
+<span class="gr">✓</span> Tienen fotos de sus productos o servicios visibles en redes
 
-<span class="hdr">PARA CADA NEGOCIO QUE ENCUENTRES, DIME:</span>
-1. Nombre del negocio
+<span class="hdr">USA BÚSQUEDA WEB Y PARA CADA NEGOCIO DIME:</span>
+1. Nombre exacto del negocio
 2. Dirección o zona de la ciudad
-3. Número de estrellas y cantidad de reseñas
-4. Redes sociales disponibles (Instagram, Facebook, etc.)
-5. Por qué crees que necesita una página web
-6. Qué tipo de página web le iría mejor
+3. Calificación exacta en Google Maps (número con decimal)
+4. Cantidad total de reseñas en Google
+5. ¿Tiene página web? — Sí / No (confirma revisando antes de decir No)
+6. Redes sociales encontradas — con @ o enlace si puedes
+7. Producto o servicio más mencionado en fotos y reseñas
+8. Razón concreta y específica por la que necesita una web AHORA
+9. Potencial de pago — bajo ($150) / medio ($350) / alto ($600+)
 
 <span class="hdr">FORMATO DE RESPUESTA:</span>
-Organiza los resultados en una tabla.
-Ordénalos de mayor a menor potencial de venta.
-Incluye al menos <span class="yl">10 negocios</span>.
+Tabla con esas 9 columnas.
+Ordena de mayor a menor prioridad de contacto — el más fácil primero.
+Incluye entre <span class="yl">10 y 15 negocios</span>.
 
-<span class="hdr">ANÁLISIS FINAL:</span>
-Al terminar la lista, dime:
-- Cuál es el nicho con más oportunidades en esa zona
-- Cuál sería el mensaje de apertura ideal para contactarlos
-- Cuánto podrías cobrar en ese mercado específico
+<span class="hdr">ANÁLISIS FINAL (después de la tabla):</span>
+<span class="gr">1.</span> ¿Cuál es el negocio #1 con más potencial y por qué ese específicamente?
+<span class="gr">2.</span> ¿Qué nicho tiene más oportunidades sin explotar en esa zona?
+<span class="gr">3.</span> ¿Cuál sería el mensaje exacto de WhatsApp para contactar al negocio #1?
+<span class="gr">4.</span> ¿Cuánto cobrar de promedio en ese mercado? Da un número concreto.
 
-<span class="cm">Usa tu capacidad de búsqueda web para encontrar información real y actualizada.</span></pre></div>
+<span class="cm">Usa búsqueda web. Solo información real y actualizada. Responde en español.</span></pre></div>
   </div>
 </div>
 
@@ -550,41 +560,58 @@ Al terminar la lista, dime:
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
     <div class="pbox"><pre><span class="hdr">━━━ RESTAURANTE / COMIDA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 
-<span class="gr">"Cinematic close-up of a perfectly grilled whole golden chicken,
- steam rising gently, warm amber restaurant lighting,
- rustic wooden table, bokeh background, 4K food photography"</span>
+<span class="gr">"Cinematic extreme close-up of a perfectly golden rotisserie chicken,
+ crispy skin glistening under warm amber restaurant lighting,
+ steam rising gently, rustic wooden table, bokeh background, 4K"</span>
 
-<span class="cm">→ Cambia "chicken" por: pizza, sushi, tacos, steak, paella...</span>
+<span class="cm">→ Cambia "chicken" por: pizza, tacos, sushi, steak, paella, ramen, burger...</span>
 
 
 <span class="hdr">━━━ BARBERÍA / PELUQUERÍA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 
-<span class="gr">"Slow-motion close-up of barber hands doing a precise fade haircut,
- professional barbershop setting, vintage mirrors, warm lighting,
- cinematic style, shallow depth of field"</span>
+<span class="gr">"Slow-motion close-up of skilled barber hands doing a precise fade,
+ vintage barbershop interior, warm Edison bulbs, leather chair,
+ classic tools on marble counter, cinematic film look, 4K"</span>
 
 
-<span class="hdr">━━━ SPA / BELLEZA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span class="hdr">━━━ SPA / ESTÉTICA / BELLEZA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 
-<span class="gr">"Peaceful spa scene, hands gently massaging with aromatic oils,
- soft candlelight, rose petals, serene atmosphere,
- ultra-smooth cinematic camera movement, 4K"</span>
+<span class="gr">"Luxurious spa treatment, elegant hands applying warm oil on relaxed
+ skin, rose petals floating in a stone bowl, soft candlelight,
+ ultra-smooth camera glide, serene atmosphere, 4K cinematic"</span>
+
+
+<span class="hdr">━━━ GIMNASIO / FITNESS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="gr">"Dynamic tracking shot inside a modern gym, athlete lifting weights
+ with focused expression, dramatic rim lighting, slow motion,
+ motivational cinematic feel, high contrast, 4K"</span>
+
+
+<span class="hdr">━━━ PANADERÍA / CAFETERÍA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+
+<span class="gr">"Extreme close-up of freshly baked croissant being torn open,
+ golden flaky layers revealed, steam rising,
+ warm morning light through window, cozy bakery, 4K cinematic"</span>
 
 
 <span class="hdr">━━━ TIENDA / ROPA / ACCESORIOS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 
-<span class="gr">"Product showcase of stylish athletic shoes rotating slowly,
- clean white studio background, dramatic side lighting,
- luxury brand commercial style, slow motion"</span>
+<span class="gr">"Slow rotating product showcase of premium sneakers on floating platform,
+ clean white studio, dramatic directional lighting, luxury brand
+ commercial style, ultra crisp 4K slow motion"</span>
 
 
-<span class="hdr">━━━ REGLA DE ORO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+<span class="hdr">━━━ FÓRMULA UNIVERSAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
 
-<span class="yl">FORMATO: [tipo de toma] + [producto] + [iluminación] + [estilo] + [calidad]</span>
+<span class="yl">[TIPO DE TOMA] + [PRODUCTO ESTRELLA] + [ILUMINACIÓN] + [AMBIENTE] + [ESTILO]</span>
 
-<span class="cm">Palabras clave que mejoran el resultado:</span>
-<span class="bl">cinematic · slow-motion · close-up · bokeh · 4K
-dramatic lighting · golden hour · shallow depth of field · ultra HD</span></pre></div>
+<span class="cm">Palabras que mejoran SIEMPRE el resultado:</span>
+<span class="bl">cinematic · slow-motion · extreme close-up · bokeh · 4K · film look
+dramatic lighting · golden hour · shallow depth of field
+tracking shot · smooth camera movement · ultra HD</span>
+
+<span class="cm">⚡ Veo 3 genera audio ambiente automáticamente — el video lleva sonido real</span></pre></div>
   </div>
 </div>
 
@@ -629,39 +656,56 @@ dramatic lighting · golden hour · shallow depth of field · ultra HD</span></p
       <div class="p-sub">Abre gemini.google.com · Reemplaza los [corchetes] · Gemini te da todos los textos de la página</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">Eres experto en copywriting y marketing digital.
-Necesito crear el contenido completo para la landing page
-de un negocio local.</span>
+    <div class="pbox"><pre><span class="or">Eres experto en copywriting persuasivo y marketing digital para negocios locales.
+Voy a darte los datos de un negocio y necesito que generes el contenido
+completo y optimizado para su landing page en español.</span>
 
 <span class="hdr">DATOS DEL NEGOCIO:</span>
 - Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
-- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / etc.]</span>
+- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / clínica / veterinaria / etc.]</span>
 - Ciudad: <span class="yl">[CIUDAD]</span>
-- Producto estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
-- Precio aproximado: <span class="yl">[PRECIO]</span>
+- Producto o servicio estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
+- Precio del producto estrella: <span class="yl">[PRECIO]</span>
+- Qué lo hace diferente: <span class="yl">[DIFERENCIADOR — qué tiene que otros no tienen]</span>
+- Cliente típico: <span class="yl">[TIPO DE PERSONA QUE SUELE COMPRARLES]</span>
 
-<span class="hdr">CREA LO SIGUIENTE EN ESPAÑOL:</span>
+<span class="hdr">GENERA EN ESPAÑOL CADA UNO DE ESTOS ELEMENTOS:</span>
 
-<span class="gr">1. HEADLINE principal</span>
-   Máximo 8 palabras. Muy impactante. Que enganche de inmediato.
+<span class="gr">1. HEADLINE PRINCIPAL</span>
+   5 a 8 palabras. Que despierte emoción o haga una promesa clara.
+   Sin palabras vacías: nada de "calidad", "experiencia" o "los mejores".
+   Formato: "El [X] que [ciudad] no olvidará" o "Donde [beneficio] es garantía"
 
 <span class="gr">2. SUBTÍTULO</span>
-   Explica el beneficio principal en máximo 15 palabras.
+   Máximo 18 palabras. Responde: ¿qué hace, para quién y qué resultado obtienes?
+   No repitas el headline — suma información nueva y concreta.
 
-<span class="gr">3. TRES BENEFICIOS con emoji</span>
-   Formato: 🔥 Título (4 palabras): descripción corta (1 oración)
+<span class="gr">3. TRES BENEFICIOS CON EMOJI</span>
+   Formato exacto por cada uno:
+   [EMOJI específico] [Título en 3 palabras]: [1 oración de 12 palabras exactas]
+   Los emojis deben ser específicos para el tipo de negocio.
 
-<span class="gr">4. TRES TESTIMONIOS realistas</span>
-   Nombre inventado + ciudad + texto de 2 oraciones muy creíble.
+<span class="gr">4. TRES TESTIMONIOS REALISTAS</span>
+   Para cada uno: Nombre creíble · Ciudad · Texto de 2-3 oraciones.
+   Menciona algo específico del producto estrella o del lugar.
+   Debe sonar como un cliente real — sin palabras de marketing.
 
-<span class="gr">5. DESCRIPCIÓN del producto estrella</span>
-   2-3 oraciones que hagan querer comprarlo ahora mismo.
+<span class="gr">5. DESCRIPCIÓN DEL PRODUCTO ESTRELLA</span>
+   3 oraciones que generen deseo inmediato.
+   Empieza con los sentidos — lo que se ve, huele, siente o saborea.
+   Termina con urgencia suave o razón para actuar hoy.
 
-<span class="gr">6. TEXTO del botón de WhatsApp</span>
-   Ejemplo: "¡Pedir ahora!" o "¡Reservar mi cita!"
+<span class="gr">6. TEXTO DEL BOTÓN DE WHATSAPP</span>
+   Máximo 4 palabras que activen la acción de inmediato.
+   Da 3 opciones distintas para elegir la mejor.
 
-<span class="cm">Responde organizado por secciones con etiquetas claras.
-Idioma: español. Tono: cercano y profesional.</span></pre></div>
+<span class="gr">7. DESCRIPCIÓN META (SEO)</span>
+   Exactamente 155 caracteres o menos. Nombre + ciudad + beneficio + CTA.
+   Ejemplo: "[Nombre] en [Ciudad] — [beneficio en 5 palabras]. [CTA de 3 palabras]."
+
+<span class="cm">Responde con etiquetas claras para cada sección numerada.
+Idioma: español. Tono: cercano, auténtico y directo.
+Evita palabras genéricas. Usa detalles específicos del negocio.</span></pre></div>
   </div>
 </div>
 
@@ -688,51 +732,71 @@ Idioma: español. Tono: cercano y profesional.</span></pre></div>
       <div class="p-sub">Paso 1: rellena los [corchetes] → dáselo a Gemini · Paso 2: copia la respuesta de Gemini → pégala en Stitch</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">Eres experto en UI/UX y diseño de apps web para negocios locales.
+    <div class="pbox"><pre><span class="or">Eres experto en UI/UX y diseño de aplicaciones web para negocios locales.
 Voy a darte los datos de un negocio y tú vas a generar el prompt
-listo para pegar en Google Stitch que diseñe TODAS las pantallas.</span>
+exacto y listo para pegar en Google Stitch que diseñe TODAS las pantallas.</span>
 
 <span class="hdr">DATOS DEL NEGOCIO:</span>
 - Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
-- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / etc.]</span>
+- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / veterinaria / etc.]</span>
 - Ciudad: <span class="yl">[CIUDAD]</span>
 - Producto estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
-- Colores: <span class="yl">[COLOR 1]</span> y <span class="yl">[COLOR 2]</span>
-- Estilo visual: <span class="yl">[moderno / elegante / colorido / rústico / minimalista]</span>
+- Color primario: <span class="yl">[COLOR 1 — ejemplo: deep orange #E85D04]</span>
+- Color secundario: <span class="yl">[COLOR 2 — ejemplo: warm cream #FFF8F0]</span>
+- Estilo visual: <span class="yl">[moderno / elegante / colorido / rústico / minimalista / oscuro]</span>
 
 <span class="hdr">INSTRUCCIÓN CRÍTICA:</span>
 <span class="or">No cambies la estructura del prompt de salida. Solo rellena los datos
-del negocio. El prompt de salida debe estar listo para pegarse en Stitch
-SIN ningún texto adicional. No pongas explicaciones ni comentarios.
-Solo el prompt en inglés.</span>
+del negocio en los campos correspondientes. El prompt de salida debe
+pegarse en Stitch SIN texto adicional tuyo. Sin explicaciones.
+Solo el prompt en inglés, listo para copiar y pegar.</span>
 
-<span class="hdr">GENERA EXACTAMENTE ESTE PROMPT:</span>
+<span class="hdr">GENERA EXACTAMENTE ESTE PROMPT (completando los datos):</span>
 ---
-<span class="cm">Create a complete web app design for [NOMBRE], a [TIPO] in [CIUDAD].
-Color palette: [COLORES]. Visual style: [ESTILO]. Language: Spanish.
-Generate exactly 8 screens in 2 groups:</span>
+<span class="cm">Create a complete professional web app design for [NOMBRE], a [TIPO]
+located in [CIUDAD]. All interface text must be in Spanish.
+Color palette — Primary: [COLOR 1], Accent: [COLOR 2].
+Visual style: [ESTILO]. Border radius: 12px. Mobile-first design.
+Minimum tap target size: 48px. Generate exactly 8 screens in 2 groups.</span>
 
-<span class="gr">GROUP A — USER SCREENS (5 screens):</span>
-Screen 1 — Home: hero video placeholder + headline + subtitle + WhatsApp button.
-  Below: 3 benefit cards with emoji for [TIPO].
-Screen 2 — Products: grid of [PRODUCTO ESTRELLA] cards with photo, name,
-  description, price. Category tabs at top.
-Screen 3 — Product Detail: large photo, name, price, WhatsApp button, 2 reviews.
-Screen 4 — Contact: Google Maps placeholder, address in [CIUDAD], Instagram link.
-Screen 5 — Order Form: name, product dropdown, quantity, notes field.
-  Large green "Enviar por WhatsApp" button. Minimal layout.
+<span class="gr">GROUP A — PUBLIC WEBSITE (5 screens):</span>
+Screen 1 — Home: full-width hero with dark overlay, video placeholder area,
+  bold headline "[HEADLINE DEL NEGOCIO]", subtitle, large green WhatsApp CTA
+  button with icon. Below hero: 3 benefit cards with emoji relevant to [TIPO].
+  Featured product section: photo of [PRODUCTO ESTRELLA], price, description,
+  WhatsApp placeholder button. Section of 3 testimonial cards with stars.
+  Footer with business name, [CIUDAD], Instagram icon, WhatsApp icon.
+Screen 2 — Products catalog: page title "Nuestros productos", category filter
+  tabs at top. Product grid: 2 columns mobile / 3 columns desktop.
+  Each card: photo, name, price badge in [COLOR 1], WhatsApp button.
+Screen 3 — Product detail: large hero photo, product name (h1), price in
+  [COLOR 1], full description, WhatsApp placeholder CTA button. Below:
+  2 review cards with name, stars (5/5), comment about [PRODUCTO ESTRELLA].
+Screen 4 — Contact: business name, full address in [CIUDAD], Google Maps
+  placeholder (static image), phone number placeholder, hours of operation.
+  Two large buttons: WhatsApp (green) and Instagram (gradient).
+Screen 5 — Order form: clean minimal layout, title "Hacer un pedido".
+  Fields: full name, product selector dropdown, quantity stepper, special
+  notes textarea. Large green "Enviar pedido por WhatsApp" button at bottom.
 
-<span class="gr">GROUP B — ADMIN SCREENS (3 screens):</span>
-Screen 6 — Admin Login: email + password. Title "Panel Admin — [NOMBRE]".
-Screen 7 — Admin Dashboard: 4 stat cards (pedidos, productos, mensajes, ingresos).
-  Recent orders table. Left sidebar navigation.
-Screen 8 — Product Manager: product list with photo, name, price, active toggle,
-  Edit and Delete buttons. "+ Agregar Producto" button.
-  Modal form: photo upload, name, description, price, category, visibility toggle.
+<span class="gr">GROUP B — ADMIN PANEL (3 screens):</span>
+Screen 6 — Login: centered card, logo placeholder, title "Panel Admin — [NOMBRE]",
+  email field, password field, "Iniciar sesión" primary button in [COLOR 1].
+Screen 7 — Dashboard: left sidebar on desktop with links: Dashboard, Productos,
+  Pedidos, Configuración, and red Cerrar sesión at bottom. Main area: 4 stat
+  cards (productos activos, pedidos hoy, mensajes nuevos, ingresos del mes).
+  Recent orders table: client name, product, date, status badge
+  (Pendiente=yellow, Confirmado=blue, Entregado=green).
+Screen 8 — Product manager: header with title and "[COLOR 1] + Agregar Producto"
+  button. Products table: thumbnail, name, category, price, active toggle switch,
+  Editar (outline) and Eliminar (red) buttons per row. On click "+ Agregar":
+  modal overlay with photo upload zone, name, description, price, category,
+  visibility toggle. All labels in Spanish.
 
-<span class="bl">DESIGN RULES:</span>
-Primary: [COLOR 1]. Accent: [COLOR 2]. 12px border radius. Mobile-first.
-Admin uses sidebar. All text in Spanish. Buttons minimum 48px height.
+<span class="bl">GLOBAL RULES:</span>
+Primary color [COLOR 1] on all main buttons and active states.
+All prices in local currency. All buttons minimum 48px height.
+Admin panel uses sidebar on desktop, bottom navigation on mobile.
 ---</pre></div>
   </div>
 </div>
@@ -763,65 +827,84 @@ Admin uses sidebar. All text in Spanish. Buttons minimum 48px height.
       <div class="p-sub">Copia las 2 partes juntas → dáselas a Gemini → sube 5 fotos de Stitch en Lovable → pega la respuesta de Gemini</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar Parte 1</button>
-    <div class="pbox"><pre><span class="or">Eres un experto en desarrollo web con IA. Voy a darte los datos de un negocio
-y tú vas a generar un prompt extenso en inglés y en formato de párrafos para
-pegar en Lovable.dev. El prompt debe ser tan completo que Lovable construya
-toda la aplicación correctamente en un solo mensaje, sin correcciones.</span>
+    <div class="pbox"><pre><span class="or">Eres experto en desarrollo de aplicaciones web. Voy a darte los datos de un
+negocio y tú debes generar un prompt extenso en INGLÉS en formato de párrafos
+para pegar en Lovable.dev. Debe ser tan completo y específico que Lovable
+construya toda la aplicación correctamente en un solo mensaje, sin ninguna
+corrección posterior. Cada detalle técnico importa — no omitas nada.</span>
 
 <span class="hdr">DATOS DEL NEGOCIO:</span>
 - Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
-- Tipo de negocio: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / etc.]</span>
+- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / veterinaria / etc.]</span>
 - Ciudad: <span class="yl">[CIUDAD]</span>
 - Producto estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
 - Precio del producto: <span class="yl">[PRECIO]</span>
-- Descripción: <span class="yl">[DESCRIPCIÓN DE 2 ORACIONES]</span>
-- Link del video MP4 en Cloudinary: <span class="yl">[URL COMPLETA DEL VIDEO]</span>
-- Color principal: <span class="yl">[COLOR 1]</span>  ·  Color secundario: <span class="yl">[COLOR 2]</span>
+- Descripción del producto: <span class="yl">[2 ORACIONES DESCRIPTIVAS]</span>
+- Headline de la página: <span class="yl">[HEADLINE DE 6 PALABRAS EN ESPAÑOL]</span>
+- Subtítulo: <span class="yl">[SUBTÍTULO DE 12 PALABRAS EN ESPAÑOL]</span>
+- Texto beneficio 1: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
+- Texto beneficio 2: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
+- Texto beneficio 3: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
+- Testimonio 1: <span class="yl">[NOMBRE · CIUDAD · TEXTO DEL TESTIMONIO]</span>
+- Testimonio 2: <span class="yl">[NOMBRE · CIUDAD · TEXTO DEL TESTIMONIO]</span>
+- Testimonio 3: <span class="yl">[NOMBRE · CIUDAD · TEXTO DEL TESTIMONIO]</span>
+- URL del video en Cloudinary: <span class="yl">[URL COMPLETA DEL VIDEO MP4]</span>
+- Color primario: <span class="yl">[COLOR 1 con código hex]</span>
+- Color secundario: <span class="yl">[COLOR 2 con código hex]</span>
 - Estilo visual: <span class="yl">[moderno / elegante / colorido / rústico / minimalista]</span>
 
 <span class="hdr">INSTRUCCIÓN CRÍTICA:</span>
 <span class="or">Genera el prompt en INGLÉS. Sin texto antes ni después. Sin explicaciones.
-Usa párrafos largos, no listas. Empieza directo con la descripción.
-No cambies la estructura, solo rellena los datos del negocio.</span>
+Escribe en párrafos largos y descriptivos, no en listas con bullet points.
+Empieza directamente con la descripción. No cambies la estructura técnica,
+solo sustituye los datos del negocio en cada campo correspondiente.</span>
 
-<span class="hdr">GENERA ESTE PROMPT (completando los datos):</span>
+<span class="hdr">GENERA ESTE PROMPT (sustituyendo todos los campos):</span>
 ---
-<span class="cm">I am uploading 5 screenshots of the complete UI design for this project and
-you must use them as strict visual reference throughout the entire application.
-Every screen must match the colors, typography, spacing, border radius, card
-styles and overall aesthetic in those screenshots. Do not deviate from them.
+<span class="cm">I am uploading 5 screenshots of the complete UI design for this project.
+You must use them as strict visual reference for the entire application.
+Every screen must match exactly the colors, typography, spacing, border
+radius, card styles and overall aesthetic shown in those screenshots.
+Do not deviate from the uploaded design under any circumstance.
 
 Build a complete, production-ready, fully functional web application for
-[NOMBRE], a [TIPO] located in [CIUDAD]. All interface text must be in Spanish.
-Tech stack: React with TypeScript, Tailwind CSS, Supabase for database and
-authentication, React Router for navigation. Primary color: [COLOR 1].
-Accent color: [COLOR 2]. Apply consistently across all screens.
+[NOMBRE], a [TIPO] in [CIUDAD]. All interface text in Spanish. Tech stack:
+React + TypeScript, Tailwind CSS, Supabase for database and authentication,
+React Router for all navigation. Define CSS custom properties at :root level:
+--color-primary: [COLOR 1]; --color-accent: [COLOR 2]; use them consistently
+across every component. The application has two distinct sections: a public
+website at routes / /productos /detalle/:id /contacto, and a protected admin
+panel at routes /admin/login /admin/dashboard /admin/productos /admin/pedidos.
 
-The application has two sections: a public website and a protected admin panel.
+For the public home page, build a full-screen hero section. The video element
+must have all four attributes together: autoplay muted loop playsinline —
+all four are required simultaneously for autoplay to work on iPhone and Android.
+Set the video to position:fixed, top:0, left:0, width:100vw, height:100vh,
+object-fit:cover, z-index:0 so it stays locked behind the entire page while
+the user scrolls. Place a dark overlay div with the same position:fixed and
+background:rgba(0,0,0,0.5), z-index:1. The hero content area must be
+position:relative, height:100vh, z-index:2, display:flex, align-items:center,
+justify-content:center. Every section below the hero — benefits, products,
+testimonials, footer — must have position:relative, z-index:2, and a solid
+background-color using var(--color-accent) or a dark/light variant, never
+transparent. This is critical: without solid backgrounds the fixed video
+will show through all sections on mobile when scrolling. Do not use
+background-attachment:fixed anywhere. Video source URL: [URL DEL VIDEO].
 
-For the public home page, open with a full-screen hero. Set the video element
-with attributes autoplay, muted, loop and playsinline — all four required for
-autoplay on iPhone and Android. Set the video to position fixed, top 0, left 0,
-width 100vw, height 100vh, object-fit cover, z-index 0 so it stays locked in
-the background while the user scrolls. Place a dark overlay div with same fixed
-position, background rgba(0,0,0,0.5), z-index 1. Hero content: position relative,
-height 100vh, z-index 2. Every section below hero must have position relative,
-z-index 2, solid background color to cover the fixed video as user scrolls.
-Do not use background-attachment fixed — use position fixed on the video.
-Video source URL: [URL DEL VIDEO].
-
-Over the hero overlay: headline "[HEADLINE 6 PALABRAS EN ESPAÑOL]", subtitle
-"[SUBTÍTULO 12 PALABRAS EN ESPAÑOL]", and a large green button
-"¡Contáctanos por WhatsApp!" with the WhatsApp icon — visual placeholder only,
-no link or phone number assigned. Below hero: 3 benefit cards with emoji for
-[TIPO]. Featured product: [PRODUCTO ESTRELLA], price [PRECIO],
-description "[DESCRIPCIÓN]", green WhatsApp placeholder button.
-Testimonials: 3 realistic reviews with name, city and stars.
-Footer: business name, city, Instagram placeholder, WhatsApp placeholder.
-All WhatsApp buttons are visual placeholders — green style, WhatsApp icon,
-no href or phone number anywhere in the app.</span>
+In the hero overlay display the headline "[HEADLINE]" in bold white text,
+subtitle "[SUBTÍTULO]" in lighter white, and a large green button labeled
+"¡Contáctanos por WhatsApp!" with the WhatsApp SVG icon — style it green
+(#25D366) but assign no href and no phone number, it is a visual placeholder.
+Below the hero: a benefits section with 3 cards showing [BENEFICIO 1],
+[BENEFICIO 2] and [BENEFICIO 3]. Featured product section: photo placeholder,
+name "[PRODUCTO ESTRELLA]", price "[PRECIO]", description "[DESCRIPCIÓN]",
+green WhatsApp placeholder button. Testimonials section: 3 cards with
+[TESTIMONIO 1], [TESTIMONIO 2], [TESTIMONIO 3] each with 5 yellow stars.
+Footer: [NOMBRE], [CIUDAD], Instagram icon placeholder, WhatsApp placeholder.
+Every WhatsApp button in the entire app must be green (#25D366) style with
+the WhatsApp icon but absolutely no href, no tel:, no phone number assigned.</span>
 ---
-<span class="cm">→ Continúa en Parte 2 — copiar ambas partes juntas y darlas a Gemini</span></pre></div>
+<span class="cm">→ Continúa en Parte 2 — copia ambas partes juntas y dáselas a Gemini</span></pre></div>
   </div>
 </div>
 
@@ -834,48 +917,82 @@ no href or phone number anywhere in the app.</span>
       <div class="p-sub">Parte 2 de 2 · Junto con la Parte 1 forma el mensaje completo que le das a Gemini</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar Parte 2</button>
-    <div class="pbox"><pre><span class="cm">Catalog page: grid of products from Supabase — photo, name, description, price,
-green WhatsApp placeholder button. Category filter tabs at top. Product detail
-page loads by ID: large photo, name, full description, price, WhatsApp placeholder
-button, 2 sample review cards. Contact page: business name, [CIUDAD], Google Maps
-placeholder image, WhatsApp placeholder button, Instagram placeholder button.
+    <div class="pbox"><pre><span class="cm">Build the products catalog page at /productos: fetch all active products from
+Supabase where active=true. Display a category filter tab bar at the top that
+filters products in real time without page reload. Product grid: 2 columns on
+mobile, 3-4 on desktop. Each card shows: product photo, name, price badge in
+var(--color-primary), short description, and a green WhatsApp placeholder button
+(#25D366, no href). Include a loading skeleton while data fetches and an empty
+state message "No hay productos disponibles" if the list is empty.
 
-For the admin section, login page at /admin/login: centered card with title
-"Panel Admin — [NOMBRE]", email field, password field, "Iniciar sesión" button
-using Supabase Auth. Wrong credentials show a Spanish error message. Successful
-login redirects to /admin/dashboard. Every admin route must be protected by a
-route guard — redirect to /admin/login if no active Supabase session. Do not
-show any admin content to unauthenticated users under any circumstance.
+Build the product detail page at /detalle/:id: fetch the single product by ID
+from Supabase. Show: large hero photo, product name as h1, price in
+var(--color-primary), full description, green WhatsApp placeholder CTA button.
+Below: 2 static review cards with realistic name, 5 stars, and comment text
+referencing [PRODUCTO ESTRELLA]. Back button to return to catalog.
 
-Admin dashboard at /admin/dashboard: left sidebar on desktop, bottom nav on
-mobile. Sidebar: links to Dashboard, Productos, Pedidos, Configuración and a
-"Cerrar sesión" button that calls Supabase signOut and redirects to /admin/login.
-Main area: 4 stat cards (active products from Supabase, orders today from
-Supabase, 2 static placeholders). Table of 5 most recent orders: client name,
-product, date, status badge (Pendiente yellow, Confirmado blue, Entregado green).
+Build the contact page at /contacto: business name [NOMBRE], address in
+[CIUDAD], a Google Maps static placeholder image, hours of operation as static
+text. Two large action buttons: WhatsApp (green #25D366, no href) and Instagram
+(gradient purple-orange, no href). All visual placeholders only.
 
-Product manager at /admin/productos: table of all products — photo thumbnail,
-name, price, category, active toggle, Editar and Eliminar buttons. "+ Agregar
-Producto" button at top right in [COLOR 1]. Clicking opens a modal with: photo
-upload to Supabase Storage returning a public URL, name field, description
-textarea, price field, category field, active toggle. Create inserts into
-Supabase products table and refreshes immediately. Edit updates the row.
-Delete shows Spanish confirmation dialog then removes from Supabase.
-All 4 CRUD operations must persist in real time after page refresh.
+For the admin panel: set up Supabase Auth with email and password. After
+connecting Supabase, enable Row Level Security and create permissive policies
+so authenticated users can perform all CRUD operations on products and orders.
 
-Supabase tables — products: id (uuid, gen_random_uuid()), name (text not null),
-description (text), price (numeric), category (text), photo_url (text), active
-(boolean default true), created_at (timestamp default now()). orders: id (uuid),
-client_name (text), product_id (uuid FK products.id), quantity (int default 1),
-notes (text), status (text default Pendiente), created_at (timestamp).
-Seed 3 sample products for [TIPO DE NEGOCIO] so the catalog is not empty.
+Login page at /admin/login: centered white card on dark background, business
+logo placeholder, title "Panel Admin — [NOMBRE]", email input, password input,
+"Iniciar sesión" button in var(--color-primary). On wrong credentials show
+Spanish inline error: "Email o contraseña incorrectos. Inténtalo de nuevo."
+On success redirect to /admin/dashboard. Use Supabase onAuthStateChange to
+persist the session across page refreshes — the user must stay logged in if
+they reload the page. Every route under /admin/* must have a route guard that
+checks the active Supabase session and redirects to /admin/login if none.
 
-All pages fully responsive at 375px minimum width. Tap targets minimum 48px.
-Video hero autoplays on mobile same as desktop. Admin sidebar collapses to
-bottom nav under 768px. Product grid: 2 columns mobile, 3-4 desktop.
-All modals scrollable on mobile. Use uploaded screenshots as design reference
-at every step. Build everything in one implementation without asking questions.
-The application must be complete and ready to publish when you finish.</span>
+Admin dashboard at /admin/dashboard: sticky left sidebar on desktop with links
+to Dashboard, Productos, Pedidos, Configuración, and a red "Cerrar sesión"
+button at bottom that calls supabase.auth.signOut() and redirects to
+/admin/login. On mobile the sidebar collapses to a bottom navigation bar.
+Main content: 4 stat cards — active products count (live from Supabase), orders
+today count (live), and 2 static placeholder stats. Below: table of 5 most
+recent orders with columns: client name, product name, date, quantity, and
+status badge — Pendiente (yellow), Confirmado (blue), Entregado (green).
+
+Product manager at /admin/productos: header row with "Gestión de Productos"
+title and a "+ Agregar Producto" button in var(--color-primary). Products table
+with columns: photo thumbnail (50×50px), name, category, price, active toggle
+switch, and action buttons Editar (outline style) and Eliminar (red). The active
+toggle calls Supabase immediately on change. Clicking "+ Agregar Producto" or
+Editar opens a centered modal with: photo upload input that shows an image
+preview before uploading, uploads to Supabase Storage on save, and saves the
+returned public URL to photo_url. Modal fields: name (required), description
+(textarea, 3 rows), price (number input), category (text), active toggle.
+Primary button "Guardar" in var(--color-primary), secondary "Cancelar". Create
+inserts a new row into Supabase products and refreshes list immediately. Edit
+updates the existing row and refreshes. Delete shows a Spanish confirmation
+dialog "¿Eliminar este producto?" with Cancelar and Eliminar buttons, then
+removes from Supabase and refreshes the list. All 4 CRUD operations must
+persist correctly after a full page refresh.
+
+Supabase schema — products: id uuid default gen_random_uuid() pk, name text
+not null, description text, price numeric, category text, photo_url text,
+active boolean default true, created_at timestamptz default now(). orders: id
+uuid default gen_random_uuid() pk, client_name text, product_id uuid
+references products(id), quantity int default 1, notes text, status text
+default 'Pendiente', created_at timestamptz default now(). Seed exactly 3
+sample products relevant to [TIPO DE NEGOCIO] so the public catalog is not
+empty on first visit.
+
+All pages fully responsive at 375px minimum width. All tap targets minimum
+48px height. Admin sidebar switches to bottom nav under 768px. All admin
+modals must scroll inside on small screens — no content cut off. Product grid:
+2 columns mobile, 3-4 columns desktop. Add toast notifications for every
+admin action: green "Guardado correctamente" on success, red "Error al guardar"
+on failure — toasts appear top-right and auto-dismiss after 3 seconds.
+
+Use the uploaded screenshots as the definitive design reference at every step.
+Build everything in one complete implementation. Do not ask clarifying questions.
+The application must be fully functional and ready to publish when done.</span>
 ---</pre></div>
   </div>
 </div>
@@ -889,44 +1006,53 @@ The application must be complete and ready to publish when you finish.</span>
       <div class="p-sub">Usar cuando los formularios del admin no funcionan · Copia y pega en Bolt o Lovable</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">The admin panel forms are not saving data. Fix everything:</span>
+    <div class="pbox"><pre><span class="or">The admin panel forms are not saving data correctly. Fix everything completely.</span>
 
-<span class="hdr">1. CHECK SUPABASE CONNECTION</span>
-   Verify Supabase URL and anon key are properly connected.
-   Show me the environment variables I need to set.
+<span class="hdr">STEP 1 — VERIFY SUPABASE CONNECTION</span>
+Check that SUPABASE_URL and SUPABASE_ANON_KEY are set in the project
+environment variables. Add a console.log at app startup to confirm the
+Supabase client initializes correctly. If not connected, tell me exactly
+which variables I need to set and where to find them in Supabase dashboard.
 
-<span class="hdr">2. CREATE ALL TABLES if they don't exist:</span>
+<span class="hdr">STEP 2 — FIX ROW LEVEL SECURITY (most common cause)</span>
+Supabase RLS might be blocking all writes. Run these SQL commands in
+Supabase SQL Editor to allow full access during development:
+<span class="bl">ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "allow_all" ON products FOR ALL USING (true) WITH CHECK (true);
+ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "allow_all" ON orders FOR ALL USING (true) WITH CHECK (true);</span>
+
+<span class="hdr">STEP 3 — CREATE TABLES if they don't exist:</span>
 
 <span class="bl">products:</span>
-  id (uuid, primary key, default gen_random_uuid()),
+  id (uuid default gen_random_uuid() primary key),
   name (text not null), description (text),
   price (numeric), category (text),
-  image_url (text), stock (integer default 0),
-  visible (boolean default true),
+  photo_url (text), active (boolean default true),
   created_at (timestamp default now())
 
 <span class="bl">orders:</span>
-  id (uuid, primary key), customer_name (text),
-  email (text), phone (text), total (numeric),
-  status (text default 'pending'),
+  id (uuid default gen_random_uuid() primary key),
+  client_name (text), product_id (uuid references products(id)),
+  quantity (integer default 1), notes (text),
+  status (text default 'Pendiente'),
   created_at (timestamp default now())
 
-<span class="bl">order_items:</span>
-  id (uuid, primary key),
-  order_id (uuid references orders(id)),
-  product_id (uuid references products(id)),
-  quantity (integer), price (numeric)
+<span class="hdr">STEP 4 — FIX ALL CRUD OPERATIONS:</span>
+<span class="gr">✓</span> Add product → inserts into Supabase → appears immediately in list
+<span class="gr">✓</span> Edit product → updates row in Supabase → correct data after page refresh
+<span class="gr">✓</span> Delete product → removes from Supabase → disappears from list instantly
+<span class="gr">✓</span> Toggle active/inactive → updates boolean in Supabase in real time
+<span class="gr">✓</span> Products from admin appear immediately on the public /productos page
+<span class="gr">✓</span> Photo upload goes to Supabase Storage and saves the public URL
 
-<span class="hdr">3. FIX ALL CRUD:</span>
-<span class="gr">✓</span> Add product → saves → appears in list immediately
-<span class="gr">✓</span> Edit product → updates → persists after page refresh
-<span class="gr">✓</span> Delete product → removes from database
-<span class="gr">✓</span> Products from admin appear on public /productos page
+<span class="hdr">STEP 5 — ADD TOAST NOTIFICATIONS:</span>
+<span class="gr">✓</span> Green toast: "Guardado correctamente" — on every successful operation
+<span class="gr">✓</span> Red toast: "Error al guardar. Intenta de nuevo." — on any error
+<span class="gr">✓</span> Toasts appear top-right and disappear automatically after 3 seconds
 
-<span class="hdr">4. ADD TOAST NOTIFICATIONS:</span>
-<span class="gr">✓</span> Green toast on success · Red toast on error
-
-<span class="cm">Fix everything. Do not ask questions. Just fix it all at once.</span></pre></div>
+<span class="cm">Fix everything completely. Do not ask questions. Do not change the design.
+Show me what you changed when done.</span></pre></div>
   </div>
 </div>
 
@@ -1062,6 +1188,77 @@ let activeDay = 0;
 // Día 3: slides 23-29 (índices 22-28)
 const DAY = { 1:[0,12], 2:[13,21], 3:[22,28] };
 
+const origS1 = slides[1].innerHTML;
+const origS2 = slides[2].innerHTML;
+
+const DAY_HTML = {
+  1: {
+    s1: `<div class="tag to">Día 1 · Objetivos</div>
+<div class="st">¿Qué vas a lograr hoy?</div>
+<div class="ss">Al terminar tienes clientes identificados y el video cinematográfico listo</div>
+<div class="cards c2">
+<div class="card"><div class="c-ico">🤖</div><div class="c-ttl">Investigar con ChatGPT</div><div class="c-bdy">Usar ChatGPT con búsqueda web para encontrar 10 negocios en tu ciudad con 4+ estrellas pero sin página web propia.</div></div>
+<div class="card"><div class="c-ico">🗺</div><div class="c-ttl">Verificar en Google Maps</div><div class="c-bdy">Confirmar los prospectos de ChatGPT, elegir el mejor negocio y anotar su producto o servicio estrella.</div></div>
+<div class="card"><div class="c-ico">⭐</div><div class="c-ttl">Encontrar el producto estrella</div><div class="c-bdy">Revisar Instagram y las reseñas de Google para identificar el producto que más aman los clientes del negocio.</div></div>
+<div class="card"><div class="c-ico">🎬</div><div class="c-ttl">Crear el video con IA</div><div class="c-bdy">Generar el video cinematográfico del producto estrella en Google Flow y subirlo a Cloudinary para obtener la URL.</div></div>
+</div>`,
+    s2: `<div class="tag tb">Día 1 · Agenda</div>
+<div class="st">Las 2.5 horas de hoy</div>
+<div class="ss">Cada bloque termina con algo concreto en tu mano</div>
+<div class="tl">
+<div class="tl-row"><div class="tl-l"><div class="tl-t">0:00</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Intro · 30 min</div><div class="tl-name">Crear cuentas y configurar las herramientas</div><div class="tl-tools">ChatGPT · Google Flow · Cloudinary</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">0:30</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque A · 45 min</div><div class="tl-name">Encontrar 10 prospectos con ChatGPT y verificarlos en Maps</div><div class="tl-tools">ChatGPT Deep Research · Google Maps</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">1:15</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque B · 30 min</div><div class="tl-name">Elegir el negocio y encontrar su producto estrella</div><div class="tl-tools">Instagram · Google Maps reseñas</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">1:45</div></div><div class="tl-box"><div class="tl-lbl">Bloque C · 45 min</div><div class="tl-name">Crear el video con Flow y subir a Cloudinary — URL lista</div><div class="tl-tools">Google Flow · Cloudinary</div></div></div>
+</div>`
+  },
+  2: {
+    s1: `<div class="tag tb">Día 2 · Objetivos</div>
+<div class="st">¿Qué vas a lograr hoy?</div>
+<div class="ss">Al terminar tienes el diseño completo y la app funcional construida en Lovable</div>
+<div class="cards c2">
+<div class="card"><div class="c-ico">✨</div><div class="c-ttl">Generar contenido con Gemini</div><div class="c-bdy">Crear headline, subtítulo, beneficios y testimonios específicos para el negocio, listos para pegar en la página web.</div></div>
+<div class="card"><div class="c-ico">🎨</div><div class="c-ttl">Diseñar la interfaz en Stitch</div><div class="c-bdy">Usar Gemini para preparar el prompt de Stitch y generar las 8 pantallas del proyecto con el estilo del negocio.</div></div>
+<div class="card"><div class="c-ico">⚡</div><div class="c-ttl">Construir la app en Lovable</div><div class="c-bdy">Dar el Prompt Maestro a Lovable con las 5 fotos de Stitch. Toda la app se construye en un solo mensaje.</div></div>
+<div class="card"><div class="c-ico">🔗</div><div class="c-ttl">Conectar Supabase</div><div class="c-bdy">Conectar la base de datos para que el panel de admin guarde, edite y elimine productos y pedidos en tiempo real.</div></div>
+</div>`,
+    s2: `<div class="tag tb">Día 2 · Agenda</div>
+<div class="st">Las 2.5 horas de hoy</div>
+<div class="ss">Del diseño visual a la app funcional en una sola sesión</div>
+<div class="tl">
+<div class="tl-row"><div class="tl-l"><div class="tl-t">0:00</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque A · 30 min</div><div class="tl-name">Generar todos los textos y contenido con Gemini</div><div class="tl-tools">Google Gemini · Prompt de contenido</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">0:30</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque B · 30 min</div><div class="tl-name">Diseñar las 8 pantallas en Stitch vía Gemini</div><div class="tl-tools">Gemini → Google Stitch</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">1:00</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque C · 60 min</div><div class="tl-name">Construir la app completa en Lovable con el Prompt Maestro</div><div class="tl-tools">Gemini → Lovable.dev · Supabase</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">2:00</div></div><div class="tl-box"><div class="tl-lbl">Bloque D · 30 min</div><div class="tl-name">Probar el admin y corregir errores con prompts de rescate</div><div class="tl-tools">Fix CRUD · Fix Video · Supabase</div></div></div>
+</div>`
+  },
+  3: {
+    s1: `<div class="tag tg">Día 3 · Objetivos</div>
+<div class="st">¿Qué vas a lograr hoy?</div>
+<div class="ss">Al terminar tienes la página online y tu primera propuesta de venta lista</div>
+<div class="cards c2">
+<div class="card"><div class="c-ico">🔧</div><div class="c-ttl">Resolver errores pendientes</div><div class="c-bdy">Usar los prompts de rescate para corregir problemas con el CRUD del admin o el video del hero que no hace autoplay.</div></div>
+<div class="card"><div class="c-ico">🚀</div><div class="c-ttl">Publicar la página online</div><div class="c-bdy">Hacer clic en "Publish" en Lovable o Bolt y obtener una URL pública real que funciona en cualquier celular.</div></div>
+<div class="card"><div class="c-ico">💬</div><div class="c-ttl">Hacer el pitch perfecto</div><div class="c-bdy">Presentar la página terminada al negocio. Llegar con algo real construido, no promesas. Cerrar el primer trato.</div></div>
+<div class="card"><div class="c-ico">💰</div><div class="c-ttl">Definir precios y modelo</div><div class="c-bdy">Saber cuánto cobrar por la página y el mantenimiento mensual. Con 5 clientes ya tienes $300/mes garantizados.</div></div>
+</div>`,
+    s2: `<div class="tag tb">Día 3 · Agenda</div>
+<div class="st">Las 2.5 horas de hoy</div>
+<div class="ss">De la app terminada al primer cliente pagando</div>
+<div class="tl">
+<div class="tl-row"><div class="tl-l"><div class="tl-t">0:00</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque A · 30 min</div><div class="tl-name">Resolver errores: CRUD, video, conexiones pendientes</div><div class="tl-tools">Fix CRUD · Fix Video</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">0:30</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque B · 20 min</div><div class="tl-name">Publicar la app con URL pública en Lovable o Bolt</div><div class="tl-tools">Lovable Publish · GitHub</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">0:50</div><div class="tl-ln"></div></div><div class="tl-box"><div class="tl-lbl">Bloque C · 40 min</div><div class="tl-name">Ensayar el pitch al negocio — roleplay en clase</div><div class="tl-tools">Demo en vivo · WhatsApp</div></div></div>
+<div class="tl-row"><div class="tl-l"><div class="tl-t">1:30</div></div><div class="tl-box"><div class="tl-lbl">Bloque D · 60 min</div><div class="tl-name">Definir precios, estrategia y próximos pasos</div><div class="tl-tools">Propuesta · Mantenimiento mensual</div></div></div>
+</div>`
+  }
+};
+
+function applyDayContent(d) {
+  slides[1].innerHTML = DAY_HTML[d].s1;
+  slides[2].innerHTML = DAY_HTML[d].s2;
+}
+
 function setMode(m) {
   mode = m;
   document.getElementById('modeOv').style.display = 'none';
@@ -1069,6 +1266,8 @@ function setMode(m) {
     document.getElementById('dayOv').style.display = 'flex';
   } else {
     activeDay = 0;
+    slides[1].innerHTML = origS1;
+    slides[2].innerHTML = origS2;
     document.getElementById('homeBtn').style.display = 'none';
     document.getElementById('dayBadge').style.display = 'none';
     document.body.classList.remove('mode3');
@@ -1078,6 +1277,7 @@ function setMode(m) {
 
 function setDay(d) {
   activeDay = d;
+  applyDayContent(d);
   document.getElementById('dayOv').style.display = 'none';
   document.getElementById('homeBtn').style.display = 'flex';
   const badge = document.getElementById('dayBadge');
