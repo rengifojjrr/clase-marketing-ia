@@ -898,11 +898,31 @@ transparent. This is critical: without solid backgrounds the fixed video
 will show through all sections on mobile when scrolling. Do not use
 background-attachment:fixed anywhere. Video source URL: [URL DEL VIDEO].
 
-After the page loads add this JavaScript: const heroVideo = document.querySelector('video');
-const ioVideo = new IntersectionObserver(([e]) => { if (e.isIntersecting) { heroVideo?.play().catch(()=>{}); } else { heroVideo?.pause(); } }, { threshold: 0.1 });
-if (heroVideo) ioVideo.observe(heroVideo);
-document.addEventListener('visibilitychange', () => { if (document.hidden) { heroVideo?.pause(); } else { heroVideo?.play().catch(()=>{}); } });
-This ensures the video restarts whenever it scrolls back into view and resumes when the tab regains focus.
+Implement scroll-driven video scrubbing for the hero. Structure: create a wrapper div
+with class "hero-scroll-wrapper" and height of 400vh (this is the scroll range that
+controls the video). Inside it place a div with class "hero-sticky" styled as
+position:sticky, top:0, height:100vh, overflow:hidden. The video and overlay go
+inside hero-sticky. The video must NOT have autoplay — it is controlled entirely
+by scroll. After the page loads add this JavaScript:
+
+const video = document.querySelector('.hero-sticky video');
+const wrapper = document.querySelector('.hero-scroll-wrapper');
+if (video && wrapper) {
+  video.pause();
+  video.preload = 'auto';
+  const scrub = () => {
+    const rect = wrapper.getBoundingClientRect();
+    const scrollable = wrapper.offsetHeight - window.innerHeight;
+    const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
+    if (video.duration) video.currentTime = progress * video.duration;
+  };
+  video.addEventListener('loadedmetadata', scrub);
+  window.addEventListener('scroll', scrub, { passive: true });
+}
+
+This makes the video frame advance as the user scrolls down and go backward as they
+scroll up, at the exact speed of their scroll gesture. The 400vh wrapper height
+controls how long the scroll zone lasts — increase to 600vh for a longer effect.
 
 CRITICAL IMAGE RULE — never place product photos, character images, mascots, or illustrations as the background of any section that contains text. Product images must always be in their own layout context: a dedicated image column in a two-column grid, a product card in a grid, or a standalone image section with no overlapping text. Text sections must always have a solid or semi-opaque surface behind them. A common mistake is placing a product PNG or illustration as a full-width background and then putting the headline on top — this makes text illegible and looks unprofessional. Instead, use a two-column layout: text on the left half, product image on the right half, both on a solid background color.
 
