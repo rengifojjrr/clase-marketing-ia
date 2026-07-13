@@ -27,11 +27,11 @@ body {
 .dot.on { background:#f97316; width:20px; border-radius:4px; }
 
 /* ── SLIDES BASE (mobile-first) ─────────── */
-.slide { position:absolute; inset:0; display:none; padding:20px 18px 100px; overflow-y:auto; overflow-x:hidden; }
+.slide { position:absolute; inset:0; display:none; padding:20px 18px 140px; overflow-y:auto; overflow-x:hidden; }
 .slide.active { display:flex; flex-direction:column; }
 .slide::after {
-  content:''; position:fixed; bottom:0; left:0; right:0; height:90px;
-  background:linear-gradient(to top,#0a0a0a 50%,transparent);
+  content:''; position:fixed; bottom:0; left:0; right:0; height:72px;
+  background:linear-gradient(to top,#0a0a0a 60%,transparent);
   pointer-events:none; z-index:100;
 }
 
@@ -227,8 +227,8 @@ body {
   .nav      { bottom:22px; gap:14px; }
   .nb       { width:46px; height:46px; }
   .dots     { display:flex; }
-  .slide    { padding:52px 72px 130px; }
-  .slide::after { height:110px; }
+  .slide    { padding:52px 72px 160px; }
+  .slide::after { height:90px; }
   .hint     { display:block; position:fixed; bottom:22px; right:20px; font-size:13px; color:rgba(255,255,255,.2); }
 
   .tag { font-size:14px; padding:6px 16px; margin-bottom:20px; }
