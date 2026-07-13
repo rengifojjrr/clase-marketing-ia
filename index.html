@@ -9,35 +9,35 @@
 * { box-sizing:border-box; margin:0; padding:0; }
 body {
   font-family:system-ui,-apple-system,sans-serif;
-  background:#0a0a0a; color:#fff;
+  background:#0f0a1e; color:#fff;
   height:100vh; overflow:hidden;
   user-select:none; -webkit-user-select:none;
 }
 
 /* ── BARRA PROGRESO ─────────────────────── */
-.progress { position:fixed; top:0; left:0; height:3px; background:#f97316; z-index:300; transition:width .35s; }
+.progress { position:fixed; top:0; left:0; height:3px; background:#a855f7; z-index:300; transition:width .35s; }
 .counter  { position:fixed; top:12px; right:14px; font-size:14px; font-weight:700; color:rgba(255,255,255,.4); z-index:300; }
 
 /* ── NAVEGACIÓN ─────────────────────────── */
 .nav { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; z-index:300; }
 .nb  { width:44px; height:44px; border-radius:50%; border:2px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07); color:#fff; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all .2s; -webkit-tap-highlight-color:transparent; }
-.nb:hover, .nb:active { background:#f97316; border-color:#f97316; }
+.nb:hover, .nb:active { background:#a855f7; border-color:#a855f7; }
 .dots { display:none; gap:6px; }
 .dot  { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.2); cursor:pointer; transition:all .25s; }
-.dot.on { background:#f97316; width:20px; border-radius:4px; }
+.dot.on { background:#a855f7; width:20px; border-radius:4px; }
 
 /* ── SLIDES BASE (mobile-first) ─────────── */
 .slide { position:absolute; inset:0; display:none; padding:20px 18px 140px; overflow-y:auto; overflow-x:hidden; }
 .slide.active { display:flex; flex-direction:column; }
 .slide::after {
   content:''; position:fixed; bottom:0; left:0; right:0; height:72px;
-  background:linear-gradient(to top,#0a0a0a 60%,transparent);
+  background:linear-gradient(to top,#0f0a1e 60%,transparent);
   pointer-events:none; z-index:100;
 }
 
 /* ── TAGS ───────────────────────────────── */
 .tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:5px 12px; border-radius:20px; margin-bottom:14px; }
-.to { background:rgba(249,115,22,.15); color:#f97316; border:1px solid rgba(249,115,22,.3); }
+.to { background:rgba(168,85,247,.15); color:#a855f7; border:1px solid rgba(168,85,247,.3); }
 .tb { background:rgba(59,130,246,.15);  color:#60a5fa; border:1px solid rgba(59,130,246,.3); }
 .tg { background:rgba(34,197,94,.15);   color:#4ade80; border:1px solid rgba(34,197,94,.3); }
 .tp { background:rgba(168,85,247,.15);  color:#c084fc; border:1px solid rgba(168,85,247,.3); }
@@ -45,16 +45,16 @@ body {
 
 /* ── SECCIÓN HEADER ─────────────────────── */
 .sec { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
-.sec-n    { font-size:80px;  font-weight:900; color:rgba(249,115,22,.09); line-height:1; }
+.sec-n    { font-size:80px;  font-weight:900; color:rgba(168,85,247,.09); line-height:1; }
 .sec-t    { font-size:36px;  font-weight:900; margin-bottom:10px; }
 .sec-s    { font-size:16px;  color:rgba(255,255,255,.5); }
-.sec-time { margin-top:20px; padding:8px 18px; background:rgba(249,115,22,.1); border:1.5px solid rgba(249,115,22,.3); border-radius:30px; font-size:15px; color:#f97316; font-weight:700; }
+.sec-time { margin-top:20px; padding:8px 18px; background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.3); border-radius:30px; font-size:15px; color:#a855f7; font-weight:700; }
 
 /* ── COVER ──────────────────────────────── */
 .cover   { flex:1; display:flex; flex-direction:column; justify-content:center; }
-.c-eye   { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#f97316; margin-bottom:14px; font-weight:700; line-height:1.5; }
+.c-eye   { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#a855f7; margin-bottom:14px; font-weight:700; line-height:1.5; }
 .c-title { font-size:32px; font-weight:900; line-height:1.1; margin-bottom:16px; word-break:break-word; }
-.c-title b { color:#f97316; }
+.c-title b { color:#a855f7; }
 .c-sub   { font-size:16px; color:rgba(255,255,255,.6); margin-bottom:24px; line-height:1.55; }
 .c-badges { display:flex; gap:8px; flex-wrap:wrap; }
 .badge   { font-size:13px; padding:7px 13px; border-radius:20px; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.65); }
@@ -75,26 +75,26 @@ body {
 /* ── STEPS ──────────────────────────────── */
 .steps { display:flex; flex-direction:column; gap:10px; }
 .step  { display:flex; gap:14px; align-items:flex-start; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:16px; }
-.s-n   { min-width:32px; width:32px; height:32px; border-radius:50%; background:#f97316; font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.s-n   { min-width:32px; width:32px; height:32px; border-radius:50%; background:#a855f7; font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .s-ttl { font-size:16px; font-weight:700; color:#fff; margin-bottom:5px; }
 .s-dsc { font-size:15px; color:rgba(255,255,255,.6); line-height:1.6; }
-.s-tip { display:inline-block; font-size:13px; margin-top:7px; padding:4px 10px; background:rgba(249,115,22,.1); border-radius:7px; color:#f97316; line-height:1.4; }
+.s-tip { display:inline-block; font-size:13px; margin-top:7px; padding:4px 10px; background:rgba(168,85,247,.1); border-radius:7px; color:#a855f7; line-height:1.4; }
 
 /* ── TOOLBOX ─────────────────────────────── */
-.tbox    { background:rgba(249,115,22,.07); border:1.5px solid rgba(249,115,22,.25); border-radius:14px; padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:10px; }
+.tbox    { background:rgba(168,85,247,.07); border:1.5px solid rgba(168,85,247,.25); border-radius:14px; padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:10px; }
 .tb-ico  { font-size:32px; line-height:1; }
 .tb-name { font-size:22px; font-weight:900; }
-.tb-url  { font-size:13px; color:#f97316; margin:3px 0 5px; }
+.tb-url  { font-size:13px; color:#a855f7; margin:3px 0 5px; }
 .tb-dsc  { font-size:15px; color:rgba(255,255,255,.65); line-height:1.6; }
 
 /* ── TIMELINE ────────────────────────────── */
 .tl     { display:flex; flex-direction:column; gap:6px; }
 .tl-row { display:flex; gap:14px; }
 .tl-l   { min-width:52px; display:flex; flex-direction:column; align-items:center; }
-.tl-t   { font-size:13px; font-weight:700; color:#f97316; white-space:nowrap; }
-.tl-ln  { flex:1; width:2px; background:rgba(249,115,22,.2); margin:4px 0; }
+.tl-t   { font-size:13px; font-weight:700; color:#a855f7; white-space:nowrap; }
+.tl-ln  { flex:1; width:2px; background:rgba(168,85,247,.2); margin:4px 0; }
 .tl-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:10px; padding:12px 14px; flex:1; margin-bottom:8px; }
-.tl-lbl   { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#f97316; margin-bottom:4px; }
+.tl-lbl   { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#a855f7; margin-bottom:4px; }
 .tl-name  { font-size:17px; font-weight:700; }
 .tl-tools { font-size:13px; color:rgba(255,255,255,.4); margin-top:4px; }
 
@@ -103,9 +103,9 @@ body {
 .p-head  { margin-bottom:10px; flex-shrink:0; }
 .p-title { font-size:24px; font-weight:900; margin-bottom:4px; }
 .p-sub   { font-size:14px; color:rgba(255,255,255,.5); }
-.pbox    { background:#0f0f0f; border:1.5px solid rgba(255,255,255,.12); border-radius:14px; padding:16px 18px; overflow-y:auto; flex:1; }
+.pbox    { background:#0c0518; border:1.5px solid rgba(255,255,255,.12); border-radius:14px; padding:16px 18px; overflow-y:auto; flex:1; }
 .pbox pre { font-family:'SF Mono','Menlo','Courier New',monospace; font-size:11.5px; line-height:1.9; color:#e2e8f0; white-space:pre-wrap; word-wrap:break-word; }
-.or  { color:#fb923c; font-weight:700; }
+.or  { color:#c084fc; font-weight:700; }
 .gr  { color:#4ade80; }
 .bl  { color:#60a5fa; }
 .yl  { color:#fbbf24; font-weight:700; }
@@ -115,9 +115,9 @@ body {
 /* ── COPY BUTTON ─────────────────────────── */
 .copy-btn {
   align-self:flex-end;
-  background:rgba(249,115,22,.1);
-  border:1.5px solid rgba(249,115,22,.35);
-  color:#f97316;
+  background:rgba(168,85,247,.1);
+  border:1.5px solid rgba(168,85,247,.35);
+  color:#a855f7;
   padding:8px 18px;
   border-radius:20px;
   font-size:13px;
@@ -137,16 +137,16 @@ body {
 /* ── FLOW PROMPT BLOCKS ──────────────────── */
 .fpb { margin-bottom:12px; }
 .fpb-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-.fpb-label { font-size:11px; font-weight:700; color:#f97316; text-transform:uppercase; letter-spacing:.08em; }
+.fpb-label { font-size:11px; font-weight:700; color:#a855f7; text-transform:uppercase; letter-spacing:.08em; }
 .fpb-tip { font-size:11px; color:rgba(255,255,255,.3); font-style:italic; padding-top:4px; line-height:1.5; }
 .fpb-head .copy-btn { margin-bottom:0; align-self:auto; padding:5px 12px; font-size:11px; flex-shrink:0; }
-.fpb-formula { background:rgba(249,115,22,.06); border:1px solid rgba(249,115,22,.2); border-radius:10px; padding:12px 14px; margin-top:4px; }
+.fpb-formula { background:rgba(168,85,247,.06); border:1px solid rgba(168,85,247,.2); border-radius:10px; padding:12px 14px; margin-top:4px; }
 
 /* ── SELECTOR MODO / DÍA ─────────────────── */
 .ov {
   position:fixed; inset:0; z-index:500;
   display:flex; align-items:center; justify-content:center;
-  background:#0a0a0a; padding:28px 20px;
+  background:#0f0a1e; padding:28px 20px;
 }
 .ov-box { width:100%; max-width:540px; display:flex; flex-direction:column; align-items:center; gap:22px; text-align:center; }
 .ov-title { font-size:22px; font-weight:900; }
@@ -158,7 +158,7 @@ body {
   border-radius:16px; padding:22px 14px; cursor:pointer; transition:all .2s;
   -webkit-tap-highlight-color:transparent;
 }
-.mc:hover,.mc:active { border-color:rgba(249,115,22,.5); background:rgba(249,115,22,.08); }
+.mc:hover,.mc:active { border-color:rgba(168,85,247,.5); background:rgba(168,85,247,.08); }
 .mc-ico   { font-size:34px; margin-bottom:10px; }
 .mc-title { font-size:17px; font-weight:900; margin-bottom:6px; }
 .mc-desc  { font-size:12px; color:rgba(255,255,255,.45); line-height:1.55; }
@@ -170,8 +170,8 @@ body {
   display:flex; align-items:center; gap:14px; text-align:left;
   -webkit-tap-highlight-color:transparent;
 }
-.dc:hover,.dc:active { border-color:rgba(249,115,22,.4); background:rgba(249,115,22,.07); }
-.dc-n     { font-size:13px; font-weight:900; color:#f97316; min-width:36px; flex-shrink:0; }
+.dc:hover,.dc:active { border-color:rgba(168,85,247,.4); background:rgba(168,85,247,.07); }
+.dc-n     { font-size:13px; font-weight:900; color:#a855f7; min-width:36px; flex-shrink:0; }
 .dc-title { font-size:15px; font-weight:700; margin-bottom:3px; }
 .dc-desc  { font-size:12px; color:rgba(255,255,255,.4); line-height:1.4; }
 .ov-back  {
@@ -184,30 +184,30 @@ body {
 /* Botón home + badge día (modo 3 días) */
 .home-btn {
   position:fixed; top:10px; left:12px; z-index:400;
-  background:rgba(249,115,22,.12); border:1.5px solid rgba(249,115,22,.3);
-  color:#f97316; width:40px; height:40px; border-radius:50%;
+  background:rgba(168,85,247,.12); border:1.5px solid rgba(168,85,247,.3);
+  color:#a855f7; width:40px; height:40px; border-radius:50%;
   font-size:17px; cursor:pointer; display:none; align-items:center; justify-content:center;
   -webkit-tap-highlight-color:transparent; transition:all .2s;
 }
-.home-btn:hover { background:rgba(249,115,22,.25); }
+.home-btn:hover { background:rgba(168,85,247,.25); }
 .day-badge {
   position:fixed; top:13px; left:58px; z-index:400; display:none;
-  background:rgba(249,115,22,.12); border:1.5px solid rgba(249,115,22,.3);
-  color:#f97316; padding:5px 12px; border-radius:20px;
+  background:rgba(168,85,247,.12); border:1.5px solid rgba(168,85,247,.3);
+  color:#a855f7; padding:5px 12px; border-radius:20px;
   font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
 }
 
 /* ── WARN / HIGHLIGHT ────────────────────── */
-.warn-box { background:rgba(249,115,22,.08); border:1.5px solid rgba(249,115,22,.3); border-radius:12px; padding:14px 16px; font-size:14px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:16px; flex-shrink:0; }
-.warn-box strong { color:#f97316; }
-.hl { background:rgba(249,115,22,.08); border-left:4px solid #f97316; border-radius:0 10px 10px 0; padding:14px 16px; font-size:15px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:14px; }
+.warn-box { background:rgba(168,85,247,.08); border:1.5px solid rgba(168,85,247,.3); border-radius:12px; padding:14px 16px; font-size:14px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:16px; flex-shrink:0; }
+.warn-box strong { color:#a855f7; }
+.hl { background:rgba(168,85,247,.08); border-left:4px solid #a855f7; border-radius:0 10px 10px 0; padding:14px 16px; font-size:15px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:14px; }
 
 /* ── MISC ────────────────────────────────── */
 .two   { display:grid; grid-template-columns:1fr; gap:12px; }
 .prices{ display:grid; grid-template-columns:1fr; gap:12px; }
 .pc    { border-radius:14px; padding:22px 18px; text-align:center; }
 .pc.s  { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); }
-.pc.m  { background:rgba(249,115,22,.1); border:1.5px solid rgba(249,115,22,.35); }
+.pc.m  { background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.35); }
 .pc.p  { background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.35); }
 .pc-lbl  { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.5); margin-bottom:8px; }
 .pc-amt  { font-size:40px; font-weight:900; margin-bottom:8px; }
@@ -615,7 +615,7 @@ Incluye entre <span class="yl">10 y 15 negocios</span>.
 
     <div class="fpb-formula">
       <div class="fpb-label" style="margin-bottom:6px">📐 Fórmula universal</div>
-      <div style="font-size:12px;color:#f97316;font-weight:700;margin-bottom:6px">[TIPO DE TOMA] + [PRODUCTO] + [ILUMINACIÓN] + [AMBIENTE] + [ESTILO]</div>
+      <div style="font-size:12px;color:#a855f7;font-weight:700;margin-bottom:6px">[TIPO DE TOMA] + [PRODUCTO] + [ILUMINACIÓN] + [AMBIENTE] + [ESTILO]</div>
       <div class="fpb-tip" style="padding-top:0;margin-bottom:3px">Palabras que siempre mejoran: cinematográfico · cámara lenta · primer plano · 4K · hora dorada · luz dramática · desenfocado</div>
       <div class="fpb-tip" style="padding-top:0">⚡ Veo 3 genera audio ambiente automáticamente — el video lleva sonido real</div>
     </div>
@@ -632,7 +632,7 @@ Incluye entre <span class="yl">10 y 15 negocios</span>.
   <div class="steps">
     <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Crea cuenta gratis en cloudinary.com</div><div class="s-dsc">Registro con email o Google. Sin tarjeta de crédito. En 1 minuto estás dentro.</div></div></div>
     <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Sube el video MP4 de Google Flow</div><div class="s-dsc">Arrastra el archivo a la pantalla. El upload tarda segundos.</div></div></div>
-    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Copia la URL del video</div><div class="s-dsc">Click en el video → copia el link. Se ve así:<br><span style="color:#f97316;font-size:16px;font-family:monospace">res.cloudinary.com/tu-cuenta/video/upload/v123/video.mp4</span></div><div class="s-tip">💡 Guarda este link — lo pegarás en el Prompt Maestro de Bolt/Lovable</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Copia la URL del video</div><div class="s-dsc">Click en el video → copia el link. Se ve así:<br><span style="color:#a855f7;font-size:16px;font-family:monospace">res.cloudinary.com/tu-cuenta/video/upload/v123/video.mp4</span></div><div class="s-tip">💡 Guarda este link — lo pegarás en el Prompt Maestro de Bolt/Lovable</div></div></div>
   </div>
 </div>
 
@@ -819,7 +819,7 @@ Admin panel uses sidebar on desktop, bottom navigation on mobile.
   <div class="st">⚡ Bolt.new vs 💜 Lovable.dev</div>
   <div class="ss">Ambas construyen la misma app — Bolt es el principal, Lovable es el plan B</div>
   <div class="cards c2" style="margin-bottom:20px">
-    <div class="card" style="border-color:rgba(249,115,22,.3)"><div class="c-ico">⚡</div><div class="c-ttl">Bolt.new — Principal</div><div class="c-bdy">1 millón de tokens gratis por mes. Más rápido. Sube las 5 imágenes de Stitch primero. Publica en bolt.host gratis.</div><div class="c-url">bolt.new · 1M tokens/mes · 300K/día</div></div>
+    <div class="card" style="border-color:rgba(168,85,247,.3)"><div class="c-ico">⚡</div><div class="c-ttl">Bolt.new — Principal</div><div class="c-bdy">1 millón de tokens gratis por mes. Más rápido. Sube las 5 imágenes de Stitch primero. Publica en bolt.host gratis.</div><div class="c-url">bolt.new · 1M tokens/mes · 300K/día</div></div>
     <div class="card" style="border-color:rgba(168,85,247,.3)"><div class="c-ico">💜</div><div class="c-ttl">Lovable.dev — Plan B</div><div class="c-bdy">~5 mensajes gratis por día. Mejor integración con Supabase. Publica gratis en lovable.app con 1 clic.</div><div class="c-url">lovable.dev · ~5 mensajes/día</div></div>
   </div>
   <div class="warn-box">⚠️ <strong>Estrategia clave:</strong> Primero dale los datos a <strong>Gemini</strong> → Gemini genera el prompt perfecto → lo pegas en Lovable/Bolt con las 5 fotos de Stitch. Todo se construye en UN solo mensaje.</div>
@@ -1112,9 +1112,9 @@ those sections have transparent or missing background colors.
   <div class="st">🚀 Poner la página online</div>
   <div class="ss">En 5 minutos el sitio está en una URL pública que puedes enviar por WhatsApp</div>
   <div class="steps">
-    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Click en "Publish" dentro de Bolt o Lovable</div><div class="s-dsc">URL gratuita inmediata: <span style="color:#f97316">tunegocio.bolt.host</span> o <span style="color:#f97316">tunegocio.lovable.app</span> — funciona con HTTPS en segundos.</div></div></div>
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Click en "Publish" dentro de Bolt o Lovable</div><div class="s-dsc">URL gratuita inmediata: <span style="color:#a855f7">tunegocio.bolt.host</span> o <span style="color:#a855f7">tunegocio.lovable.app</span> — funciona con HTTPS en segundos.</div></div></div>
     <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Conectar a GitHub para cambios futuros</div><div class="s-dsc">Botón de GitHub → autoriza → repositorio creado automáticamente. Cada cambio que hagas en Bolt actualiza la página online sin repetir el proceso.</div><div class="s-tip">💡 Así cualquier ajuste futuro tarda segundos, no horas</div></div></div>
-    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Dominio propio — opcional (~$9/año)</div><div class="s-dsc">Comprar en porkbun.com → conectar en la configuración de Bolt/Lovable → el negocio tiene su propia <span style="color:#f97316">sunegocio.com</span>. Este es el servicio premium que cobras aparte.</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Dominio propio — opcional (~$9/año)</div><div class="s-dsc">Comprar en porkbun.com → conectar en la configuración de Bolt/Lovable → el negocio tiene su propia <span style="color:#a855f7">sunegocio.com</span>. Este es el servicio premium que cobras aparte.</div></div></div>
   </div>
 </div>
 
@@ -1143,7 +1143,7 @@ those sections have transparent or missing background colors.
   <div class="ss">Precios sugeridos para comenzar · Ajusta según tu mercado local</div>
   <div class="prices">
     <div class="pc s"><div class="pc-lbl">Básico</div><div class="pc-amt">$150</div><div class="pc-desc">Landing page sencilla<br>Sin panel de admin<br>URL gratuita<br><br>+ $30/mes mantenimiento</div></div>
-    <div class="pc m"><div class="pc-lbl" style="color:#f97316">Profesional</div><div class="pc-amt" style="color:#f97316">$350</div><div class="pc-desc">Landing + panel admin<br>Video con IA incluido<br>Dominio .com propio<br><br>+ $60/mes mantenimiento</div></div>
+    <div class="pc m"><div class="pc-lbl" style="color:#a855f7">Profesional</div><div class="pc-amt" style="color:#a855f7">$350</div><div class="pc-desc">Landing + panel admin<br>Video con IA incluido<br>Dominio .com propio<br><br>+ $60/mes mantenimiento</div></div>
     <div class="pc p"><div class="pc-lbl" style="color:#c084fc">Premium</div><div class="pc-amt" style="color:#c084fc">$600+</div><div class="pc-desc">E-commerce completo<br>Catálogo de productos<br>Videos e imágenes IA<br><br>+ $100/mes mantenimiento</div></div>
   </div>
   <div class="hl" style="margin-top:20px">💡 <strong>Fórmula:</strong> 5 clientes × $60/mes = <strong>$300/mes fijo</strong> · 10 clientes = <strong>$600/mes</strong> · 20 clientes = <strong>$1,200/mes</strong></div>
