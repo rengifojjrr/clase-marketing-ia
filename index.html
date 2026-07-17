@@ -1360,7 +1360,9 @@ function go(i) {
   let mn = 0, mx = N-1;
   if (mode === '3days' && activeDay) { mn = DAY[activeDay][0]; mx = DAY[activeDay][1]; }
   slides[cur].classList.remove('active');
-  cur = Math.max(mn, Math.min(mx, i));
+  if (i < mn) i = mx;
+  else if (i > mx) i = mn;
+  cur = i;
   slides[cur].classList.add('active');
   const total = mx - mn + 1;
   const pos   = cur - mn + 1;
