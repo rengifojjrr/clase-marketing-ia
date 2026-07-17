@@ -824,32 +824,23 @@ Sin preguntas. Sin explicaciones. Solo los 3 outputs etiquetados en orden.</span
 <span class="gr">7. META DESCRIPCIÓN SEO:</span> Máx. 155 caracteres. Nombre + ciudad + beneficio + CTA.
 
 <span class="hdr">━━━ OUTPUT 2 — PROMPT PARA STITCH (en inglés) ━━━</span>
-<span class="cm">Completa este prompt con los datos del negocio y el headline del Output 1.
-Sin texto antes ni después. Solo el prompt terminado, listo para copiar a Stitch:
+<span class="cm">Genera el prompt completo para Google Stitch. En inglés. Sin texto antes ni después.
+Sin preguntas al final. Un solo bloque listo para pegar directamente en Stitch.
 
-Create a complete professional web app design for [NOMBRE], a [TIPO] in [CIUDAD].
-All interface text in Spanish. Color palette: Primary [COLOR 1], Accent [COLOR 2].
-Style: [ESTILO]. Border radius: 12px. Mobile-first. Tap targets min 48px. 8 screens.
+Piensa en este negocio específico: [NOMBRE], un [TIPO] en [CIUDAD].
+Decide qué pantallas necesita realmente — no uses una estructura genérica para todos.
+Un restaurante no necesita las mismas pantallas que una barbería o una tienda de ropa.
+Sin panel de administración. Solo el sitio web público.
 
-GROUP A — PUBLIC WEBSITE (5 screens):
-Screen 1 — Home: full-width hero, dark overlay, video placeholder, bold headline
-"[HEADLINE DEL OUTPUT 1]", subtitle, green WhatsApp CTA (#25D366) with icon.
-Below hero: 3 benefit cards with emoji for [TIPO], featured product section
-with photo of [PRODUCTO ESTRELLA] + price + WhatsApp button, 3 testimonial cards,
-footer with business name, [CIUDAD], Instagram and WhatsApp icons.
-Screen 2 — Catalog: "Nuestros productos", category filter tabs, product grid
-2-col mobile / 3-col desktop. Card: photo, name, price in [COLOR 1], CTA button.
-Screen 3 — Product detail: large hero photo, name as h1, price in [COLOR 1],
-description, WhatsApp CTA. 2 review cards with 5 stars.
-Screen 4 — Contact: [NOMBRE], [CIUDAD], map placeholder, hours. WhatsApp + Instagram buttons.
-Screen 5 — Order form: name, product selector, quantity, notes, submit button.
-
-GROUP B — ADMIN PANEL (3 screens):
-Screen 6 — Login: centered card, "Panel Admin — [NOMBRE]", email, password, "Iniciar sesión".
-Screen 7 — Dashboard: sidebar (desktop) / bottom nav (mobile), 4 stat cards, orders table.
-Screen 8 — Products: table with photo, name, price, active toggle, edit/delete.
-Modal add/edit with photo upload. All labels in Spanish. Primary color [COLOR 1].
-Global: [COLOR 1] on all primary buttons. All prices in local currency.</span>
+El prompt que generes debe incluir:
+• Nombre exacto: [NOMBRE] · Tipo: [TIPO] · Ciudad: [CIUDAD]
+• Color primario: [COLOR 1] · Color secundario: [COLOR 2] · Estilo visual: [ESTILO]
+• Todo el texto de la UI en español · Border radius: 12px · Mobile-first · Tap targets min 48px
+• En la pantalla de inicio, el headline exacto: "[HEADLINE DEL OUTPUT 1]"
+• Producto/servicio destacado: [PRODUCTO ESTRELLA] con precio [PRECIO]
+• WhatsApp como único CTA en verde #25D366 — sin número de teléfono en ninguna pantalla
+• Para cada pantalla: nombre, layout, componentes visuales, textos en español
+• Estilos globales: fuentes, sombras, tarjetas, botones, espaciado entre secciones</span>
 
 <span class="hdr">━━━ OUTPUT 3 — PROMPT PARA GOOGLE AI STUDIO (en inglés) ━━━</span>
 <span class="cm">Completa este prompt con TODOS los datos y el contenido del Output 1.
@@ -936,78 +927,18 @@ Output only the complete HTML file starting with &lt;!DOCTYPE html&gt;. No expla
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
-      <div class="tag tb">Para Gemini → Stitch</div>
-      <div class="p-title">🎨 Prompt para diseñar en Stitch</div>
-      <div class="p-sub">Paso 1: rellena los [corchetes] → dáselo a Gemini · Paso 2: copia la respuesta de Gemini → pégala en Stitch</div>
+      <div class="tag tb">Bloque 2 · Tips</div>
+      <div class="p-title" style="font-size:clamp(18px,3.5vw,26px)">🎨 Si Stitch no genera lo que quieres</div>
+      <div class="p-sub">El OUTPUT 2 ya genera el prompt perfecto de Stitch · Estos tips son para ajustar el diseño si algo no quedó bien</div>
     </div>
-    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">Eres experto en UI/UX y diseño de aplicaciones web para negocios locales.
-Voy a darte los datos de un negocio y tú vas a generar el prompt
-exacto y listo para pegar en Google Stitch que diseñe TODAS las pantallas.</span>
-
-<span class="hdr">DATOS DEL NEGOCIO:</span>
-- Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
-- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / veterinaria / etc.]</span>
-- Ciudad: <span class="yl">[CIUDAD]</span>
-- Producto estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
-- Color primario: <span class="yl">[COLOR 1 — ejemplo: deep orange #E85D04]</span>
-- Color secundario: <span class="yl">[COLOR 2 — ejemplo: warm cream #FFF8F0]</span>
-- Estilo visual: <span class="yl">[moderno / elegante / colorido / rústico / minimalista / oscuro]</span>
-
-<span class="hdr">INSTRUCCIÓN CRÍTICA:</span>
-<span class="or">No cambies la estructura del prompt de salida. Solo rellena los datos
-del negocio en los campos correspondientes. El prompt de salida debe
-pegarse en Stitch SIN texto adicional tuyo. Sin explicaciones.
-Solo el prompt en inglés, listo para copiar y pegar.</span>
-
-<span class="hdr">GENERA EXACTAMENTE ESTE PROMPT (completando los datos):</span>
----
-<span class="cm">Create a complete professional web app design for [NOMBRE], a [TIPO]
-located in [CIUDAD]. All interface text must be in Spanish.
-Color palette — Primary: [COLOR 1], Accent: [COLOR 2].
-Visual style: [ESTILO]. Border radius: 12px. Mobile-first design.
-Minimum tap target size: 48px. Generate exactly 8 screens in 2 groups.</span>
-
-<span class="gr">GROUP A — PUBLIC WEBSITE (5 screens):</span>
-Screen 1 — Home: full-width hero with dark overlay, video placeholder area,
-  bold headline "[HEADLINE DEL NEGOCIO]", subtitle, large green WhatsApp CTA
-  button with icon. Below hero: 3 benefit cards with emoji relevant to [TIPO].
-  Featured product section: photo of [PRODUCTO ESTRELLA], price, description,
-  WhatsApp placeholder button. Section of 3 testimonial cards with stars.
-  Footer with business name, [CIUDAD], Instagram icon, WhatsApp icon.
-Screen 2 — Products catalog: page title "Nuestros productos", category filter
-  tabs at top. Product grid: 2 columns mobile / 3 columns desktop.
-  Each card: photo, name, price badge in [COLOR 1], WhatsApp button.
-Screen 3 — Product detail: large hero photo, product name (h1), price in
-  [COLOR 1], full description, WhatsApp placeholder CTA button. Below:
-  2 review cards with name, stars (5/5), comment about [PRODUCTO ESTRELLA].
-Screen 4 — Contact: business name, full address in [CIUDAD], Google Maps
-  placeholder (static image), phone number placeholder, hours of operation.
-  Two large buttons: WhatsApp (green) and Instagram (gradient).
-Screen 5 — Order form: clean minimal layout, title "Hacer un pedido".
-  Fields: full name, product selector dropdown, quantity stepper, special
-  notes textarea. Large green "Enviar pedido por WhatsApp" button at bottom.
-
-<span class="gr">GROUP B — ADMIN PANEL (3 screens):</span>
-Screen 6 — Login: centered card, logo placeholder, title "Panel Admin — [NOMBRE]",
-  email field, password field, "Iniciar sesión" primary button in [COLOR 1].
-Screen 7 — Dashboard: left sidebar on desktop with links: Dashboard, Productos,
-  Pedidos, Configuración, and red Cerrar sesión at bottom. Main area: 4 stat
-  cards (productos activos, pedidos hoy, mensajes nuevos, ingresos del mes).
-  Recent orders table: client name, product, date, status badge
-  (Pendiente=yellow, Confirmado=blue, Entregado=green).
-Screen 8 — Product manager: header with title and "[COLOR 1] + Agregar Producto"
-  button. Products table: thumbnail, name, category, price, active toggle switch,
-  Editar (outline) and Eliminar (red) buttons per row. On click "+ Agregar":
-  modal overlay with photo upload zone, name, description, price, category,
-  visibility toggle. All labels in Spanish.
-
-<span class="bl">GLOBAL RULES:</span>
-Primary color [COLOR 1] on all main buttons and active states.
-All prices in local currency. All buttons minimum 48px height.
-Admin panel uses sidebar on desktop, bottom navigation on mobile.
----</pre></div>
   </div>
+  <div class="cards c2" style="padding:0 18px 20px;gap:12px">
+    <div class="card"><div class="c-ico">🎨</div><div class="c-ttl">Los colores no son exactos</div><div class="c-bdy">Escribe esto en el mismo chat de Stitch:<br><br><span style="color:#a855f7;font-family:monospace;font-size:13px">Change all primary colors to exact hex [COLOR 1] and accent to [COLOR 2]. Apply consistently to buttons, headings, and highlights.</span></div></div>
+    <div class="card"><div class="c-ico">📐</div><div class="c-ttl">Faltan secciones o sobran</div><div class="c-bdy">Escribe en Stitch:<br><br><span style="color:#a855f7;font-family:monospace;font-size:13px">Remove the [SECCIÓN] screen. Add a [NUEVA SECCIÓN] screen with [DESCRIPCIÓN en inglés].</span></div></div>
+    <div class="card"><div class="c-ico">📱</div><div class="c-ttl">Se ve bien en desktop pero mal en móvil</div><div class="c-bdy">Escribe en Stitch:<br><br><span style="color:#a855f7;font-family:monospace;font-size:13px">Rebuild all screens mobile-first. Stack cards vertically at 375px. Minimum tap target 48px on all buttons.</span></div></div>
+    <div class="card"><div class="c-ico">✨</div><div class="c-ttl">El diseño no se ve profesional</div><div class="c-bdy">Escribe en Stitch:<br><br><span style="color:#a855f7;font-family:monospace;font-size:13px">Refine: add subtle card shadows (0 4px 16px rgba(0,0,0,0.08)), increase spacing between sections to 80px, consistent 12px border radius.</span></div></div>
+  </div>
+  <div class="warn-box" style="margin:0 18px 18px">💡 <strong>Tip clave:</strong> Stitch recuerda el contexto. No repitas los datos del negocio — describe solo el ajuste específico que quieres y lo aplica al diseño existente.
 </div>
 
 <!-- SLIDE 19 SECCIÓN 3 -->
