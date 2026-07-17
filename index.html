@@ -794,12 +794,12 @@ Incluye entre <span class="yl">10 y 15 negocios</span>.
     <div class="p-head">
       <div class="tag tb">Prompt Maestro · Gemini</div>
       <div class="p-title">✨ Un prompt — todo generado</div>
-      <div class="p-sub">Rellena los [corchetes] UNA sola vez → Gemini genera el contenido + el prompt de Stitch + el prompt de Google AI Studio</div>
+      <div class="p-sub">Rellena los [corchetes] UNA sola vez → Gemini genera el contenido de la página + el prompt de Stitch listo para usar</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt maestro</button>
     <div class="pbox"><pre><span class="or">Eres experto en copywriting, diseño UI/UX y desarrollo web para negocios locales.
-Con los datos de abajo generarás 3 outputs en una sola respuesta.
-Sin preguntas. Sin explicaciones. Solo los 3 outputs etiquetados en orden.</span>
+Con los datos de abajo generarás 2 outputs en una sola respuesta.
+Sin preguntas. Sin explicaciones. Solo los 2 outputs etiquetados en orden.</span>
 
 <span class="hdr">DATOS DEL NEGOCIO — rellena solo los [corchetes]:</span>
 - Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
@@ -823,89 +823,24 @@ Sin preguntas. Sin explicaciones. Solo los 3 outputs etiquetados en orden.</span
 <span class="gr">6. TEXTO BOTÓN WHATSAPP:</span> Máx. 4 palabras. Da 3 opciones para elegir.
 <span class="gr">7. META DESCRIPCIÓN SEO:</span> Máx. 155 caracteres. Nombre + ciudad + beneficio + CTA.
 
-<span class="hdr">━━━ OUTPUT 2 — PROMPT PARA STITCH (en inglés) ━━━</span>
-<span class="cm">Genera el prompt completo para Google Stitch. En inglés. Sin texto antes ni después.
+<span class="hdr">━━━ OUTPUT 2 — PROMPT PARA STITCH (en español) ━━━</span>
+<span class="cm">Genera el prompt completo para Google Stitch. En español. Sin texto antes ni después.
 Sin preguntas al final. Un solo bloque listo para pegar directamente en Stitch.
 
 Piensa en este negocio específico: [NOMBRE], un [TIPO] en [CIUDAD].
-Decide qué pantallas necesita realmente — no uses una estructura genérica para todos.
+Decide qué pantallas y secciones necesita realmente — no uses una plantilla genérica.
 Un restaurante no necesita las mismas pantallas que una barbería o una tienda de ropa.
-Sin panel de administración. Solo el sitio web público.
+Sin panel de administración. Solo el sitio web público que verán los clientes.
 
-El prompt que generes debe incluir:
-• Nombre exacto: [NOMBRE] · Tipo: [TIPO] · Ciudad: [CIUDAD]
-• Color primario: [COLOR 1] · Color secundario: [COLOR 2] · Estilo visual: [ESTILO]
-• Todo el texto de la UI en español · Border radius: 12px · Mobile-first · Tap targets min 48px
-• En la pantalla de inicio, el headline exacto: "[HEADLINE DEL OUTPUT 1]"
-• Producto/servicio destacado: [PRODUCTO ESTRELLA] con precio [PRECIO]
-• WhatsApp como único CTA en verde #25D366 — sin número de teléfono en ninguna pantalla
+El prompt que generes debe especificar:
+• Nombre: [NOMBRE] · Tipo de negocio: [TIPO] · Ciudad: [CIUDAD]
+• Color primario: [COLOR 1] · Color secundario: [COLOR 2] · Estilo: [ESTILO]
+• Todo el texto de la interfaz en español · Border radius: 12px · Mobile-first · Tap targets mínimo 48px
+• En la pantalla de inicio, usa exactamente este titular: "[HEADLINE DEL OUTPUT 1]"
+• Producto/servicio estrella: [PRODUCTO ESTRELLA] con precio [PRECIO]
+• WhatsApp como único botón de contacto en verde #25D366 — sin número de teléfono
 • Para cada pantalla: nombre, layout, componentes visuales, textos en español
-• Estilos globales: fuentes, sombras, tarjetas, botones, espaciado entre secciones</span>
-
-<span class="hdr">━━━ OUTPUT 3 — PROMPT PARA GOOGLE AI STUDIO (en inglés) ━━━</span>
-<span class="cm">Completa este prompt con TODOS los datos y el contenido del Output 1.
-Las capturas de Stitch se subirán a Google AI Studio junto con este prompt.
-Sin texto antes ni después. Listo para copiar a aistudio.google.com:
-
-You are a senior front-end developer. I am uploading screenshots of a complete
-web app design created in Google Stitch. Build a working website that matches
-these designs exactly — colors, typography, spacing, card styles, section order.
-
-Output one single HTML file with all CSS inside a &lt;style&gt; tag and all JavaScript
-inside a &lt;script&gt; tag at the end of the body. No external dependencies except
-Google Fonts via @import. The file must open in any browser with no build step.
-
-Build this website for [NOMBRE], a [TIPO] in [CIUDAD].
-All text in Spanish. CSS variables at :root: --color-primary:[COLOR 1]; --color-accent:[COLOR 2].
-Visual style: [ESTILO]. Border radius: 12px. Mobile-first layout.
-
-CRITICAL DESIGN RULES:
-Never place product photos or illustrations as backgrounds behind text.
-Images must be in their own column or card — text always on a solid surface.
-Every section below the hero must have a solid background color — never transparent.
-Match the uploaded Stitch screenshots exactly — do not add sections not shown there.
-
-HERO SECTION — scroll-driven video (implement exactly as written):
-Create a wrapper div class="hero-scroll-wrapper" with height:400vh.
-Inside it a sticky div class="hero-sticky" with position:sticky, top:0, height:100vh, overflow:hidden.
-Video inside hero-sticky: src="[URL DEL VIDEO]", muted, playsinline — NO autoplay attribute.
-Dark overlay: position:absolute, inset:0, background:rgba(0,0,0,0.5), z-index:1.
-Hero content: position:absolute, inset:0, z-index:2, display:flex, flex-direction:column,
-align-items:center, justify-content:center, text-align:center, padding:0 24px.
-Add this JavaScript (do not change it):
-const video=document.querySelector('.hero-sticky video');
-const wrapper=document.querySelector('.hero-scroll-wrapper');
-if(video&amp;&amp;wrapper){video.pause();video.preload='auto';
-const scrub=()=>{const rect=wrapper.getBoundingClientRect();
-const p=Math.max(0,Math.min(1,-rect.top/(wrapper.offsetHeight-window.innerHeight)));
-if(video.duration)video.currentTime=p*video.duration;};
-video.addEventListener('loadedmetadata',scrub);
-window.addEventListener('scroll',scrub,{passive:true});}
-
-Hero text: headline "[HEADLINE DEL OUTPUT 1]" in bold white, subtitle "[SUBTÍTULO DEL OUTPUT 1]"
-in white, green WhatsApp button #25D366 with WhatsApp SVG icon "[TEXTO BOTÓN DEL OUTPUT 1]"
-— no href, no phone number anywhere in the file.
-
-CONTENT — use exactly what Output 1 generated:
-Benefits: [BENEFICIO 1] · [BENEFICIO 2] · [BENEFICIO 3]
-Featured product: photo placeholder, [PRODUCTO ESTRELLA], [PRECIO], [DESCRIPCIÓN OUTPUT 1], green WhatsApp CTA.
-Testimonials: [TESTIMONIO 1] · [TESTIMONIO 2] · [TESTIMONIO 3] — 5 stars each.
-Footer: [NOMBRE], [CIUDAD], Instagram icon, WhatsApp icon — all placeholders, no hrefs.
-
-ADAPT SECTIONS TO THIS BUSINESS TYPE ([TIPO]):
-Build the sections that make sense for this specific business. Follow the uploaded
-screenshots — they are the source of truth. Common patterns for reference:
-Restaurante/Panadería → hero · platos del día · sobre nosotros · testimonios · horarios · CTA
-Barbería/Spa/Salón → hero · servicios con precios · galería · equipo · testimonios · CTA
-Tienda/Boutique → hero · productos destacados · sobre nosotros · testimonios · CTA
-Gimnasio → hero · planes y precios · clases · equipo · testimonios · CTA
-Veterinaria → hero · servicios · equipo · testimonios · contacto · CTA
-
-TECHNICAL REQUIREMENTS:
-Fully responsive at 375px and 1280px. Smooth scroll for anchors. Tap targets min 48px.
-Sticky top navigation with business name and anchor links (desktop only).
-All WhatsApp buttons: green #25D366, WhatsApp icon (SVG inline), no href, no phone number.
-Output only the complete HTML file starting with &lt;!DOCTYPE html&gt;. No explanation text.</span></pre></div>
+• Estilos globales: tipografía, sombras en tarjetas, botones, espaciado entre secciones</span></pre></div>
   </div>
 </div>
 
@@ -917,28 +852,59 @@ Output only the complete HTML file starting with &lt;!DOCTYPE html&gt;. No expla
     <div><div class="tb-name">Google Stitch</div><div class="tb-url">stitch.withgoogle.com · Gratis · 350 diseños/mes</div><div class="tb-dsc">Diseña la interfaz de tu página describiendo lo que quieres en palabras. Genera el código visual completo. Las capturas del diseño se usan como referencia en Google AI Studio.</div></div>
   </div>
   <div class="steps">
-    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Copia el OUTPUT 2 de la respuesta de Gemini</div><div class="s-dsc">El Prompt Maestro ya le pidió a Gemini que generara el prompt de Stitch. Búscalo en la respuesta bajo "OUTPUT 2 — PROMPT PARA STITCH".</div><div class="s-tip">💡 Ya viene con tu nombre, colores y headline — no tienes que rellenar nada más</div></div></div>
-    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Pega el Output 2 en Stitch</div><div class="s-dsc">Abre stitch.withgoogle.com → pega el prompt en el chat → Stitch genera las 8 pantallas del proyecto completo.</div></div></div>
-    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Toma screenshots de las mejores pantallas</div><div class="s-dsc">Esas imágenes son las que subirás a Google AI Studio junto con el Output 3 de Gemini como referencia visual del diseño.</div><div class="s-tip">💡 AI Studio lee las imágenes y construye el HTML replicando exactamente el estilo de Stitch</div></div></div>
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Copia el OUTPUT 2 de la respuesta de Gemini</div><div class="s-dsc">El Prompt Maestro ya le pidió a Gemini el prompt de Stitch. Búscalo en la respuesta bajo "OUTPUT 2 — PROMPT PARA STITCH".</div><div class="s-tip">💡 Ya viene con tu nombre, colores y titular — no tienes que rellenar nada más</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Pega el OUTPUT 2 en Stitch y ajusta el diseño</div><div class="s-dsc">Abre stitch.withgoogle.com → pega el prompt → Stitch genera todas las pantallas. Si algo no quedó bien, ajústalo en el mismo chat (la siguiente slide tiene tips).</div><div class="s-tip">💡 Stitch recuerda todos los datos del negocio durante toda la conversación</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Genera el prompt de AI Studio desde el mismo chat de Stitch</div><div class="s-dsc">Cuando el diseño esté listo, pega el <strong style="color:#a855f7">Prompt de Transición</strong> (siguiente slide) en el chat de Stitch. Gemini tiene todos los datos y genera el prompt de AI Studio auto-rellenado.</div><div class="s-tip">💡 Solo necesitas pegar la URL del video — todo lo demás se rellena solo</div></div></div>
+    <div class="step"><div class="s-n">4</div><div><div class="s-ttl">Exporta a Google AI Studio y pega el prompt</div><div class="s-dsc">En Stitch: clic en <strong style="color:#a855f7">Exportar → Google AI Studio</strong> → el diseño se transfiere. Pega el prompt generado en el paso anterior → clic en Ejecutar → AI Studio construye el HTML.</div><div class="s-tip">💡 El HTML generado replica exactamente el diseño de Stitch con el video scroll incluido</div></div></div>
   </div>
 </div>
 
-<!-- SLIDE 18 PROMPT GEMINI → STITCH -->
+<!-- SLIDE 18 PROMPT TRANSICIÓN STITCH → AI STUDIO -->
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
-      <div class="tag tb">Bloque 2 · Tips</div>
-      <div class="p-title" style="font-size:clamp(18px,3.5vw,26px)">🎨 Si Stitch no genera lo que quieres</div>
-      <div class="p-sub">El OUTPUT 2 ya genera el prompt perfecto de Stitch · Estos tips son para ajustar el diseño si algo no quedó bien</div>
+      <div class="tag tb">Bloque 2 · Paso 3</div>
+      <div class="p-title">🔗 Prompt de Transición — Stitch → AI Studio</div>
+      <div class="p-sub">Pega esto en el <strong>mismo chat de Stitch</strong> cuando el diseño esté listo · Solo tienes que pegar la URL del video — todo lo demás ya lo sabe</div>
     </div>
+    <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt de transición</button>
+    <div class="pbox"><pre><span class="or">Con toda la información del negocio que ya tienes de nuestra conversación,
+genera el prompt completo para Google AI Studio en español.</span>
+
+<span class="hdr">El único dato nuevo que necesito que incluyas es la URL del video:</span>
+URL del video: <span class="yl">[PEGA AQUÍ LA URL DE CLOUDINARY .MP4]</span>
+
+<span class="hdr">El prompt debe pedirle a Google AI Studio que:</span>
+<span class="gr">1.</span> Construya un archivo HTML completo con todo el CSS dentro de &lt;style&gt; y todo el JavaScript dentro de &lt;script&gt;. Sin dependencias externas. El archivo debe abrir en cualquier navegador sin pasos de compilación.
+
+<span class="gr">2.</span> Replique exactamente el diseño que acabas de generar: colores, tipografía, tarjetas, espaciado, orden de secciones. Que use las imágenes exportadas de Stitch como referencia visual exacta.
+
+<span class="gr">3.</span> Implemente el hero con video scroll-scrubbing usando exactamente esta estructura:
+   - div class="hero-scroll-wrapper" con height:400vh
+   - div class="hero-sticky" con position:sticky, top:0, height:100vh, overflow:hidden
+   - Video dentro: src="[URL DEL VIDEO]", muted, playsinline, SIN atributo autoplay
+   - Overlay oscuro: position:absolute, inset:0, background:rgba(0,0,0,0.5), z-index:1
+   - Contenido del hero: position:absolute, inset:0, z-index:2, flex column center
+   - Este JavaScript exacto después de que cargue la página (no modificar):
+const video=document.querySelector('.hero-sticky video');
+const wrapper=document.querySelector('.hero-scroll-wrapper');
+if(video&amp;&amp;wrapper){video.pause();video.preload='auto';
+const scrub=()=>{const rect=wrapper.getBoundingClientRect();
+const p=Math.max(0,Math.min(1,-rect.top/(wrapper.offsetHeight-window.innerHeight)));
+if(video.duration)video.currentTime=p*video.duration;};
+video.addEventListener('loadedmetadata',scrub);
+window.addEventListener('scroll',scrub,{passive:true});}
+
+<span class="gr">4.</span> Todos los botones de WhatsApp en verde #25D366 con ícono SVG de WhatsApp. Sin número de teléfono en ningún lugar del archivo.
+
+<span class="gr">5.</span> Reglas críticas de diseño:
+   - Imágenes nunca como fondo detrás de texto — siempre en su propia columna o tarjeta
+   - Cada sección tiene fondo sólido — nunca transparente
+   - Responsivo: funciona en 375px (móvil) y 1280px (desktop)
+   - Tap targets mínimo 48px · Scroll suave para anclas
+
+<span class="gr">6.</span> Solo el archivo HTML completo empezando con &lt;!DOCTYPE html&gt;. Sin texto antes ni después del código.</pre></div>
   </div>
-  <div class="cards c2" style="padding:0 18px 20px;gap:12px">
-    <div class="card"><div class="c-ico">🎨</div><div class="c-ttl">Los colores no son exactos</div><div class="c-bdy">Escribe esto en el mismo chat de Stitch:<br><br><span style="color:#a855f7;font-family:monospace;font-size:13px">Change all primary colors to exact hex [COLOR 1] and accent to [COLOR 2]. Apply consistently to buttons, headings, and highlights.</span></div></div>
-    <div class="card"><div class="c-ico">📐</div><div class="c-ttl">Faltan secciones o sobran</div><div class="c-bdy">Escribe en Stitch:<br><br><span style="color:#a855f7;font-family:monospace;font-size:13px">Remove the [SECCIÓN] screen. Add a [NUEVA SECCIÓN] screen with [DESCRIPCIÓN en inglés].</span></div></div>
-    <div class="card"><div class="c-ico">📱</div><div class="c-ttl">Se ve bien en desktop pero mal en móvil</div><div class="c-bdy">Escribe en Stitch:<br><br><span style="color:#a855f7;font-family:monospace;font-size:13px">Rebuild all screens mobile-first. Stack cards vertically at 375px. Minimum tap target 48px on all buttons.</span></div></div>
-    <div class="card"><div class="c-ico">✨</div><div class="c-ttl">El diseño no se ve profesional</div><div class="c-bdy">Escribe en Stitch:<br><br><span style="color:#a855f7;font-family:monospace;font-size:13px">Refine: add subtle card shadows (0 4px 16px rgba(0,0,0,0.08)), increase spacing between sections to 80px, consistent 12px border radius.</span></div></div>
-  </div>
-  <div class="warn-box" style="margin:0 18px 18px">💡 <strong>Tip clave:</strong> Stitch recuerda el contexto. No repitas los datos del negocio — describe solo el ajuste específico que quieres y lo aplica al diseño existente.
 </div>
 
 <!-- SLIDE 19 SECCIÓN 3 -->
@@ -951,13 +917,13 @@ Output only the complete HTML file starting with &lt;!DOCTYPE html&gt;. No expla
   <div class="tag tp">Bloque 3 · Paso 1</div>
   <div class="tbox">
     <div class="tb-ico">🤖</div>
-    <div><div class="tb-name">Google AI Studio</div><div class="tb-url">aistudio.google.com · Gratis · Gemini 2.5 Pro</div><div class="tb-dsc">Construye el HTML completo de la página. Sube las capturas de Stitch como referencia visual + pega el Output 3 de Gemini → genera el código listo para publicar. Sin instalaciones, sin frameworks.</div></div>
+    <div><div class="tb-name">Google AI Studio</div><div class="tb-url">aistudio.google.com · Gratis · Gemini 2.5 Pro</div><div class="tb-dsc">Construye el HTML completo de la página. Llega con el diseño exportado de Stitch + el prompt generado en el chat de Stitch → genera el código listo para publicar. Sin instalaciones, sin frameworks.</div></div>
   </div>
   <div class="steps">
-    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Abre aistudio.google.com</div><div class="s-dsc">Inicia sesión con tu cuenta de Google → clic en "New prompt". Selecciona el modelo <span style="color:#a855f7;font-weight:700">Gemini 2.5 Pro</span>.</div><div class="s-tip">💡 Gemini 2.5 Pro genera código más limpio y completo que Flash</div></div></div>
-    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Adjunta las capturas de Stitch</div><div class="s-dsc">Clic en el ícono de imagen (📎) → sube las capturas que tomaste de Stitch. AI Studio las usará como referencia exacta del diseño.</div><div class="s-tip">💡 Sube las pantallas más representativas del diseño: home, cards, colores</div></div></div>
-    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Pega el Output 3 y ejecuta</div><div class="s-dsc">Copia el Output 3 de la respuesta de Gemini → pégalo en el chat de AI Studio → clic en <span style="color:#a855f7;font-weight:700">Run</span>. AI Studio genera el archivo HTML completo.</div></div></div>
-    <div class="step"><div class="s-n">4</div><div><div class="s-ttl">Copia el código → guarda como index.html</div><div class="s-dsc">Copia el código HTML generado → pégalo en un archivo de texto → guárdalo como <span style="color:#a855f7;font-family:monospace">index.html</span>. Ábrelo en el navegador para verificar que se ve bien.</div><div class="s-tip">💡 Si algo no está bien, dile a AI Studio qué corregir — sigue en el mismo chat</div></div></div>
+    <div class="step"><div class="s-n">1</div><div><div class="s-ttl">Exporta desde Stitch a Google AI Studio</div><div class="s-dsc">En Stitch: clic en <strong style="color:#a855f7">Exportar → Google AI Studio</strong>. El diseño completo se transfiere automáticamente — colores, pantallas, componentes.</div><div class="s-tip">💡 Stitch transfiere el contexto visual completo, no solo capturas</div></div></div>
+    <div class="step"><div class="s-n">2</div><div><div class="s-ttl">Pega el Prompt de Transición y ejecuta</div><div class="s-dsc">Copia el prompt que generó Stitch en el paso anterior → pégalo en el chat de AI Studio → clic en <span style="color:#a855f7;font-weight:700">Ejecutar</span>. AI Studio genera el archivo HTML completo con el video scroll incluido.</div><div class="s-tip">💡 Selecciona el modelo Gemini 2.5 Pro para mejores resultados de código</div></div></div>
+    <div class="step"><div class="s-n">3</div><div><div class="s-ttl">Revisa el resultado en el navegador</div><div class="s-dsc">Copia el código HTML → abre el Bloc de notas → pega → guarda como <span style="color:#a855f7;font-family:monospace">index.html</span> → ábrelo en Chrome. Verifica que el diseño coincide con Stitch y el video hace scroll.</div></div></div>
+    <div class="step"><div class="s-n">4</div><div><div class="s-ttl">Publica en Netlify en 30 segundos</div><div class="s-dsc">Abre <span style="color:#a855f7">netlify.com/drop</span> → arrastra el archivo <span style="color:#a855f7;font-family:monospace">index.html</span> → obtienes una URL pública gratuita al instante para mostrarle al negocio.</div><div class="s-tip">💡 Si algo no quedó bien, dile a AI Studio qué corregir — sigue en el mismo chat</div></div></div>
   </div>
 </div>
 
@@ -965,46 +931,46 @@ Output only the complete HTML file starting with &lt;!DOCTYPE html&gt;. No expla
 <div class="slide">
   <div class="p-slide">
     <div class="p-head">
-      <div class="tag tp">Bloque 3 · Paso 2</div>
+      <div class="tag tp">Bloque 3 · Alternativo</div>
       <div class="p-title">🤖 Prompt directo para Google AI Studio</div>
-      <div class="p-sub">Úsalo si quieres ir directo a AI Studio sin pasar por el Prompt Maestro · Rellena los [corchetes] y adjunta capturas de Stitch</div>
+      <div class="p-sub">Úsalo si no pasaste por Stitch o quieres construir desde cero · Rellena los [corchetes] con los datos del negocio</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">You are a senior front-end developer. I am uploading screenshots of a web design
-created in Google Stitch. Build a website that matches these designs exactly.</span>
+    <div class="pbox"><pre><span class="or">Eres un desarrollador web experto. Voy a subir capturas del diseño creado en Google Stitch.
+Construye un sitio web que replique exactamente esos diseños.</span>
 
-<span class="hdr">OUTPUT: one single HTML file. All CSS inside &lt;style&gt;. All JS inside &lt;script&gt;.
-No external dependencies except Google Fonts via @import. Opens in any browser.</span>
+<span class="hdr">RESULTADO: un único archivo HTML. Todo el CSS dentro de &lt;style&gt;. Todo el JS dentro de &lt;script&gt;.
+Sin dependencias externas excepto Google Fonts con @import. Abre en cualquier navegador.</span>
 
-<span class="hdr">BUSINESS DATA:</span>
-- Name: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
-- Type: <span class="yl">[restaurant / barbershop / spa / store / gym / etc.]</span>
-- City: <span class="yl">[CIUDAD]</span>
-- Star product/service: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
-- Price: <span class="yl">[PRECIO]</span>
-- Primary color: <span class="yl">[COLOR 1 hex — e.g. #E85D04]</span>
-- Secondary color: <span class="yl">[COLOR 2 hex — e.g. #FFF8F0]</span>
-- Style: <span class="yl">[modern / elegant / colorful / rustic / minimalist / dark]</span>
-- Video URL: <span class="yl">[URL COMPLETA DEL VIDEO .MP4 EN CLOUDINARY]</span>
+<span class="hdr">DATOS DEL NEGOCIO:</span>
+- Nombre: <span class="yl">[NOMBRE DEL NEGOCIO]</span>
+- Tipo: <span class="yl">[restaurante / barbería / spa / tienda / gimnasio / etc.]</span>
+- Ciudad: <span class="yl">[CIUDAD]</span>
+- Producto o servicio estrella: <span class="yl">[PRODUCTO O SERVICIO PRINCIPAL]</span>
+- Precio: <span class="yl">[PRECIO]</span>
+- Color primario: <span class="yl">[COLOR 1 en hex — ej: #E85D04]</span>
+- Color secundario: <span class="yl">[COLOR 2 en hex — ej: #FFF8F0]</span>
+- Estilo visual: <span class="yl">[moderno / elegante / colorido / rústico / minimalista / oscuro]</span>
+- URL del video: <span class="yl">[URL COMPLETA DEL VIDEO .MP4 EN CLOUDINARY]</span>
 
-<span class="hdr">PAGE CONTENT (in Spanish):</span>
-- Headline: <span class="yl">[HEADLINE 6-8 PALABRAS]</span>
-- Subtitle: <span class="yl">[SUBTÍTULO 12-15 PALABRAS]</span>
-- Benefit 1: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
-- Benefit 2: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
-- Benefit 3: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
-- Testimonial 1: <span class="yl">[NOMBRE · CIUDAD · TEXTO 20 PALABRAS]</span>
-- Testimonial 2: <span class="yl">[NOMBRE · CIUDAD · TEXTO 20 PALABRAS]</span>
-- Testimonial 3: <span class="yl">[NOMBRE · CIUDAD · TEXTO 20 PALABRAS]</span>
-- WhatsApp button text: <span class="yl">[TEXTO DEL BOTÓN — máx 5 palabras]</span>
+<span class="hdr">CONTENIDO DE LA PÁGINA (en español):</span>
+- Titular: <span class="yl">[TITULAR DE 6-8 PALABRAS]</span>
+- Subtítulo: <span class="yl">[SUBTÍTULO DE 12-15 PALABRAS]</span>
+- Beneficio 1: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
+- Beneficio 2: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
+- Beneficio 3: <span class="yl">[EMOJI + TÍTULO + DESCRIPCIÓN]</span>
+- Testimonio 1: <span class="yl">[NOMBRE · CIUDAD · TEXTO DE 20 PALABRAS]</span>
+- Testimonio 2: <span class="yl">[NOMBRE · CIUDAD · TEXTO DE 20 PALABRAS]</span>
+- Testimonio 3: <span class="yl">[NOMBRE · CIUDAD · TEXTO DE 20 PALABRAS]</span>
+- Texto botón WhatsApp: <span class="yl">[TEXTO DEL BOTÓN — máx 5 palabras]</span>
 
-<span class="hdr">HERO — SCROLL-DRIVEN VIDEO (implement exactly):</span>
-<span class="cm">Wrapper div class="hero-scroll-wrapper" height:400vh.
-Inside: sticky div class="hero-sticky" position:sticky top:0 height:100vh overflow:hidden.
-Video inside: src="[VIDEO URL]" muted playsinline — NO autoplay.
-Dark overlay: position:absolute inset:0 background:rgba(0,0,0,0.5) z-index:1.
-Content: position:absolute inset:0 z-index:2 flex column center center.
-JavaScript after page load:
+<span class="hdr">HERO — VIDEO CON SCROLL (implementar exactamente así):</span>
+<span class="cm">div class="hero-scroll-wrapper" con height:400vh.
+Dentro: div class="hero-sticky" position:sticky top:0 height:100vh overflow:hidden.
+Video dentro: src="[URL DEL VIDEO]" muted playsinline — SIN atributo autoplay.
+Overlay oscuro: position:absolute inset:0 background:rgba(0,0,0,0.5) z-index:1.
+Contenido: position:absolute inset:0 z-index:2 flex columna centrado.
+JavaScript después de que cargue la página:
 const video=document.querySelector('.hero-sticky video');
 const wrapper=document.querySelector('.hero-scroll-wrapper');
 if(video&amp;&amp;wrapper){video.pause();video.preload='auto';
@@ -1014,14 +980,14 @@ if(video.duration)video.currentTime=p*video.duration;};
 video.addEventListener('loadedmetadata',scrub);
 window.addEventListener('scroll',scrub,{passive:true});}</span>
 
-<span class="hdr">CRITICAL RULES:</span>
-<span class="or">1. Match the uploaded screenshots exactly — colors, fonts, spacing, section order.
-2. Never place images as backgrounds behind text. Images in their own column/card.
-3. Every section below hero must have a solid background — never transparent.
-4. All WhatsApp buttons: green #25D366, SVG icon, NO href, NO phone number anywhere.
-5. Adapt sections to the business type — follow what's shown in the screenshots.
-6. Fully responsive: 375px mobile and 1280px desktop. Tap targets min 48px.
-7. Output only the HTML file starting with &lt;!DOCTYPE html&gt;. No explanations.</span></pre></div>
+<span class="hdr">REGLAS CRÍTICAS:</span>
+<span class="or">1. Replica las capturas subidas exactamente — colores, fuentes, espaciado, orden de secciones.
+2. Las imágenes nunca como fondo detrás de texto. Siempre en su propia columna o tarjeta.
+3. Cada sección debajo del hero debe tener fondo sólido — nunca transparente.
+4. Todos los botones de WhatsApp: verde #25D366, ícono SVG, SIN href, SIN número de teléfono.
+5. Adapta las secciones al tipo de negocio — sigue lo que muestran las capturas.
+6. Completamente responsivo: 375px móvil y 1280px desktop. Tap targets mínimo 48px.
+7. Solo el archivo HTML empezando con &lt;!DOCTYPE html&gt;. Sin texto explicativo.</span></pre></div>
   </div>
 </div>
 
@@ -1037,39 +1003,39 @@ window.addEventListener('scroll',scrub,{passive:true});}</span>
       <div class="card fpb">
         <div class="fpb-label">🎨 El diseño no coincide con Stitch</div>
         <button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button>
-        <div class="pbox"><pre><span class="or">The design doesn't match the uploaded screenshots. Fix it completely.</span>
+        <div class="pbox"><pre><span class="or">El diseño no coincide con las capturas subidas. Corrígelo completamente.</span>
 
-<span class="hdr">CHECK THESE ISSUES:</span>
-<span class="cm">1. Colors — use exactly: --color-primary:[COLOR 1]; --color-accent:[COLOR 2]
-   Apply --color-primary to all buttons, headings, accents consistently.
-2. Typography — match the font weights, sizes and spacing from the screenshots.
-3. Cards — match border radius, shadows, padding shown in the screenshots.
-4. Section backgrounds — every section must have a solid background color.
-   No transparent sections that let the hero video show through.
-5. Images — never as backgrounds behind text. Always in their own layout area.
-6. Spacing — increase padding between sections to match the Stitch design.</span>
+<span class="hdr">VERIFICA ESTOS PROBLEMAS:</span>
+<span class="cm">1. Colores — usa exactamente: --color-primary:[COLOR 1]; --color-accent:[COLOR 2]
+   Aplica --color-primary en todos los botones, encabezados y acentos de forma consistente.
+2. Tipografía — iguala los pesos de fuente, tamaños y espaciado de las capturas.
+3. Tarjetas — iguala el border-radius, sombras y padding que se ven en las capturas.
+4. Fondos de sección — cada sección debe tener un color de fondo sólido.
+   Sin secciones transparentes que dejen ver el video del hero al hacer scroll.
+5. Imágenes — nunca como fondo detrás de texto. Siempre en su propia área de layout.
+6. Espaciado — aumenta el padding entre secciones para que coincida con el diseño de Stitch.</span>
 
-<span class="or">Do not change the content or structure. Only fix the visual style.
-Output the complete corrected HTML file.</span></pre></div>
+<span class="or">No cambies el contenido ni la estructura. Solo corrige el estilo visual.
+Entrega el archivo HTML completo corregido.</span></pre></div>
       </div>
       <div class="card fpb">
         <div class="fpb-label">📐 Secciones o contenido incorrecto</div>
         <button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button>
-        <div class="pbox"><pre><span class="or">The page structure needs fixes. Apply all corrections below.</span>
+        <div class="pbox"><pre><span class="or">La estructura de la página necesita correcciones. Aplica todos los cambios indicados.</span>
 
-<span class="hdr">CORRECTIONS NEEDED:</span>
-<span class="cm">1. The hero section must use scroll-driven video scrubbing — not autoplay.
-   Re-implement exactly: hero-scroll-wrapper (400vh) containing hero-sticky
-   (position:sticky) with the scroll JavaScript I provided.
-2. Navigation bar — add a sticky top nav with the business name and smooth
-   scroll anchor links to each section.
-3. Missing sections — add: [DESCRIBE LA SECCIÓN QUE FALTA]
-4. WhatsApp buttons — all must be green #25D366 with SVG icon, no href anywhere.
-5. Mobile layout — check that cards stack correctly at 375px width.
-6. Footer — must show: business name, city, Instagram icon, WhatsApp icon.</span>
+<span class="hdr">CORRECCIONES NECESARIAS:</span>
+<span class="cm">1. El hero debe usar video con scroll-scrubbing — no autoplay.
+   Reimpleméntalo exactamente: hero-scroll-wrapper (400vh) con hero-sticky
+   (position:sticky) y el JavaScript de scroll que te di.
+2. Barra de navegación — agrega un nav fijo en la parte superior con el nombre
+   del negocio y enlaces de scroll suave a cada sección.
+3. Secciones faltantes — agrega: [DESCRIBE LA SECCIÓN QUE FALTA]
+4. Botones de WhatsApp — todos deben ser verde #25D366 con ícono SVG, sin href.
+5. Layout móvil — verifica que las tarjetas se apilen correctamente a 375px.
+6. Footer — debe mostrar: nombre del negocio, ciudad, ícono de Instagram, ícono de WhatsApp.</span>
 
-<span class="or">Fix all issues above. Output the complete corrected HTML file.
-Do not ask questions. Do not remove existing content.</span></pre></div>
+<span class="or">Corrige todos los problemas indicados. Entrega el archivo HTML completo corregido.
+Sin preguntas. Sin eliminar contenido existente.</span></pre></div>
       </div>
     </div>
     <div class="card fpb">
@@ -1095,61 +1061,61 @@ Do not ask questions. Do not remove existing content.</span></pre></div>
       <div class="card fpb">
         <div class="fpb-label">🖼️ Galería de fotos / portafolio</div>
         <button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button>
-        <div class="pbox"><pre><span class="or">Add a photo gallery section to the existing HTML file.</span>
+        <div class="pbox"><pre><span class="or">Agrega una sección de galería de fotos al archivo HTML existente.</span>
 
-<span class="cm">Section title in Spanish: "Nuestro Trabajo" (or adapt to the business).
-Layout: masonry grid — 3 columns desktop, 2 columns tablet, 1 column mobile.
-Each item: a square image placeholder (aspect ratio 1:1, background var(--color-accent),
-border-radius 12px) with a subtle hover overlay showing the business name.
-Add 6 image placeholders total. Insert this section between testimonials and footer.
-Use the same colors and font style as the rest of the page.
-Output the complete updated HTML file. Do not remove any existing content.</span></pre></div>
+<span class="cm">Título de la sección: "Nuestro Trabajo" (o adáptalo al tipo de negocio).
+Layout: cuadrícula tipo masonry — 3 columnas en desktop, 2 en tablet, 1 en móvil.
+Cada elemento: imagen cuadrada placeholder (relación 1:1, fondo var(--color-accent),
+border-radius 12px) con un overlay sutil al hacer hover que muestre el nombre del negocio.
+Agrega 6 placeholders de imagen en total. Inserta esta sección entre los testimonios y el footer.
+Usa los mismos colores y fuentes del resto de la página.
+Entrega el archivo HTML completo actualizado. No elimines ningún contenido existente.</span></pre></div>
       </div>
       <div class="card fpb">
         <div class="fpb-label">🛍️ Grid de productos / servicios</div>
         <button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button>
-        <div class="pbox"><pre><span class="or">Add a products/services grid section to the existing HTML file.</span>
+        <div class="pbox"><pre><span class="or">Agrega una sección de cuadrícula de productos o servicios al archivo HTML existente.</span>
 
-<span class="cm">Section title: "Nuestros Productos" or "Nuestros Servicios" (adapt to business type).
-Grid: 2 columns mobile, 3 columns desktop. Each card shows:
-- Square image placeholder with border-radius 12px
-- Product/service name in bold
-- Short description (2 lines max)
-- Price in var(--color-primary) font-weight 700
-- Green WhatsApp button #25D366 "Pedir ahora" — no href, no phone number
-Add 6 cards with realistic placeholder content for [TIPO DE NEGOCIO] in Spanish.
-Cards must have a solid white/light background — never transparent.
-Insert this section right after the hero and before the benefits section.
-Output the complete updated HTML file. Do not remove any existing content.</span></pre></div>
+<span class="cm">Título de la sección: "Nuestros Productos" o "Nuestros Servicios" (según el tipo de negocio).
+Cuadrícula: 2 columnas en móvil, 3 columnas en desktop. Cada tarjeta muestra:
+- Imagen cuadrada placeholder con border-radius 12px
+- Nombre del producto o servicio en negrita
+- Descripción corta (máximo 2 líneas)
+- Precio en var(--color-primary) font-weight 700
+- Botón de WhatsApp verde #25D366 con texto "Pedir ahora" — sin href, sin número de teléfono
+Agrega 6 tarjetas con contenido placeholder realista para [TIPO DE NEGOCIO] en español.
+Las tarjetas deben tener fondo sólido blanco o claro — nunca transparente.
+Inserta esta sección justo después del hero y antes de los beneficios.
+Entrega el archivo HTML completo actualizado. No elimines ningún contenido existente.</span></pre></div>
       </div>
       <div class="card fpb">
         <div class="fpb-label">💬 Botón flotante de WhatsApp</div>
         <button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button>
-        <div class="pbox"><pre><span class="or">Add a floating WhatsApp button to the bottom-right corner of the page.</span>
+        <div class="pbox"><pre><span class="or">Agrega un botón flotante de WhatsApp en la esquina inferior derecha de la página.</span>
 
-<span class="cm">Style: circular button 56px × 56px, position fixed, bottom:24px, right:24px, z-index:999.
-Background: #25D366 (WhatsApp green). Box-shadow: 0 4px 16px rgba(37,211,102,0.4).
-Icon: WhatsApp SVG logo in white, 28px.
-On hover: scale(1.1) with smooth transition 0.2s.
-No href, no phone number — it is a visual placeholder.
-Add a small pulsing animation ring around the button to draw attention.
-Output the complete updated HTML file. Do not remove any existing content.</span></pre></div>
+<span class="cm">Estilo: botón circular de 56px × 56px, position fixed, bottom:24px, right:24px, z-index:999.
+Fondo: #25D366 (verde WhatsApp). Box-shadow: 0 4px 16px rgba(37,211,102,0.4).
+Ícono: logo SVG de WhatsApp en blanco, 28px.
+Al hacer hover: scale(1.1) con transición suave de 0.2s.
+Sin href, sin número de teléfono — es un placeholder visual.
+Agrega un pequeño anillo pulsante alrededor del botón para llamar la atención.
+Entrega el archivo HTML completo actualizado. No elimines ningún contenido existente.</span></pre></div>
       </div>
       <div class="card fpb">
         <div class="fpb-label">📋 Formulario de contacto</div>
         <button class="copy-btn" onclick="copyFpb(this)">📋 Copiar</button>
-        <div class="pbox"><pre><span class="or">Add a contact form section to the existing HTML file.</span>
+        <div class="pbox"><pre><span class="or">Agrega una sección de formulario de contacto al archivo HTML existente.</span>
 
-<span class="cm">Section title: "Contáctanos". Background: var(--color-accent) or a light variant.
-Form fields (all labeled in Spanish):
-- Nombre completo (text input, required)
-- Correo electrónico (email input, required)
-- Mensaje (textarea, 4 rows, required)
-- Submit button "Enviar mensaje" in var(--color-primary), full width on mobile.
-On submit: prevent default, show a success message "¡Mensaje enviado!
-Nos contactaremos pronto." in green. No backend needed — visual placeholder only.
-Place this section before the footer.
-Output the complete updated HTML file. Do not remove any existing content.</span></pre></div>
+<span class="cm">Título de la sección: "Contáctanos". Fondo: var(--color-accent) o una variante clara.
+Campos del formulario (todos con etiquetas en español):
+- Nombre completo (input de texto, obligatorio)
+- Correo electrónico (input de email, obligatorio)
+- Mensaje (textarea de 4 filas, obligatorio)
+- Botón de envío "Enviar mensaje" en var(--color-primary), ancho completo en móvil.
+Al enviar: preventDefault, muestra un mensaje de éxito "¡Mensaje enviado!
+Nos contactaremos pronto." en verde. Sin backend — solo placeholder visual.
+Coloca esta sección antes del footer.
+Entrega el archivo HTML completo actualizado. No elimines ningún contenido existente.</span></pre></div>
       </div>
     </div>
   </div>
@@ -1164,37 +1130,37 @@ Output the complete updated HTML file. Do not remove any existing content.</span
       <div class="p-sub">Usar cuando el video no reproduce en iPhone o Android · Copia y pega en el chat de Google AI Studio</div>
     </div>
     <button class="copy-btn" onclick="copyPre(this)">📋 Copiar prompt</button>
-    <div class="pbox"><pre><span class="or">The hero video has two problems. Fix both completely.</span>
+    <div class="pbox"><pre><span class="or">El video del hero tiene dos problemas. Corrígelos completamente.</span>
 
-<span class="hdr">PROBLEM 1 — VIDEO NOT AUTOPLAYING ON MOBILE:</span>
-The video element must have all four attributes at the same time:
+<span class="hdr">PROBLEMA 1 — EL VIDEO NO REPRODUCE EN MÓVIL:</span>
+El elemento de video debe tener los cuatro atributos al mismo tiempo:
 <span class="yl">autoplay  muted  loop  playsinline</span>
-Without all four together the video will NOT autoplay on iPhone or Android.
+Sin los cuatro juntos, el video NO hará autoplay en iPhone ni Android.
 
-<span class="hdr">PROBLEM 2 — VIDEO VISIBLE THROUGH ALL SECTIONS WHEN SCROLLING:</span>
-The video has position fixed so it stays locked behind the entire page.
-Every section AFTER the hero is showing the video through it because
-those sections have transparent or missing background colors.
+<span class="hdr">PROBLEMA 2 — EL VIDEO SE VE A TRAVÉS DE TODAS LAS SECCIONES AL HACER SCROLL:</span>
+El video tiene position fixed y queda fijo detrás de toda la página.
+Cada sección DESPUÉS del hero muestra el video porque esas secciones
+tienen fondos transparentes o sin color de fondo definido.
 
-<span class="gr">Fix the z-index stack like this:</span>
-  Video element  →  position fixed, top 0, left 0, width 100vw,
-                    height 100vh, object-fit cover, z-index 0
-  Dark overlay   →  position fixed, same position,
-                    background rgba(0,0,0,0.5), z-index 1
-  Hero content   →  position relative, height 100vh, z-index 2
+<span class="gr">Corrige la capa de z-index así:</span>
+  Video           →  position fixed, top 0, left 0, width 100vw,
+                     height 100vh, object-fit cover, z-index 0
+  Overlay oscuro  →  position fixed, misma posición,
+                     background rgba(0,0,0,0.5), z-index 1
+  Contenido hero  →  position relative, height 100vh, z-index 2
 
-<span class="gr">Fix every section AFTER the hero:</span>
-  Benefits section, products section, testimonials section,
-  contact section, footer — ALL of them must have:
+<span class="gr">Corrige cada sección DESPUÉS del hero:</span>
+  Sección beneficios, sección productos, sección testimonios,
+  sección contacto, footer — TODAS deben tener:
   <span class="yl">position: relative</span>
   <span class="yl">z-index: 2</span>
-  <span class="yl">background-color: [the site's main background color]</span>
-  NOT transparent. NOT inherit. A real solid color.
+  <span class="yl">background-color: [el color de fondo principal del sitio]</span>
+  NO transparente. NO inherit. Un color sólido real.
 
-<span class="hdr">DO NOT USE background-attachment: fixed</span>
-<span class="or">It does not work on mobile. Use position fixed on the video only.</span>
+<span class="hdr">NO USAR background-attachment: fixed</span>
+<span class="or">No funciona en móvil. Usar position fixed solo en el video.</span>
 
-<span class="cm">Fix both problems without changing anything else. Do not ask questions.</span></pre></div>
+<span class="cm">Corrige los dos problemas sin cambiar nada más. Sin hacer preguntas.</span></pre></div>
   </div>
 </div>
 
