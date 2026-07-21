@@ -627,59 +627,48 @@ en el formato que ya te enseñé.</span></pre>
 <div class="slide p-slide">
   <div class="p-head">
     <div class="tag tp">Paso 6</div>
-    <div class="p-title">🎬 Prompt JSON para el Video</div>
-    <div class="p-sub">ChatGPT genera este JSON usando el storyboard → pégalo en Google Flow para crear el video</div>
+    <div class="p-title">🎬 Formato JSON para el Video en Flow</div>
+    <div class="p-sub">ChatGPT genera este JSON completo basado en tu storyboard → cópialo y pégalo directo en Google Flow</div>
   </div>
   <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
   <div class="pbox">
-    <pre><span class="cm">Este es el formato que ChatGPT generará basado en tu storyboard.
-Pégalo en Flow → genera el video completo.</span>
+    <pre><span class="bl">{
+  <span class="hdr">"video_settings"</span>: {
+    "duration": "</span><span class="or">[DURACIÓN TOTAL DEL VIDEO]</span><span class="bl">",
+    "aspect_ratio": "</span><span class="or">[RELACIÓN DE ASPECTO]</span><span class="bl">",
+    "resolution": "</span><span class="or">[RESOLUCIÓN]</span><span class="bl">",
+    "frame_rate": "</span><span class="or">[FOTOGRAMAS POR SEGUNDO]</span><span class="bl">",
+    "style": "</span><span class="or">[ESTÉTICA GENERAL, CALIDAD, GÉNERO COMERCIAL Y TIPO DE ILUMINACIÓN]</span><span class="bl">"
+  },
 
-<span class="bl">{
-  "concepto": "</span><span class="or">[CONCEPTO CREATIVO — generado por ChatGPT]</span><span class="bl">",
-  "duracion_total": "20 segundos",
-  "formato": "9:16 vertical",
-  "estilo": "</span><span class="or">[ESTILO CINEMATOGRÁFICO del briefing]</span><span class="bl">",
-  "escenas": [
+  <span class="hdr">"audio_track"</span>: {
+    "background_music": "</span><span class="or">[GÉNERO, RITMO, ATMÓSFERA Y PERSONALIDAD DE LA MÚSICA]</span><span class="bl">",
+    "sound_design": "</span><span class="or">[TIPO DE EFECTOS, SINCRONIZACIÓN Y TRATAMIENTO SONORO]</span><span class="bl">"
+  },
+
+  <span class="hdr">"timeline_sequence"</span>: [
     {
-      "escena": 1,
-      "duracion": "4s",
-      "descripcion": "Primer plano extremo de </span><span class="or">[PRODUCTO]</span><span class="bl">. </span><span class="or">[ILUMINACIÓN]</span><span class="bl">. Fondo </span><span class="or">[FONDO]</span><span class="bl">.",
-      "camara": "zoom suave hacia adelante",
-      "referencia": "</span><span class="or">[imagen 1]</span><span class="bl">"
+      "time_stamp": "</span><span class="or">[TIEMPO DE INICIO - TIEMPO FINAL]</span><span class="bl">",
+      "visuals": "</span><span class="or">[DESCRIPCIÓN DETALLADA DE LA ESCENA, PRODUCTO, FONDO,
+       PERSONAJES, ACCIONES, COMPOSICIÓN Y ELEMENTOS VISIBLES]</span><span class="bl">",
+      "camera_movement": "</span><span class="or">[TIPO DE PLANO, ÁNGULO, LENTE, ENFOQUE
+       Y MOVIMIENTO DE CÁMARA]</span><span class="bl">",
+      "lighting": "</span><span class="or">[DIRECCIÓN, INTENSIDAD, COLOR, CONTRASTE
+       Y COMPORTAMIENTO DE LA ILUMINACIÓN]</span><span class="bl">",
+      "audio_effects": "</span><span class="or">[SONIDO ESPECÍFICO SINCRONIZADO CON LA ACCIÓN]</span><span class="bl">"
     },
     {
-      "escena": 2,
-      "duracion": "4s",
-      "descripcion": "Plano detalle de la textura de </span><span class="or">[PRODUCTO]</span><span class="bl">. Rotación lenta.",
-      "camara": "órbita lenta de izquierda a derecha",
-      "referencia": "</span><span class="or">[imagen 2]</span><span class="bl">"
-    },
-    {
-      "escena": 3,
-      "duracion": "5s",
-      "descripcion": "Plano medio de </span><span class="or">[PRODUCTO]</span><span class="bl"> con </span><span class="or">[ELEMENTOS DE CONTEXTO]</span><span class="bl">.",
-      "camara": "tilt down suave",
-      "referencia": "</span><span class="or">[imagen 3]</span><span class="bl">"
-    },
-    {
-      "escena": 4,
-      "duracion": "4s",
-      "descripcion": "Ángulo bajo 45° de </span><span class="or">[PRODUCTO]</span><span class="bl">. Luz de fondo dramática.",
-      "camara": "grúa ascendente lenta",
-      "referencia": "</span><span class="or">[imagen 4]</span><span class="bl">"
-    },
-    {
-      "escena": 5,
-      "duracion": "3s",
-      "descripcion": "Producto completo centrado. Nombre </span><span class="or">[NEGOCIO]</span><span class="bl"> aparece suavemente.",
-      "camara": "estático con zoom muy lento",
-      "referencia": "</span><span class="or">[imagen 5]</span><span class="bl">"
+      "time_stamp": "</span><span class="or">[SIGUIENTE INTERVALO]</span><span class="bl">",
+      "visuals": "</span><span class="or">[DESCRIPCIÓN DE LA SIGUIENTE ESCENA]</span><span class="bl">",
+      "camera_movement": "</span><span class="or">[MOVIMIENTO Y COMPORTAMIENTO DE CÁMARA]</span><span class="bl">",
+      "lighting": "</span><span class="or">[ILUMINACIÓN DE LA ESCENA]</span><span class="bl">",
+      "audio_effects": "</span><span class="or">[EFECTOS SONOROS DE LA ESCENA]</span><span class="bl">"
     }
   ]
 }</span>
 
-<span class="cm">⚠ Si tienes tu propio formato JSON → reemplaza este con el tuyo</span></pre>
+<span class="cm">ChatGPT rellena todos los [corchetes] usando el concepto
+y el storyboard que ya generaron juntos en el proyecto.</span></pre>
   </div>
 </div>
 
