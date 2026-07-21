@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contenido con IA — Clase Práctica</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:system-ui,-apple-system,sans-serif;
+  background:#0f0a1e; color:#fff;
+  height:100vh; overflow:hidden;
+  user-select:none; -webkit-user-select:none;
+}
+.progress { position:fixed; top:0; left:0; height:3px; background:#a855f7; z-index:300; transition:width .35s; }
+.counter  { position:fixed; top:12px; right:14px; font-size:14px; font-weight:700; color:rgba(255,255,255,.4); z-index:300; }
+.nav { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; z-index:300; }
+.nb  { width:44px; height:44px; border-radius:50%; border:2px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07); color:#fff; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all .2s; -webkit-tap-highlight-color:transparent; }
+.nb:hover, .nb:active { background:#a855f7; border-color:#a855f7; }
+.dots { display:none; gap:6px; }
+.dot  { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.2); cursor:pointer; transition:all .25s; }
+.dot.on { background:#a855f7; width:20px; border-radius:4px; }
+
+.slide { position:absolute; inset:0; display:none; padding:72px 18px 140px; overflow-y:auto; overflow-x:hidden; }
+.slide.active { display:flex; flex-direction:column; }
+.slide::after {
+  content:''; position:fixed; bottom:0; left:0; right:0; height:72px;
+  background:linear-gradient(to top,#0f0a1e 60%,transparent);
+  pointer-events:none; z-index:100;
+}
+
+.tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:5px 12px; border-radius:20px; margin-bottom:14px; }
+.to { background:rgba(168,85,247,.15); color:#a855f7; border:1px solid rgba(168,85,247,.3); }
+.tb { background:rgba(59,130,246,.15);  color:#60a5fa; border:1px solid rgba(59,130,246,.3); }
+.tg { background:rgba(34,197,94,.15);   color:#4ade80; border:1px solid rgba(34,197,94,.3); }
+.tp { background:rgba(168,85,247,.15);  color:#c084fc; border:1px solid rgba(168,85,247,.3); }
+.tr { background:rgba(239,68,68,.15);   color:#f87171; border:1px solid rgba(239,68,68,.3); }
+.ta { background:rgba(245,158,11,.15);  color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+
+.sec { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+.sec-n    { font-size:80px;  font-weight:900; color:rgba(168,85,247,.09); line-height:1; }
+.sec-t    { font-size:36px;  font-weight:900; margin-bottom:10px; }
+.sec-s    { font-size:16px;  color:rgba(255,255,255,.5); }
+.sec-time { margin-top:20px; padding:8px 18px; background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.3); border-radius:30px; font-size:15px; color:#a855f7; font-weight:700; }
+
+.cover   { flex:1; display:flex; flex-direction:column; justify-content:center; }
+.c-eye   { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#a855f7; margin-bottom:14px; font-weight:700; line-height:1.5; }
+.c-title { font-size:32px; font-weight:900; line-height:1.1; margin-bottom:16px; word-break:break-word; }
+.c-title b { color:#a855f7; }
+.c-sub   { font-size:16px; color:rgba(255,255,255,.6); margin-bottom:24px; line-height:1.55; }
+.c-badges { display:flex; gap:8px; flex-wrap:wrap; }
+.badge   { font-size:13px; padding:7px 13px; border-radius:20px; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.65); }
+
+.st { font-size:24px; font-weight:900; margin-bottom:8px;  line-height:1.15; }
+.ss { font-size:15px; color:rgba(255,255,255,.5); margin-bottom:18px; line-height:1.45; }
+
+.cards { display:grid; gap:10px; }
+.c2, .c3 { grid-template-columns:1fr; }
+.card  { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:18px; }
+.c-ico { font-size:28px; margin-bottom:10px; }
+.c-ttl { font-size:17px; font-weight:700; color:#fff; margin-bottom:7px; }
+.c-bdy { font-size:15px; color:rgba(255,255,255,.6); line-height:1.6; }
+.c-url { display:inline-block; font-size:13px; margin-top:10px; padding:3px 10px; background:rgba(34,197,94,.1); color:#4ade80; border-radius:10px; border:1px solid rgba(34,197,94,.2); }
+
+.steps { display:flex; flex-direction:column; gap:10px; }
+.step  { display:flex; gap:14px; align-items:flex-start; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:16px; }
+.s-n   { min-width:32px; width:32px; height:32px; border-radius:50%; background:#a855f7; font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.s-ttl { font-size:16px; font-weight:700; color:#fff; margin-bottom:5px; }
+.s-dsc { font-size:15px; color:rgba(255,255,255,.6); line-height:1.6; }
+.s-tip { display:inline-block; font-size:13px; margin-top:7px; padding:4px 10px; background:rgba(168,85,247,.1); border-radius:7px; color:#a855f7; line-height:1.4; }
+
+.tbox    { background:rgba(168,85,247,.07); border:1.5px solid rgba(168,85,247,.25); border-radius:14px; padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:10px; }
+.tb-ico  { font-size:32px; line-height:1; }
+.tb-name { font-size:22px; font-weight:900; }
+.tb-url  { font-size:13px; color:#a855f7; margin:3px 0 5px; }
+.tb-dsc  { font-size:15px; color:rgba(255,255,255,.65); line-height:1.6; }
+
+.tl     { display:flex; flex-direction:column; gap:6px; }
+.tl-row { display:flex; gap:14px; }
+.tl-l   { min-width:52px; display:flex; flex-direction:column; align-items:center; }
+.tl-t   { font-size:13px; font-weight:700; color:#a855f7; white-space:nowrap; }
+.tl-ln  { flex:1; width:2px; background:rgba(168,85,247,.2); margin:4px 0; }
+.tl-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:10px; padding:12px 14px; flex:1; margin-bottom:8px; }
+.tl-lbl   { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#a855f7; margin-bottom:4px; }
+.tl-name  { font-size:17px; font-weight:700; }
+.tl-tools { font-size:13px; color:rgba(255,255,255,.4); margin-top:4px; }
+
+.p-slide { display:flex; flex-direction:column; }
+.p-head  { margin-bottom:10px; flex-shrink:0; }
+.p-title { font-size:24px; font-weight:900; margin-bottom:4px; }
+.p-sub   { font-size:14px; color:rgba(255,255,255,.5); }
+.pbox    { background:#0c0518; border:1.5px solid rgba(255,255,255,.12); border-radius:14px; padding:16px 18px; overflow-y:auto; flex:1; }
+.pbox pre { font-family:'SF Mono','Menlo','Courier New',monospace; font-size:11.5px; line-height:1.9; color:#e2e8f0; white-space:pre-wrap; word-wrap:break-word; }
+.or  { color:#c084fc; font-weight:700; }
+.gr  { color:#4ade80; }
+.bl  { color:#60a5fa; }
+.yl  { color:#fbbf24; font-weight:700; }
+.cm  { color:rgba(255,255,255,.3); font-style:italic; }
+.hdr { color:#c084fc; font-weight:700; letter-spacing:.04em; }
+
+.copy-btn {
+  align-self:flex-end;
+  background:rgba(168,85,247,.1);
+  border:1.5px solid rgba(168,85,247,.35);
+  color:#a855f7;
+  font-size:13px; font-family:inherit; font-weight:700;
+  padding:8px 20px; border-radius:20px; cursor:pointer;
+  transition:all .2s; margin-bottom:8px; flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+}
+.copy-btn:active { transform:scale(.95); }
+.copy-btn.ok { background:rgba(34,197,94,.12); border-color:rgba(34,197,94,.4); color:#4ade80; }
+
+.warn-box { background:rgba(168,85,247,.08); border:1.5px solid rgba(168,85,247,.3); border-radius:12px; padding:14px 16px; font-size:14px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:16px; flex-shrink:0; }
+.warn-box strong { color:#a855f7; }
+.hl { background:rgba(168,85,247,.08); border-left:4px solid #a855f7; border-radius:0 10px 10px 0; padding:14px 16px; font-size:15px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:14px; }
+
+.two   { display:grid; grid-template-columns:1fr; gap:12px; }
+.prices{ display:grid; grid-template-columns:1fr; gap:12px; }
+.pc    { border-radius:14px; padding:22px 18px; text-align:center; }
+.pc.s  { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); }
+.pc.m  { background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.35); }
+.pc.p  { background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.35); }
+.pc-lbl  { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.5); margin-bottom:8px; }
+.pc-amt  { font-size:40px; font-weight:900; margin-bottom:8px; }
+.pc-desc { font-size:15px; color:rgba(255,255,255,.55); line-height:1.8; }
+
+.planos { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.plano  { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:16px 14px; }
+.pl-ico { font-size:26px; margin-bottom:8px; }
+.pl-nom { font-size:14px; font-weight:900; margin-bottom:4px; }
+.pl-ing { font-size:11px; color:#a855f7; font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:6px; }
+.pl-dsc { font-size:13px; color:rgba(255,255,255,.55); line-height:1.5; }
+
+.hint { display:none; }
+
+/* Botón volver al inicio */
+.home-link {
+  position:fixed; top:10px; left:12px; z-index:400;
+  background:rgba(168,85,247,.12); border:1.5px solid rgba(168,85,247,.3);
+  color:#a855f7; width:40px; height:40px; border-radius:50%;
+  font-size:17px; display:flex; align-items:center; justify-content:center;
+  text-decoration:none; transition:all .2s; -webkit-tap-highlight-color:transparent;
+}
+.home-link:hover { background:rgba(168,85,247,.25); }
+
+/* Comparación de herramientas */
+.herr-row { display:flex; flex-direction:column; gap:10px; }
+.herr { display:flex; gap:12px; align-items:flex-start; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:12px; padding:14px; }
+.herr-ico { font-size:28px; flex-shrink:0; }
+.herr-name { font-size:15px; font-weight:900; margin-bottom:3px; }
+.herr-url { font-size:12px; color:#a855f7; margin-bottom:5px; }
+.herr-dsc  { font-size:14px; color:rgba(255,255,255,.55); line-height:1.5; }
+.herr-tag  { display:inline-block; font-size:11px; font-weight:700; padding:3px 8px; border-radius:10px; margin-top:5px; }
+.ht-gratis { background:rgba(34,197,94,.1); color:#4ade80; border:1px solid rgba(34,197,94,.2); }
+.ht-limite { background:rgba(245,158,11,.1); color:#fbbf24; border:1px solid rgba(245,158,11,.2); }
+
+@media (min-width:769px) {
+  .counter  { font-size:17px; top:16px; right:22px; }
+  .nav      { bottom:22px; gap:14px; }
+  .nb       { width:46px; height:46px; }
+  .dots     { display:flex; }
+  .slide    { padding:52px 72px 160px; }
+  .slide::after { height:90px; }
+  .hint     { display:block; position:fixed; bottom:22px; right:20px; font-size:13px; color:rgba(255,255,255,.2); }
+
+  .tag { font-size:14px; padding:6px 16px; margin-bottom:20px; }
+
+  .sec-n    { font-size:200px; }
+  .sec-t    { font-size:64px; }
+  .sec-s    { font-size:26px; }
+  .sec-time { font-size:20px; padding:10px 24px; margin-top:28px; }
+
+  .c-eye   { font-size:16px; letter-spacing:.15em; margin-bottom:24px; }
+  .c-title { font-size:80px; margin-bottom:28px; }
+  .c-sub   { font-size:26px; margin-bottom:40px; }
+  .badge   { font-size:18px; padding:10px 20px; border-radius:24px; }
+  .c-badges{ gap:12px; }
+
+  .st { font-size:52px; margin-bottom:12px; }
+  .ss { font-size:22px; margin-bottom:28px; }
+
+  .cards  { gap:18px; }
+  .c2     { grid-template-columns:1fr 1fr; }
+  .c3     { grid-template-columns:1fr 1fr 1fr; }
+  .card   { padding:28px; border-radius:18px; }
+  .c-ico  { font-size:40px; margin-bottom:14px; }
+  .c-ttl  { font-size:24px; margin-bottom:10px; }
+  .c-bdy  { font-size:19px; }
+  .c-url  { font-size:15px; margin-top:12px; }
+
+  .steps  { gap:14px; }
+  .step   { gap:22px; padding:22px 26px; border-radius:16px; }
+  .s-n    { min-width:42px; width:42px; height:42px; font-size:18px; }
+  .s-ttl  { font-size:24px; margin-bottom:7px; }
+  .s-dsc  { font-size:19px; }
+  .s-tip  { font-size:17px; padding:6px 14px; margin-top:9px; }
+
+  .tbox    { flex-direction:row; gap:20px; padding:24px 28px; margin-bottom:26px; border-radius:18px; }
+  .tb-ico  { font-size:48px; }
+  .tb-name { font-size:30px; }
+  .tb-url  { font-size:17px; margin:5px 0 8px; }
+  .tb-dsc  { font-size:20px; }
+
+  .tl-l   { min-width:90px; }
+  .tl-t   { font-size:17px; }
+  .tl-box { padding:18px 24px; }
+  .tl-lbl   { font-size:13px; }
+  .tl-name  { font-size:24px; }
+  .tl-tools { font-size:17px; }
+
+  .p-title { font-size:46px; }
+  .p-sub   { font-size:20px; }
+  .pbox    { padding:32px 40px; border-radius:18px; }
+  .pbox pre { font-size:17px; line-height:2; }
+
+  .warn-box { font-size:19px; padding:18px 22px; border-radius:14px; }
+  .hl       { font-size:20px; padding:18px 22px; }
+
+  .two    { grid-template-columns:1fr 1fr; gap:20px; }
+  .prices { grid-template-columns:1fr 1fr 1fr; gap:16px; }
+  .pc     { padding:32px 22px; border-radius:18px; }
+  .pc-amt { font-size:56px; }
+  .pc-desc{ font-size:18px; }
+  .pc-lbl { font-size:14px; margin-bottom:12px; }
+
+  .copy-btn { font-size:16px; padding:10px 26px; }
+
+  .planos { grid-template-columns:1fr 1fr; gap:16px; }
+  .plano  { padding:22px 18px; }
+  .pl-ico { font-size:36px; margin-bottom:12px; }
+  .pl-nom { font-size:18px; }
+  .pl-dsc { font-size:16px; }
+
+  .herr-row { gap:14px; }
+  .herr { gap:18px; padding:20px; border-radius:16px; }
+  .herr-ico { font-size:40px; }
+  .herr-name { font-size:20px; margin-bottom:5px; }
+  .herr-url { font-size:15px; }
+  .herr-dsc  { font-size:17px; }
+  .home-link { width:46px; height:46px; top:14px; left:14px; font-size:20px; }
+}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<div class="counter" id="cnt"></div>
+<div class="hint">← → navegar · F pantalla completa</div>
+<a href="index.html" class="home-link" title="Volver al inicio">⌂</a>
+
+<!-- SLIDE 1 — PORTADA -->
+<div class="slide active">
+  <div class="cover">
+    <div class="c-eye">Clase Práctica · 4 Horas · 100% Herramientas Gratuitas</div>
+    <div class="c-title">Crea Contenido<br><b>Cinematográfico</b><br>con IA</div>
+    <div class="c-sub">Genera videos de producto profesionales para negocios locales — sin cámara, sin producción, sin costo. Y véndelo como servicio.</div>
+    <div class="c-badges">
+      <div class="badge">🆓 Herramientas gratuitas</div>
+      <div class="badge">🎬 Sin cámara</div>
+      <div class="badge">🤖 100% IA</div>
+      <div class="badge">💰 Modelo de negocio real</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2 — OBJETIVOS -->
+<div class="slide">
+  <div class="tag to">Objetivos</div>
+  <div class="st">¿Qué vas a lograr hoy?</div>
+  <div class="ss">Al terminar tienes un video cinematográfico de producto listo para publicar y vender</div>
+  <div class="cards c2">
+    <div class="card"><div class="c-ico">🎯</div><div class="c-ttl">Elegir el producto</div><div class="c-bdy">Inspirarte en Pinterest, elegir un producto propio o de un cliente, y definir el concepto visual que lo haga irresistible.</div></div>
+    <div class="card"><div class="c-ico">🖼</div><div class="c-ttl">Generar las imágenes</div><div class="c-bdy">Crear imágenes cinematográficas del producto con Google Flow usando prompts tipo JSON. Planos de detalle, medio y gran angular.</div></div>
+    <div class="card"><div class="c-ico">🎬</div><div class="c-ttl">Armar el video</div><div class="c-bdy">Planear el storyboard con ChatGPT y generar el video final con el prompt JSON para Flow o Kling AI.</div></div>
+    <div class="card"><div class="c-ico">💰</div><div class="c-ttl">Vender el servicio</div><div class="c-bdy">Saber cuánto cobrar y cómo presentar el video a un negocio real para cerrar un contrato mensual de contenido.</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 3 — AGENDA -->
+<div class="slide">
+  <div class="tag tb">Agenda</div>
+  <div class="st">Las 4 horas de hoy</div>
+  <div class="ss">Cada bloque termina con algo concreto en tu mano</div>
+  <div class="tl">
+    <div class="tl-row">
+      <div class="tl-l"><div class="tl-t">Hora 1</div><div class="tl-ln"></div></div>
+      <div class="tl-box"><div class="tl-lbl">Bloque 1 — El Concepto</div><div class="tl-name">Elegir producto, configurar ChatGPT y definir el concepto económico</div><div class="tl-tools">Pinterest · ChatGPT · Gemini</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-l"><div class="tl-t">Hora 2</div><div class="tl-ln"></div></div>
+      <div class="tl-box"><div class="tl-lbl">Bloque 2 — Las Imágenes</div><div class="tl-name">Generar imágenes cinematográficas del producto con prompts JSON</div><div class="tl-tools">Google Flow · Kling AI</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-l"><div class="tl-t">Hora 3</div><div class="tl-ln"></div></div>
+      <div class="tl-box"><div class="tl-lbl">Bloque 3 — El Video</div><div class="tl-name">Storyboard con ChatGPT, prompt JSON para video y generación final</div><div class="tl-tools">ChatGPT · Google Flow · Kling AI</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-l"><div class="tl-t">Hora 4</div></div>
+      <div class="tl-box"><div class="tl-lbl">Bloque 4 — Publicar y Vender</div><div class="tl-name">Publicar en redes, hacer el pitch al negocio y definir el precio</div><div class="tl-tools">Instagram · TikTok · Propuesta</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 — HERRAMIENTAS -->
+<div class="slide">
+  <div class="tag tg">Herramientas</div>
+  <div class="st">Lo que vamos a usar hoy</div>
+  <div class="ss">Todo gratis · Sin instalar nada · Solo necesitas una cuenta en cada plataforma</div>
+  <div class="herr-row">
+    <div class="herr">
+      <div class="herr-ico">🤖</div>
+      <div>
+        <div class="herr-name">ChatGPT</div>
+        <div class="herr-url">chatgpt.com · Gratis</div>
+        <div class="herr-dsc">Genera el concepto creativo del producto, el briefing visual y el storyboard del video. Configura el proyecto con las instrucciones para toda la clase.</div>
+        <span class="herr-tag ht-gratis">Gratis</span>
+      </div>
+    </div>
+    <div class="herr">
+      <div class="herr-ico">✨</div>
+      <div>
+        <div class="herr-name">Google Flow</div>
+        <div class="herr-url">flow.google.com · 50 créditos/día</div>
+        <div class="herr-dsc">Genera las imágenes cinematográficas del producto y el video final. Acepta prompts estructurados en JSON para resultados muy precisos.</div>
+        <span class="herr-tag ht-limite">50 créditos/día · Úsalos con cuidado</span>
+      </div>
+    </div>
+    <div class="herr">
+      <div class="herr-ico">🎬</div>
+      <div>
+        <div class="herr-name">Kling AI</div>
+        <div class="herr-url">kling.ai · 66 créditos/día</div>
+        <div class="herr-dsc">Alternativa a Flow cuando los créditos se agoten. 66 créditos diarios que se recargan cada día. Text-to-image y text-to-video de muy alta calidad.</div>
+        <span class="herr-tag ht-gratis">66 créditos/día · Se recarga diario</span>
+      </div>
+    </div>
+    <div class="herr">
+      <div class="herr-ico">📌</div>
+      <div>
+        <div class="herr-name">Pinterest</div>
+        <div class="herr-url">pinterest.com · Gratis</div>
+        <div class="herr-dsc">Referencia visual para el estilo del producto. Busca "[producto] photography" para encontrar el look que quieres replicar con IA.</div>
+        <span class="herr-tag ht-gratis">Solo para inspiración</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 — SECCIÓN: EL CONCEPTO -->
+<div class="slide">
+  <div class="sec">
+    <div class="sec-n">01</div>
+    <div class="sec-t">El Concepto</div>
+    <div class="sec-s">Inspiración → Producto → Dirección Visual</div>
+    <div class="sec-time">⏱ Hora 1</div>
+  </div>
+</div>
+
+<!-- SLIDE 6 — INSPIRACIÓN EN PINTEREST -->
+<div class="slide">
+  <div class="tag to">Paso 1</div>
+  <div class="st">Inspiración en Pinterest</div>
+  <div class="ss">Primero elige el look visual, luego adaptas el producto</div>
+  <div class="steps">
+    <div class="step">
+      <div class="s-n">1</div>
+      <div>
+        <div class="s-ttl">Busca en Pinterest</div>
+        <div class="s-dsc">Abre pinterest.com y busca: <strong style="color:#a855f7">"[tipo de producto] photography"</strong> o <strong style="color:#a855f7">"[producto] aesthetic"</strong>. Por ejemplo: "coffee photography", "sneaker aesthetic", "jewelry editorial".</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">2</div>
+      <div>
+        <div class="s-ttl">Guarda 3–5 imágenes de referencia</div>
+        <div class="s-dsc">Elige imágenes que te inspiren. No las vas a copiar — son tu <strong>dirección visual</strong>. Guárdalas en tu teléfono o toma capturas.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">3</div>
+      <div>
+        <div class="s-ttl">Observa los detalles</div>
+        <div class="s-dsc">En cada imagen nota: ¿Qué tipo de luz? ¿Qué fondo? ¿Qué ángulos se ven? ¿Qué colores dominan? Eso es lo que le pedirás a Flow después.</div>
+        <div class="s-tip">💡 El objetivo: mejorar la producción de ese producto con IA — sin cámara, sin estudio, sin presupuesto</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">4</div>
+      <div>
+        <div class="s-ttl">Elige tu producto</div>
+        <div class="s-dsc">Puede ser un producto propio que quieras promocionar, o el producto estrella de un negocio local que sea tu potencial cliente.</div>
+        <div class="s-tip">💡 Mejor si ya conoces el negocio — más fácil cerrar la venta después</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 — CONFIGURAR CHATGPT -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag to">Paso 2</div>
+    <div class="p-title">⚙️ Configura tu Proyecto en ChatGPT</div>
+    <div class="p-sub">Crea un proyecto → pega estas instrucciones → ChatGPT sabrá exactamente qué hacer en toda la clase</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre><span class="hdr">CÓMO CONFIGURAR:</span>
+<span class="cm">chatgpt.com → Projects → + New Project → Instructions → pega esto</span>
+
+<span class="or">━━━ INSTRUCCIONES DEL PROYECTO ━━━</span>
+
+Eres un experto en creación de contenido visual y marketing de producto para Instagram y TikTok. Ayudas a crear videos cinematográficos de productos usando IA.
+
+<span class="gr">FLUJO DE TRABAJO QUE SEGUIREMOS:</span>
+1. Concepto económico del producto (qué comunicar, a quién, cómo)
+2. Briefing visual (estilo, luz, planos, paleta de colores)
+3. Prompts JSON para imágenes en Google Flow
+4. Storyboard del video (escenas, duración, movimiento)
+5. Prompt JSON para el video final en Flow
+
+<span class="gr">TU ROL EN CADA ETAPA:</span>
+- Datos del producto → genera el concepto creativo completo
+- Pido briefing → describe qué imágenes generar y en qué estilo
+- Imágenes listas → crea el storyboard del video
+- Momento del video → genera el prompt JSON exacto
+
+<span class="gr">REGLAS:</span>
+- Todo en español
+- Respuestas estructuradas y directas
+- Sin preguntas de vuelta — usa los datos que te dé y genera todo
+- Formato JSON cuando te lo pida, sin texto antes ni después
+- Piensa siempre: ¿este contenido haría que alguien pare de hacer scroll?
+- No más de 3 oraciones de explicación antes de cada entregable</pre>
+  </div>
+</div>
+
+<!-- SLIDE 8 — CONCEPTO ECONÓMICO -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag to">Paso 3</div>
+    <div class="p-title">💡 Concepto Económico del Producto</div>
+    <div class="p-sub">Pega esto en tu proyecto de ChatGPT — rellena los [corchetes] con los datos del producto elegido</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre><span class="gr">DATOS DEL PRODUCTO — rellena los [corchetes]:</span>
+- Producto: <span class="or">[NOMBRE DEL PRODUCTO]</span>
+- Negocio: <span class="or">[NOMBRE DEL NEGOCIO]</span>
+- Ciudad: <span class="or">[CIUDAD]</span>
+- Precio: <span class="or">[PRECIO]</span>
+- Cliente objetivo: <span class="or">[TIPO DE PERSONA]</span>
+- Qué lo hace especial: <span class="or">[UNA ORACIÓN]</span>
+- Estilo visual que me gustó en Pinterest: <span class="or">[DESCRIBE LAS IMÁGENES QUE ENCONTRASTE]</span>
+
+<span class="gr">Genera:</span>
+<span class="bl">1. CONCEPTO CREATIVO:</span> 2 oraciones que capturen la esencia visual del producto
+<span class="bl">2. PROPUESTA DE VALOR:</span> Por qué el cliente objetivo lo necesita (1 oración)
+<span class="bl">3. GANCHO EMOCIONAL:</span> La sensación exacta que debe transmitir el video
+<span class="bl">4. PALETA VISUAL:</span> 3 colores con hex (fondo, acento, detalle)
+<span class="bl">5. ESTILO CINEMATOGRÁFICO:</span> Tipo de luz, ambiente y composición en 1 oración
+<span class="bl">6. HEADLINE:</span> Una frase de impacto de máximo 6 palabras para el video</pre>
+  </div>
+</div>
+
+<!-- SLIDE 9 — SECCIÓN: LAS IMÁGENES -->
+<div class="slide">
+  <div class="sec">
+    <div class="sec-n">02</div>
+    <div class="sec-t">Las Imágenes</div>
+    <div class="sec-s">Prompts JSON → Flow → Planos de Referencia</div>
+    <div class="sec-time">⏱ Hora 2</div>
+  </div>
+</div>
+
+<!-- SLIDE 10 — PROMPT MAESTRO IMÁGENES -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag tb">Paso 4</div>
+    <div class="p-title">🖼 Prompt Maestro — Imágenes</div>
+    <div class="p-sub">Pega esto en ChatGPT → genera el prompt JSON listo para usar en Google Flow</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre><span class="cm">Usa el concepto creativo que generamos. Crea el prompt JSON
+para generar las imágenes del producto en Google Flow.</span>
+
+<span class="gr">El JSON debe tener esta estructura exacta:</span>
+
+<span class="bl">{
+  "producto": "</span><span class="or">[NOMBRE DEL PRODUCTO]</span><span class="bl">",
+  "marca": "</span><span class="or">[NOMBRE DEL NEGOCIO]</span><span class="bl">",
+  "estilo": "</span><span class="or">[cinematográfico / editorial / lifestyle / minimalista]</span><span class="bl">",
+  "iluminacion": "</span><span class="or">[luz lateral de estudio / luz natural suave / contraluz dramático]</span><span class="bl">",
+  "fondo": "</span><span class="or">[negro texturizado / mármol blanco / madera oscura / degradado oscuro]</span><span class="bl">",
+  "colores_acento": ["</span><span class="or">[COLOR HEX 1]</span><span class="bl">", "</span><span class="or">[COLOR HEX 2]</span><span class="bl">"],
+  "ambiente": "</span><span class="or">[elegante y premium / orgánico y natural / moderno y dinámico]</span><span class="bl">",
+  "calidad": "fotografía comercial de producto, 4K, hiperealista",
+  "planos": [
+    "primer plano extremo: textura y detalles del producto, macro",
+    "primer plano: producto completo centrado sobre fondo",
+    "plano medio: producto con elementos de contexto y ambiente",
+    "ángulo bajo 45°: dramático, aspiracional, luz de fondo"
+  ]
+}</span>
+
+<span class="cm">Genera el JSON completo con los datos reales del producto.
+Sin texto antes ni después del JSON.</span></pre>
+  </div>
+</div>
+
+<!-- SLIDE 11 — LOS PLANOS -->
+<div class="slide">
+  <div class="tag tb">Tipos de plano</div>
+  <div class="st">Los 4 planos que debes generar</div>
+  <div class="ss">Cada plano cumple una función diferente en el video final</div>
+  <div class="planos">
+    <div class="plano">
+      <div class="pl-ico">🔍</div>
+      <div class="pl-nom">Primer plano extremo</div>
+      <div class="pl-ing">Extreme Close-Up · ECU</div>
+      <div class="pl-dsc">Textura, detalles, logo, materiales. Crea curiosidad e impacto inmediato.</div>
+    </div>
+    <div class="plano">
+      <div class="pl-ico">📷</div>
+      <div class="pl-nom">Primer plano</div>
+      <div class="pl-ing">Close-Up · CU</div>
+      <div class="pl-dsc">El producto completo sobre el fondo elegido. La imagen "principal" del video.</div>
+    </div>
+    <div class="plano">
+      <div class="pl-ico">🖼</div>
+      <div class="pl-nom">Plano medio</div>
+      <div class="pl-ing">Medium Shot · MS</div>
+      <div class="pl-dsc">Producto con elementos de contexto: ingredientes, accesorios, ambiente. Da vida.</div>
+    </div>
+    <div class="plano">
+      <div class="pl-ico">🌅</div>
+      <div class="pl-nom">Ángulo bajo 45°</div>
+      <div class="pl-ing">Low Angle · Dramatic</div>
+      <div class="pl-dsc">Vista desde abajo, dramática y aspiracional. Hace que el producto parezca poderoso.</div>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-top:14px">💡 <strong>Genera al menos 2 variaciones de cada plano</strong> en Flow. Así tienes 8 imágenes para elegir las mejores 4-6 que usarás en el video.</div>
+</div>
+
+<!-- SLIDE 12 — TIPS FLOW + KLING -->
+<div class="slide">
+  <div class="tag ta">Créditos</div>
+  <div class="st">Cómo usar bien tus créditos</div>
+  <div class="ss">Flow da 50 créditos/día · Kling AI da 66 créditos/día — usa los dos</div>
+  <div class="steps">
+    <div class="step">
+      <div class="s-n">1</div>
+      <div>
+        <div class="s-ttl">Empieza en Flow (flow.google.com)</div>
+        <div class="s-dsc">Genera 1 imagen de prueba de cada plano para validar el estilo. Si no te gusta el resultado, ajusta el prompt antes de gastar más créditos.</div>
+        <div class="s-tip">💡 1 crédito = 1 imagen en Flow</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">2</div>
+      <div>
+        <div class="s-ttl">Una vez que el estilo está bien → genera variaciones</div>
+        <div class="s-dsc">Con el prompt que funciona, genera 2 variaciones de cada plano. Eso es 8 imágenes = 8 créditos. Te quedan créditos para el video.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">3</div>
+      <div>
+        <div class="s-ttl">Si se acaban los créditos de Flow → cambia a Kling AI</div>
+        <div class="s-dsc">Abre kling.ai, crea una cuenta gratuita. Tienes 66 créditos que se recargan cada día. Usa el mismo prompt en formato texto (sin las llaves JSON).</div>
+        <div class="s-tip">💡 Kling también hace text-to-video — guárdalo para el video final si Flow no alcanza</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">4</div>
+      <div>
+        <div class="s-ttl">Selecciona las mejores 4–6 imágenes</div>
+        <div class="s-dsc">De todas las que generaste, elige las mejores. Deben representar distintos planos. Esas son tus "fotos de referencia" para el video.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13 — SECCIÓN: EL VIDEO -->
+<div class="slide">
+  <div class="sec">
+    <div class="sec-n">03</div>
+    <div class="sec-t">El Video</div>
+    <div class="sec-s">Storyboard → Prompt JSON → Video Final</div>
+    <div class="sec-time">⏱ Hora 3</div>
+  </div>
+</div>
+
+<!-- SLIDE 14 — STORYBOARD -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag tp">Paso 5</div>
+    <div class="p-title">🎞 Storyboard con ChatGPT</div>
+    <div class="p-sub">Con tus imágenes de referencia listas, pide el storyboard a ChatGPT</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre><span class="cm">Pega esto en tu proyecto de ChatGPT cuando tengas las imágenes listas.</span>
+
+<span class="or">Con el concepto creativo que definimos, crea el storyboard para un
+video de producto de 20-25 segundos.</span>
+
+<span class="gr">Tengo disponibles estas imágenes de referencia:</span>
+- <span class="or">[Describe la imagen 1: "primer plano extremo de la textura, fondo negro"]</span>
+- <span class="or">[Describe la imagen 2: "producto completo centrado, luz lateral"]</span>
+- <span class="or">[Describe la imagen 3: "plano medio con ingredientes/contexto"]</span>
+- <span class="or">[Describe la imagen 4: "ángulo bajo dramático"]</span>
+
+<span class="gr">El storyboard debe tener:</span>
+<span class="bl">- 4 a 6 escenas numeradas</span>
+<span class="bl">- Para cada escena: número, duración (3-5 seg), descripción visual, movimiento de cámara</span>
+<span class="bl">- Que fluya de lo más detallado a lo más general</span>
+<span class="bl">- Cierre con el producto completo y el nombre de la marca</span>
+<span class="bl">- Pensando en formato vertical 9:16 para Reels y TikTok</span>
+
+<span class="cm">Después del storyboard, genera el prompt JSON para el video
+en el formato que ya te enseñé.</span></pre>
+  </div>
+</div>
+
+<!-- SLIDE 15 — PROMPT JSON VIDEO -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag tp">Paso 6</div>
+    <div class="p-title">🎬 Prompt JSON para el Video</div>
+    <div class="p-sub">ChatGPT genera este JSON usando el storyboard → pégalo en Google Flow para crear el video</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre><span class="cm">Este es el formato que ChatGPT generará basado en tu storyboard.
+Pégalo en Flow → genera el video completo.</span>
+
+<span class="bl">{
+  "concepto": "</span><span class="or">[CONCEPTO CREATIVO — generado por ChatGPT]</span><span class="bl">",
+  "duracion_total": "20 segundos",
+  "formato": "9:16 vertical",
+  "estilo": "</span><span class="or">[ESTILO CINEMATOGRÁFICO del briefing]</span><span class="bl">",
+  "escenas": [
+    {
+      "escena": 1,
+      "duracion": "4s",
+      "descripcion": "Primer plano extremo de </span><span class="or">[PRODUCTO]</span><span class="bl">. </span><span class="or">[ILUMINACIÓN]</span><span class="bl">. Fondo </span><span class="or">[FONDO]</span><span class="bl">.",
+      "camara": "zoom suave hacia adelante",
+      "referencia": "</span><span class="or">[imagen 1]</span><span class="bl">"
+    },
+    {
+      "escena": 2,
+      "duracion": "4s",
+      "descripcion": "Plano detalle de la textura de </span><span class="or">[PRODUCTO]</span><span class="bl">. Rotación lenta.",
+      "camara": "órbita lenta de izquierda a derecha",
+      "referencia": "</span><span class="or">[imagen 2]</span><span class="bl">"
+    },
+    {
+      "escena": 3,
+      "duracion": "5s",
+      "descripcion": "Plano medio de </span><span class="or">[PRODUCTO]</span><span class="bl"> con </span><span class="or">[ELEMENTOS DE CONTEXTO]</span><span class="bl">.",
+      "camara": "tilt down suave",
+      "referencia": "</span><span class="or">[imagen 3]</span><span class="bl">"
+    },
+    {
+      "escena": 4,
+      "duracion": "4s",
+      "descripcion": "Ángulo bajo 45° de </span><span class="or">[PRODUCTO]</span><span class="bl">. Luz de fondo dramática.",
+      "camara": "grúa ascendente lenta",
+      "referencia": "</span><span class="or">[imagen 4]</span><span class="bl">"
+    },
+    {
+      "escena": 5,
+      "duracion": "3s",
+      "descripcion": "Producto completo centrado. Nombre </span><span class="or">[NEGOCIO]</span><span class="bl"> aparece suavemente.",
+      "camara": "estático con zoom muy lento",
+      "referencia": "</span><span class="or">[imagen 5]</span><span class="bl">"
+    }
+  ]
+}</span>
+
+<span class="cm">⚠ Si tienes tu propio formato JSON → reemplaza este con el tuyo</span></pre>
+  </div>
+</div>
+
+<!-- SLIDE 16 — SECCIÓN: PUBLICAR Y VENDER -->
+<div class="slide">
+  <div class="sec">
+    <div class="sec-n">04</div>
+    <div class="sec-t">Publicar y Vender</div>
+    <div class="sec-s">Plataformas · Pitch · Precios</div>
+    <div class="sec-time">⏱ Hora 4</div>
+  </div>
+</div>
+
+<!-- SLIDE 17 — DÓNDE PUBLICAR -->
+<div class="slide">
+  <div class="tag tg">Publicar</div>
+  <div class="st">Dónde publicar el video</div>
+  <div class="ss">Formato 9:16 · 20-30 segundos · Sin texto en pantalla necesario</div>
+  <div class="cards c2">
+    <div class="card">
+      <div class="c-ico">📸</div>
+      <div class="c-ttl">Instagram Reels</div>
+      <div class="c-bdy">Mayor alcance orgánico para negocios locales. Etiqueta la ubicación y usa 3-5 hashtags de nicho. Mejor horario: 11am–1pm o 7pm–9pm.</div>
+    </div>
+    <div class="card">
+      <div class="c-ico">🎵</div>
+      <div class="c-ttl">TikTok</div>
+      <div class="c-bdy">Audiencia más joven y videos de producto viralizan bien. Añade texto en pantalla con el nombre del producto y precio al final.</div>
+    </div>
+    <div class="card">
+      <div class="c-ico">▶️</div>
+      <div class="c-ttl">YouTube Shorts</div>
+      <div class="c-bdy">Menos competencia que TikTok e Instagram. Ideal para negocios que quieren posicionamiento en búsquedas de Google.</div>
+    </div>
+    <div class="card">
+      <div class="c-ico">📤</div>
+      <div class="c-ttl">Enviar al cliente</div>
+      <div class="c-bdy">Comparte el video por WhatsApp antes de reunirte. "Este es el video que le haría para su negocio esta semana." Cierra antes de la reunión.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 18 — CÓMO VENDER -->
+<div class="slide">
+  <div class="tag tg">Ventas</div>
+  <div class="st">Cómo vender este servicio</div>
+  <div class="ss">Sus competidores muestran fotos. Usted mostrará cine.</div>
+  <div class="prices">
+    <div class="pc s">
+      <div class="pc-lbl">Video único</div>
+      <div class="pc-amt">$50–100</div>
+      <div class="pc-desc">1 video · 20-30 seg<br>Producto estrella<br>Entrega en 24 horas</div>
+    </div>
+    <div class="pc m">
+      <div class="pc-lbl">Pack mensual ⭐</div>
+      <div class="pc-amt">$200–350</div>
+      <div class="pc-desc">4 videos al mes<br>1 producto por video<br>Estrategia incluida</div>
+    </div>
+    <div class="pc s">
+      <div class="pc-lbl">Pack premium</div>
+      <div class="pc-amt">$400–600</div>
+      <div class="pc-desc">8 videos al mes<br>Múltiples productos<br>Gestión de publicación</div>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-top:14px">
+    💡 <strong>Pitch en 10 segundos:</strong> "Le muestro cómo se vería su [producto] en un video cinematográfico de 20 segundos, completamente gratis esta vez. Si le gusta, hablamos de hacer uno mensual."
+  </div>
+</div>
+
+<!-- SLIDE 19 — RESULTADO FINAL -->
+<div class="slide">
+  <div class="tag to">Resultado</div>
+  <div class="st">¿Qué tienes al terminar la clase?</div>
+  <div class="ss">Todo lo necesario para conseguir tu primer cliente de contenido</div>
+  <div class="steps">
+    <div class="step">
+      <div class="s-n">✓</div>
+      <div>
+        <div class="s-ttl">Proyecto ChatGPT configurado</div>
+        <div class="s-dsc">Listo para generar conceptos, briefings y storyboards de cualquier producto en minutos.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">✓</div>
+      <div>
+        <div class="s-ttl">4–6 imágenes cinematográficas del producto</div>
+        <div class="s-dsc">Plano detalle, primer plano, plano medio y ángulo dramático. Generadas con Flow o Kling AI.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">✓</div>
+      <div>
+        <div class="s-ttl">Video de 20–30 segundos listo para publicar</div>
+        <div class="s-dsc">Formato 9:16 para Reels y TikTok. Con storyboard coherente y movimientos de cámara cinematográficos.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">✓</div>
+      <div>
+        <div class="s-ttl">Tu propuesta de ventas</div>
+        <div class="s-dsc">Sabes cuánto cobrar, cómo hacer el pitch y tienes el video de muestra para enviárselo al cliente por WhatsApp hoy mismo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav">
+  <button class="nb" onclick="prev()">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="nb" onclick="next()">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const N = slides.length;
+let cur = 0;
+
+function go(i) {
+  slides[cur].classList.remove('active');
+  if (i < 0) i = N-1;
+  else if (i >= N) i = 0;
+  cur = i;
+  slides[cur].classList.add('active');
+  document.getElementById('prog').style.width = ((cur+1)/N*100)+'%';
+  document.getElementById('cnt').textContent = (cur+1)+' / '+N;
+  document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('on',j===cur));
+  window.scrollTo(0,0);
+}
+function next() { go(cur+1); }
+function prev() { go(cur-1); }
+
+const dc = document.getElementById('dots');
+for(let i=0;i<N;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' on':'');
+  d.onclick=()=>go(i);
+  dc.appendChild(d);
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+  if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+  if(e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen?.();}
+});
+
+let sx=0,sy=0;
+document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-sx;
+  const dy=e.changedTouches[0].clientY-sy;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>44){ dx>0?prev():next(); }
+},{passive:true});
+
+function copyPre(btn) {
+  const pre=btn.closest('.p-slide')?.querySelector('.pbox pre')||btn.closest('.pbox')?.querySelector('pre');
+  if(!pre)return;
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='✓ Copiado';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok');},2000);
+  });
+}
+
+go(0);
+</script>
+</body>
+</html>
