@@ -132,6 +132,12 @@ body {
 .pl-ing { font-size:11px; color:#a855f7; font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:6px; }
 .pl-dsc { font-size:13px; color:rgba(255,255,255,.55); line-height:1.5; }
 
+/* ── FLOW PROMPT BLOCKS ──────────────────── */
+.fpb { margin-bottom:12px; }
+.fpb-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.fpb-label { font-size:11px; font-weight:700; color:#a855f7; text-transform:uppercase; letter-spacing:.08em; }
+.fpb-head .copy-btn { margin-bottom:0; align-self:auto; padding:5px 12px; font-size:11px; flex-shrink:0; }
+
 .hint { display:none; }
 
 /* Botón volver al inicio */
@@ -758,37 +764,74 @@ Sin texto antes ni después del JSON.</span></pre>
 </div>
 
 <!-- SLIDE 11 — LOS PLANOS -->
-<div class="slide">
-  <div class="tag tb">Tipos de plano</div>
-  <div class="st">Los 4 planos que debes generar</div>
-  <div class="ss">Cada plano cumple una función diferente en el video final</div>
-  <div class="planos">
-    <div class="plano">
-      <div class="pl-ico">🔍</div>
-      <div class="pl-nom">Primer plano extremo</div>
-      <div class="pl-ing">Extreme Close-Up · ECU</div>
-      <div class="pl-dsc">Textura, detalles, logo, materiales. Crea curiosidad e impacto inmediato.</div>
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag tb">Paso 4 · Variaciones</div>
+    <div class="p-title">📐 Genera los 4 ángulos del producto</div>
+    <div class="p-sub">Ya tienes la foto con el estilo correcto · Copia uno de estos → pégalo en Flow → genera esa variación</div>
+  </div>
+  <div class="pbox" style="overflow-y:auto;flex:1">
+    <div class="fpb">
+      <div class="fpb-head">
+        <span class="fpb-label">🔍 Primer plano extremo — ECU</span>
+        <button class="copy-btn" onclick="copyFpb(this)">Copiar</button>
+      </div>
+      <pre>Con la misma dirección artística y producto de la fotografía anterior,
+genera una nueva versión cambiando solo el ángulo y encuadre:
+
+PLANO: Primer plano extremo (Extreme Close-Up / ECU)
+- El producto llena el 85-90% del frame
+- Enfoque en textura, material, logo, etiqueta — nitidez máxima
+- Profundidad de campo mínima — fondo completamente desenfocado
+- Ángulo de cámara: al nivel del producto o ligeramente elevado
+- Objetivo: revelar la calidad del material, crear curiosidad inmediata</pre>
     </div>
-    <div class="plano">
-      <div class="pl-ico">📷</div>
-      <div class="pl-nom">Primer plano</div>
-      <div class="pl-ing">Close-Up · CU</div>
-      <div class="pl-dsc">El producto completo sobre el fondo elegido. La imagen "principal" del video.</div>
+    <div class="fpb">
+      <div class="fpb-head">
+        <span class="fpb-label">📷 Primer plano — CU</span>
+        <button class="copy-btn" onclick="copyFpb(this)">Copiar</button>
+      </div>
+      <pre>Con la misma dirección artística y producto de la fotografía anterior,
+genera una nueva versión cambiando solo el ángulo y encuadre:
+
+PLANO: Primer plano (Close-Up / CU)
+- El producto completo visible, ocupa el 70% del frame
+- Todo el producto perfectamente nítido de arriba a abajo
+- Profundidad de campo moderada — fondo suavemente desenfocado
+- Ángulo de cámara: nivel del producto, perspectiva neutra
+- Objetivo: imagen principal del anuncio, el producto en todo su esplendor</pre>
     </div>
-    <div class="plano">
-      <div class="pl-ico">🖼</div>
-      <div class="pl-nom">Plano medio</div>
-      <div class="pl-ing">Medium Shot · MS</div>
-      <div class="pl-dsc">Producto con elementos de contexto: ingredientes, accesorios, ambiente. Da vida.</div>
+    <div class="fpb">
+      <div class="fpb-head">
+        <span class="fpb-label">🖼 Plano medio — MS</span>
+        <button class="copy-btn" onclick="copyFpb(this)">Copiar</button>
+      </div>
+      <pre>Con la misma dirección artística y producto de la fotografía anterior,
+genera una nueva versión cambiando solo el ángulo y encuadre:
+
+PLANO: Plano medio (Medium Shot / MS)
+- Producto con props y elementos de contexto reinterpretados de la referencia
+- Espacio suficiente para mostrar la escena y el ambiente completo
+- Profundidad de campo más amplia — el entorno forma parte de la historia
+- Los props no se copian de la referencia: se adaptan al producto del cliente
+- Objetivo: contar la historia del producto en su contexto natural</pre>
     </div>
-    <div class="plano">
-      <div class="pl-ico">🌅</div>
-      <div class="pl-nom">Ángulo bajo 45°</div>
-      <div class="pl-ing">Low Angle · Dramatic</div>
-      <div class="pl-dsc">Vista desde abajo, dramática y aspiracional. Hace que el producto parezca poderoso.</div>
+    <div class="fpb">
+      <div class="fpb-head">
+        <span class="fpb-label">🌅 Ángulo bajo 45° — Low Angle</span>
+        <button class="copy-btn" onclick="copyFpb(this)">Copiar</button>
+      </div>
+      <pre>Con la misma dirección artística y producto de la fotografía anterior,
+genera una nueva versión cambiando solo el ángulo y encuadre:
+
+PLANO: Ángulo bajo 45° (Low Angle / Dramatic)
+- Cámara por debajo del nivel del producto, apuntando hacia arriba
+- Perspectiva dramática y aspiracional — el producto se ve poderoso
+- Luz de fondo más intensa: crea aura o silueta alrededor del producto
+- Fondo: espacio abierto o degradado que da profundidad hacia arriba
+- Objetivo: sensación premium, imponente y deseable</pre>
     </div>
   </div>
-  <div class="warn-box" style="margin-top:14px">💡 <strong>Genera al menos 2 variaciones de cada plano</strong> en Flow. Así tienes 8 imágenes para elegir las mejores 4-6 que usarás en el video.</div>
 </div>
 
 <!-- SLIDE 12 — TIPS FLOW + KLING -->
@@ -1072,6 +1115,14 @@ document.addEventListener('touchend',e=>{
   if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>44){ dx>0?prev():next(); }
 },{passive:true});
 
+function copyFpb(btn) {
+  const pre=btn.closest('.fpb').querySelector('pre');
+  if(!pre)return;
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='✓';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok');},2000);
+  });
+}
 function copyPre(btn) {
   const pre=btn.closest('.p-slide')?.querySelector('.pbox pre')||btn.closest('.pbox')?.querySelector('pre');
   if(!pre)return;
