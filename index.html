@@ -312,25 +312,7 @@ body {
   .dc-n { min-width:auto; }
   .home-btn { width:46px; height:46px; top:14px; left:14px; font-size:20px; }
   .day-badge { top:16px; left:66px; font-size:13px; }
-  .course-cards { flex-direction:row; }
-  .cc { flex:1; }
-  .cc-ico { font-size:48px; }
-  .cc-title { font-size:26px; }
-  .cc-desc { font-size:16px; }
 }
-
-/* ── SELECTOR DE CURSO ───────────────────── */
-.course-cards { display:flex; flex-direction:column; gap:12px; width:100%; }
-.cc {
-  background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.1);
-  border-radius:16px; padding:24px 18px; cursor:pointer; transition:all .2s;
-  text-align:left; -webkit-tap-highlight-color:transparent;
-}
-.cc:hover,.cc:active { border-color:rgba(168,85,247,.5); background:rgba(168,85,247,.08); }
-.cc-ico   { font-size:38px; margin-bottom:10px; }
-.cc-title { font-size:20px; font-weight:900; margin-bottom:6px; }
-.cc-desc  { font-size:13px; color:rgba(255,255,255,.5); line-height:1.55; margin-bottom:10px; }
-.cc-tag   { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; background:rgba(168,85,247,.1); border:1px solid rgba(168,85,247,.3); border-radius:20px; color:#a855f7; }
 </style>
 </head>
 <body>
@@ -338,32 +320,8 @@ body {
 <div class="counter" id="cnt"></div>
 <div class="hint">← → navegar · F pantalla completa</div>
 
-<!-- SELECTOR DE CURSO (se muestra primero) -->
-<div class="ov" id="courseOv">
-  <div class="ov-box">
-    <div>
-      <div class="ov-title">Marketing con IA</div>
-      <div class="ov-sub">Selecciona el curso que quieres impartir</div>
-    </div>
-    <div class="course-cards">
-      <div class="cc" onclick="selectCourse('web')">
-        <div class="cc-ico">🌐</div>
-        <div class="cc-title">Páginas Web</div>
-        <div class="cc-desc">Crea y vende landing pages con video e IA para negocios locales</div>
-        <div><span class="cc-tag">ChatGPT · Stitch · AI Studio · Netlify</span></div>
-      </div>
-      <div class="cc" onclick="selectCourse('contenido')">
-        <div class="cc-ico">🎬</div>
-        <div class="cc-title">Contenido con IA</div>
-        <div class="cc-desc">Genera videos cinematográficos de productos para vender como servicio</div>
-        <div><span class="cc-tag">ChatGPT · Flow · Kling AI</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- SELECTOR DE MODO -->
-<div class="ov" id="modeOv" style="display:none">
+<div class="ov" id="modeOv">
   <div class="ov-box">
     <div>
       <div class="ov-title">Marketing con IA</div>
@@ -1284,15 +1242,6 @@ tienen fondos transparentes o sin color de fondo definido.
 <div class="day-badge" id="dayBadge"></div>
 
 <script>
-function selectCourse(c) {
-  document.getElementById('courseOv').style.display = 'none';
-  if (c === 'web') {
-    document.getElementById('modeOv').style.display = 'flex';
-  } else {
-    window.location.href = 'contenido-ia.html';
-  }
-}
-
 const slides = document.querySelectorAll('.slide');
 const N = slides.length;
 let cur = 0;
