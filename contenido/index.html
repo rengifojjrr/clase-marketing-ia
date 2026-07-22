@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contenido con IA — Clase Práctica</title>
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:system-ui,-apple-system,sans-serif;
+  background:#0f0a1e; color:#fff;
+  height:100vh; overflow:hidden;
+  user-select:none; -webkit-user-select:none;
+}
+.progress { position:fixed; top:0; left:0; height:3px; background:#a855f7; z-index:300; transition:width .35s; }
+.counter  { position:fixed; top:12px; right:14px; font-size:14px; font-weight:700; color:rgba(255,255,255,.4); z-index:300; }
+.nav { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); display:flex; gap:10px; align-items:center; z-index:300; }
+.nb  { width:44px; height:44px; border-radius:50%; border:2px solid rgba(255,255,255,.2); background:rgba(255,255,255,.07); color:#fff; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:all .2s; -webkit-tap-highlight-color:transparent; }
+.nb:hover, .nb:active { background:#a855f7; border-color:#a855f7; }
+.dots { display:none; gap:6px; }
+.dot  { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.2); cursor:pointer; transition:all .25s; }
+.dot.on { background:#a855f7; width:20px; border-radius:4px; }
+
+.slide { position:absolute; inset:0; display:none; padding:72px 18px 140px; overflow-y:auto; overflow-x:hidden; }
+.slide.active { display:flex; flex-direction:column; }
+.slide::after {
+  content:''; position:fixed; bottom:0; left:0; right:0; height:72px;
+  background:linear-gradient(to top,#0f0a1e 60%,transparent);
+  pointer-events:none; z-index:100;
+}
+
+.tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:5px 12px; border-radius:20px; margin-bottom:14px; }
+.to { background:rgba(168,85,247,.15); color:#a855f7; border:1px solid rgba(168,85,247,.3); }
+.tb { background:rgba(59,130,246,.15);  color:#60a5fa; border:1px solid rgba(59,130,246,.3); }
+.tg { background:rgba(34,197,94,.15);   color:#4ade80; border:1px solid rgba(34,197,94,.3); }
+.tp { background:rgba(168,85,247,.15);  color:#c084fc; border:1px solid rgba(168,85,247,.3); }
+.tr { background:rgba(239,68,68,.15);   color:#f87171; border:1px solid rgba(239,68,68,.3); }
+.ta { background:rgba(245,158,11,.15);  color:#fbbf24; border:1px solid rgba(245,158,11,.3); }
+
+.sec { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+.sec-n    { font-size:80px;  font-weight:900; color:rgba(168,85,247,.09); line-height:1; }
+.sec-t    { font-size:36px;  font-weight:900; margin-bottom:10px; }
+.sec-s    { font-size:16px;  color:rgba(255,255,255,.5); }
+.sec-time { margin-top:20px; padding:8px 18px; background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.3); border-radius:30px; font-size:15px; color:#a855f7; font-weight:700; }
+
+.cover   { flex:1; display:flex; flex-direction:column; justify-content:center; }
+.c-eye   { font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#a855f7; margin-bottom:14px; font-weight:700; line-height:1.5; }
+.c-title { font-size:32px; font-weight:900; line-height:1.1; margin-bottom:16px; word-break:break-word; }
+.c-title b { color:#a855f7; }
+.c-sub   { font-size:16px; color:rgba(255,255,255,.6); margin-bottom:24px; line-height:1.55; }
+.c-badges { display:flex; gap:8px; flex-wrap:wrap; }
+.badge   { font-size:13px; padding:7px 13px; border-radius:20px; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.65); }
+
+.st { font-size:24px; font-weight:900; margin-bottom:8px;  line-height:1.15; }
+.ss { font-size:15px; color:rgba(255,255,255,.5); margin-bottom:18px; line-height:1.45; }
+
+.cards { display:grid; gap:10px; }
+.c2, .c3 { grid-template-columns:1fr; }
+.card  { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:18px; }
+.c-ico { font-size:28px; margin-bottom:10px; }
+.c-ttl { font-size:17px; font-weight:700; color:#fff; margin-bottom:7px; }
+.c-bdy { font-size:15px; color:rgba(255,255,255,.6); line-height:1.6; }
+.c-url { display:inline-block; font-size:13px; margin-top:10px; padding:3px 10px; background:rgba(34,197,94,.1); color:#4ade80; border-radius:10px; border:1px solid rgba(34,197,94,.2); }
+
+.steps { display:flex; flex-direction:column; gap:10px; }
+.step  { display:flex; gap:14px; align-items:flex-start; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:16px; }
+.s-n   { min-width:32px; width:32px; height:32px; border-radius:50%; background:#a855f7; font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.s-ttl { font-size:16px; font-weight:700; color:#fff; margin-bottom:5px; }
+.s-dsc { font-size:15px; color:rgba(255,255,255,.6); line-height:1.6; }
+.s-tip { display:inline-block; font-size:13px; margin-top:7px; padding:4px 10px; background:rgba(168,85,247,.1); border-radius:7px; color:#a855f7; line-height:1.4; }
+
+.tbox    { background:rgba(168,85,247,.07); border:1.5px solid rgba(168,85,247,.25); border-radius:14px; padding:16px; margin-bottom:18px; display:flex; flex-direction:column; gap:10px; }
+.tb-ico  { font-size:32px; line-height:1; }
+.tb-name { font-size:22px; font-weight:900; }
+.tb-url  { font-size:13px; color:#a855f7; margin:3px 0 5px; }
+.tb-dsc  { font-size:15px; color:rgba(255,255,255,.65); line-height:1.6; }
+
+.tl     { display:flex; flex-direction:column; gap:6px; }
+.tl-row { display:flex; gap:14px; }
+.tl-l   { min-width:52px; display:flex; flex-direction:column; align-items:center; }
+.tl-t   { font-size:13px; font-weight:700; color:#a855f7; white-space:nowrap; }
+.tl-ln  { flex:1; width:2px; background:rgba(168,85,247,.2); margin:4px 0; }
+.tl-box { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.09); border-radius:10px; padding:12px 14px; flex:1; margin-bottom:8px; }
+.tl-lbl   { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:#a855f7; margin-bottom:4px; }
+.tl-name  { font-size:17px; font-weight:700; }
+.tl-tools { font-size:13px; color:rgba(255,255,255,.4); margin-top:4px; }
+
+.p-slide { flex-direction:column; }
+.p-head  { margin-bottom:10px; flex-shrink:0; }
+.p-title { font-size:24px; font-weight:900; margin-bottom:4px; }
+.p-sub   { font-size:14px; color:rgba(255,255,255,.5); }
+.pbox    { background:#0c0518; border:1.5px solid rgba(255,255,255,.12); border-radius:14px; padding:16px 18px; overflow-y:auto; flex:1; }
+.pbox pre { font-family:'SF Mono','Menlo','Courier New',monospace; font-size:11.5px; line-height:1.9; color:#e2e8f0; white-space:pre-wrap; word-wrap:break-word; }
+.or  { color:#c084fc; font-weight:700; }
+.gr  { color:#4ade80; }
+.bl  { color:#60a5fa; }
+.yl  { color:#fbbf24; font-weight:700; }
+.cm  { color:rgba(255,255,255,.3); font-style:italic; }
+.hdr { color:#c084fc; font-weight:700; letter-spacing:.04em; }
+
+.copy-btn {
+  align-self:flex-end;
+  background:rgba(168,85,247,.1);
+  border:1.5px solid rgba(168,85,247,.35);
+  color:#a855f7;
+  font-size:13px; font-family:inherit; font-weight:700;
+  padding:8px 20px; border-radius:20px; cursor:pointer;
+  transition:all .2s; margin-bottom:8px; flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+}
+.copy-btn:active { transform:scale(.95); }
+.copy-btn.ok { background:rgba(34,197,94,.12); border-color:rgba(34,197,94,.4); color:#4ade80; }
+
+.warn-box { background:rgba(168,85,247,.08); border:1.5px solid rgba(168,85,247,.3); border-radius:12px; padding:14px 16px; font-size:14px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:16px; flex-shrink:0; }
+.warn-box strong { color:#a855f7; }
+.hl { background:rgba(168,85,247,.08); border-left:4px solid #a855f7; border-radius:0 10px 10px 0; padding:14px 16px; font-size:15px; color:rgba(255,255,255,.85); line-height:1.6; margin-bottom:14px; }
+
+.two   { display:grid; grid-template-columns:1fr; gap:12px; }
+.prices{ display:grid; grid-template-columns:1fr; gap:12px; }
+.pc    { border-radius:14px; padding:22px 18px; text-align:center; }
+.pc.s  { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); }
+.pc.m  { background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.35); }
+.pc.p  { background:rgba(168,85,247,.1); border:1.5px solid rgba(168,85,247,.35); }
+.pc-lbl  { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.5); margin-bottom:8px; }
+.pc-amt  { font-size:40px; font-weight:900; margin-bottom:8px; }
+.pc-desc { font-size:15px; color:rgba(255,255,255,.55); line-height:1.8; }
+
+.planos { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.plano  { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:16px 14px; }
+.pl-ico { font-size:26px; margin-bottom:8px; }
+.pl-nom { font-size:14px; font-weight:900; margin-bottom:4px; }
+.pl-ing { font-size:11px; color:#a855f7; font-weight:700; text-transform:uppercase; letter-spacing:.07em; margin-bottom:6px; }
+.pl-dsc { font-size:13px; color:rgba(255,255,255,.55); line-height:1.5; }
+
+/* ── FLOW PROMPT BLOCKS ──────────────────── */
+.fpb { margin-bottom:12px; }
+.fpb-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.fpb-label { font-size:11px; font-weight:700; color:#a855f7; text-transform:uppercase; letter-spacing:.08em; }
+.fpb-head .copy-btn { margin-bottom:0; align-self:auto; padding:5px 12px; font-size:11px; flex-shrink:0; }
+
+.hint { display:none; }
+
+/* Botón volver al inicio */
+.home-link {
+  position:fixed; top:10px; left:12px; z-index:400;
+  background:rgba(168,85,247,.12); border:1.5px solid rgba(168,85,247,.3);
+  color:#a855f7; width:40px; height:40px; border-radius:50%;
+  font-size:17px; display:flex; align-items:center; justify-content:center;
+  text-decoration:none; transition:all .2s; -webkit-tap-highlight-color:transparent;
+}
+.home-link:hover { background:rgba(168,85,247,.25); }
+
+/* Comparación de herramientas */
+.herr-row { display:flex; flex-direction:column; gap:10px; }
+.herr { display:flex; gap:12px; align-items:flex-start; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:12px; padding:14px; }
+.herr-ico { font-size:28px; flex-shrink:0; }
+.herr-name { font-size:15px; font-weight:900; margin-bottom:3px; }
+.herr-url { font-size:12px; color:#a855f7; margin-bottom:5px; }
+.herr-dsc  { font-size:14px; color:rgba(255,255,255,.55); line-height:1.5; }
+.herr-tag  { display:inline-block; font-size:11px; font-weight:700; padding:3px 8px; border-radius:10px; margin-top:5px; }
+.ht-gratis { background:rgba(34,197,94,.1); color:#4ade80; border:1px solid rgba(34,197,94,.2); }
+.ht-limite { background:rgba(245,158,11,.1); color:#fbbf24; border:1px solid rgba(245,158,11,.2); }
+
+@media (min-width:769px) {
+  .counter  { font-size:17px; top:16px; right:22px; }
+  .nav      { bottom:22px; gap:14px; }
+  .nb       { width:46px; height:46px; }
+  .dots     { display:flex; }
+  .slide    { padding:52px 72px 160px; }
+  .slide::after { height:90px; }
+  .hint     { display:block; position:fixed; bottom:22px; right:20px; font-size:13px; color:rgba(255,255,255,.2); }
+
+  .tag { font-size:14px; padding:6px 16px; margin-bottom:20px; }
+
+  .sec-n    { font-size:200px; }
+  .sec-t    { font-size:64px; }
+  .sec-s    { font-size:26px; }
+  .sec-time { font-size:20px; padding:10px 24px; margin-top:28px; }
+
+  .c-eye   { font-size:16px; letter-spacing:.15em; margin-bottom:24px; }
+  .c-title { font-size:80px; margin-bottom:28px; }
+  .c-sub   { font-size:26px; margin-bottom:40px; }
+  .badge   { font-size:18px; padding:10px 20px; border-radius:24px; }
+  .c-badges{ gap:12px; }
+
+  .st { font-size:52px; margin-bottom:12px; }
+  .ss { font-size:22px; margin-bottom:28px; }
+
+  .cards  { gap:18px; }
+  .c2     { grid-template-columns:1fr 1fr; }
+  .c3     { grid-template-columns:1fr 1fr 1fr; }
+  .card   { padding:28px; border-radius:18px; }
+  .c-ico  { font-size:40px; margin-bottom:14px; }
+  .c-ttl  { font-size:24px; margin-bottom:10px; }
+  .c-bdy  { font-size:19px; }
+  .c-url  { font-size:15px; margin-top:12px; }
+
+  .steps  { gap:14px; }
+  .step   { gap:22px; padding:22px 26px; border-radius:16px; }
+  .s-n    { min-width:42px; width:42px; height:42px; font-size:18px; }
+  .s-ttl  { font-size:24px; margin-bottom:7px; }
+  .s-dsc  { font-size:19px; }
+  .s-tip  { font-size:17px; padding:6px 14px; margin-top:9px; }
+
+  .tbox    { flex-direction:row; gap:20px; padding:24px 28px; margin-bottom:26px; border-radius:18px; }
+  .tb-ico  { font-size:48px; }
+  .tb-name { font-size:30px; }
+  .tb-url  { font-size:17px; margin:5px 0 8px; }
+  .tb-dsc  { font-size:20px; }
+
+  .tl-l   { min-width:90px; }
+  .tl-t   { font-size:17px; }
+  .tl-box { padding:18px 24px; }
+  .tl-lbl   { font-size:13px; }
+  .tl-name  { font-size:24px; }
+  .tl-tools { font-size:17px; }
+
+  .p-title { font-size:46px; }
+  .p-sub   { font-size:20px; }
+  .pbox    { padding:32px 40px; border-radius:18px; }
+  .pbox pre { font-size:17px; line-height:2; }
+
+  .warn-box { font-size:19px; padding:18px 22px; border-radius:14px; }
+  .hl       { font-size:20px; padding:18px 22px; }
+
+  .two    { grid-template-columns:1fr 1fr; gap:20px; }
+  .prices { grid-template-columns:1fr 1fr 1fr; gap:16px; }
+  .pc     { padding:32px 22px; border-radius:18px; }
+  .pc-amt { font-size:56px; }
+  .pc-desc{ font-size:18px; }
+  .pc-lbl { font-size:14px; margin-bottom:12px; }
+
+  .copy-btn { font-size:16px; padding:10px 26px; }
+
+  .planos { grid-template-columns:1fr 1fr; gap:16px; }
+  .plano  { padding:22px 18px; }
+  .pl-ico { font-size:36px; margin-bottom:12px; }
+  .pl-nom { font-size:18px; }
+  .pl-dsc { font-size:16px; }
+
+  .herr-row { gap:14px; }
+  .herr { gap:18px; padding:20px; border-radius:16px; }
+  .herr-ico { font-size:40px; }
+  .herr-name { font-size:20px; margin-bottom:5px; }
+  .herr-url { font-size:15px; }
+  .herr-dsc  { font-size:17px; }
+  .home-link { width:46px; height:46px; top:14px; left:14px; font-size:20px; }
+
+  .fd-box  { padding:20px 22px; }
+  .fd-ico  { font-size:36px; margin-bottom:10px; }
+  .fd-lbl  { font-size:20px; margin-bottom:6px; }
+  .fd-src  { font-size:15px; }
+  .fd-arrow { font-size:36px; }
+  .fd-merge { font-size:28px; }
+}
+
+/* ── FLOW DIAGRAM ──────────────────── */
+.flow-diag { display:flex; flex-direction:column; align-items:center; gap:6px; padding:4px 0; }
+.fd-row    { display:flex; gap:10px; width:100%; justify-content:center; }
+.fd-box    { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:14px 12px; text-align:center; flex:1; }
+.fd-input  { border-color:rgba(168,85,247,.35); background:rgba(168,85,247,.07); }
+.fd-gpt    { border-color:rgba(96,165,250,.35); background:rgba(96,165,250,.07); }
+.fd-master { border-color:rgba(168,85,247,.5); background:rgba(168,85,247,.15); }
+.fd-result { border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.07); }
+.fd-ico    { font-size:26px; margin-bottom:6px; }
+.fd-lbl    { font-size:13px; font-weight:900; line-height:1.3; margin-bottom:3px; }
+.fd-src    { font-size:11px; color:rgba(255,255,255,.5); }
+.fd-arrow  { font-size:22px; color:#a855f7; line-height:1; }
+.fd-merge  { font-size:20px; color:rgba(255,255,255,.3); line-height:1; }
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<div class="counter" id="cnt"></div>
+<div class="hint">← → navegar · F pantalla completa</div>
+<a href="../" class="home-link" title="Volver al inicio">⌂</a>
+
+<!-- SLIDE 1 — PORTADA -->
+<div class="slide active">
+  <div class="cover">
+    <div class="c-eye">Clase Práctica · 4 Horas · 100% Herramientas Gratuitas</div>
+    <div class="c-title">Crea Contenido<br><b>Cinematográfico</b><br>con IA</div>
+    <div class="c-sub">Genera videos de producto profesionales para negocios locales — sin cámara, sin producción, sin costo. Y véndelo como servicio.</div>
+    <div class="c-badges">
+      <div class="badge">🆓 Herramientas gratuitas</div>
+      <div class="badge">🎬 Sin cámara</div>
+      <div class="badge">🤖 100% IA</div>
+      <div class="badge">💰 Modelo de negocio real</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2 — OBJETIVOS -->
+<div class="slide">
+  <div class="tag to">Objetivos</div>
+  <div class="st">¿Qué vas a lograr hoy?</div>
+  <div class="ss">Al terminar tienes un video cinematográfico de producto listo para publicar y vender</div>
+  <div class="cards c2">
+    <div class="card"><div class="c-ico">🎯</div><div class="c-ttl">Elegir el producto</div><div class="c-bdy">Inspirarte en Pinterest, elegir un producto propio o de un cliente, y definir el concepto visual que lo haga irresistible.</div></div>
+    <div class="card"><div class="c-ico">🖼</div><div class="c-ttl">Generar las imágenes</div><div class="c-bdy">Crear imágenes cinematográficas del producto con Google Flow usando prompts tipo JSON. Planos de detalle, medio y gran angular.</div></div>
+    <div class="card"><div class="c-ico">🎬</div><div class="c-ttl">Armar el video</div><div class="c-bdy">Planear el storyboard con ChatGPT y generar el video final con el prompt JSON para Flow o Kling AI.</div></div>
+    <div class="card"><div class="c-ico">💰</div><div class="c-ttl">Vender el servicio</div><div class="c-bdy">Saber cuánto cobrar y cómo presentar el video a un negocio real para cerrar un contrato mensual de contenido.</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 3 — AGENDA -->
+<div class="slide">
+  <div class="tag tb">Agenda</div>
+  <div class="st">Las 4 horas de hoy</div>
+  <div class="ss">Cada bloque termina con algo concreto en tu mano</div>
+  <div class="tl">
+    <div class="tl-row">
+      <div class="tl-l"><div class="tl-t">Hora 1</div><div class="tl-ln"></div></div>
+      <div class="tl-box"><div class="tl-lbl">Bloque 1 — El Concepto</div><div class="tl-name">Elegir producto, configurar ChatGPT y definir el concepto económico</div><div class="tl-tools">Pinterest · ChatGPT · Gemini</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-l"><div class="tl-t">Hora 2</div><div class="tl-ln"></div></div>
+      <div class="tl-box"><div class="tl-lbl">Bloque 2 — Las Imágenes</div><div class="tl-name">Generar imágenes cinematográficas del producto con prompts JSON</div><div class="tl-tools">Google Flow · Kling AI</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-l"><div class="tl-t">Hora 3</div><div class="tl-ln"></div></div>
+      <div class="tl-box"><div class="tl-lbl">Bloque 3 — El Video</div><div class="tl-name">Storyboard con ChatGPT, prompt JSON para video y generación final</div><div class="tl-tools">ChatGPT · Google Flow · Kling AI</div></div>
+    </div>
+    <div class="tl-row">
+      <div class="tl-l"><div class="tl-t">Hora 4</div></div>
+      <div class="tl-box"><div class="tl-lbl">Bloque 4 — Publicar y Vender</div><div class="tl-name">Publicar en redes, hacer el pitch al negocio y definir el precio</div><div class="tl-tools">Instagram · TikTok · Propuesta</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 — HERRAMIENTAS -->
+<div class="slide">
+  <div class="tag tg">Herramientas</div>
+  <div class="st">Lo que vamos a usar hoy</div>
+  <div class="ss">Todo gratis · Sin instalar nada · Solo necesitas una cuenta en cada plataforma</div>
+  <div class="herr-row">
+    <div class="herr">
+      <div class="herr-ico">🤖</div>
+      <div>
+        <div class="herr-name">ChatGPT</div>
+        <div class="herr-url">chatgpt.com · Gratis</div>
+        <div class="herr-dsc">Genera el concepto creativo del producto, el briefing visual y el storyboard del video. Configura el proyecto con las instrucciones para toda la clase.</div>
+        <span class="herr-tag ht-gratis">Gratis</span>
+      </div>
+    </div>
+    <div class="herr">
+      <div class="herr-ico">✨</div>
+      <div>
+        <div class="herr-name">Google Flow</div>
+        <div class="herr-url">flow.google.com · 50 créditos/día</div>
+        <div class="herr-dsc">Genera las imágenes cinematográficas del producto y el video final. Acepta prompts estructurados en JSON para resultados muy precisos.</div>
+        <span class="herr-tag ht-limite">50 créditos/día · Úsalos con cuidado</span>
+      </div>
+    </div>
+    <div class="herr">
+      <div class="herr-ico">🎬</div>
+      <div>
+        <div class="herr-name">Kling AI</div>
+        <div class="herr-url">kling.ai · 66 créditos/día</div>
+        <div class="herr-dsc">Alternativa a Flow cuando los créditos se agoten. 66 créditos diarios que se recargan cada día. Text-to-image y text-to-video de muy alta calidad.</div>
+        <span class="herr-tag ht-gratis">66 créditos/día · Se recarga diario</span>
+      </div>
+    </div>
+    <div class="herr">
+      <div class="herr-ico">📌</div>
+      <div>
+        <div class="herr-name">Pinterest</div>
+        <div class="herr-url">pinterest.com · Gratis</div>
+        <div class="herr-dsc">Referencia visual para el estilo del producto. Busca "[producto] photography" para encontrar el look que quieres replicar con IA.</div>
+        <span class="herr-tag ht-gratis">Solo para inspiración</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 — MASTER PROMPT vs JSON PROMPT -->
+<div class="slide">
+  <div class="tag to">Conceptos clave</div>
+  <div class="st">Dos tipos de prompt</div>
+  <div class="ss">Entiende esto primero — todo lo demás tiene sentido después</div>
+  <div class="two">
+    <div class="card" style="border-color:rgba(168,85,247,.45);background:rgba(168,85,247,.06)">
+      <div class="c-ico">📋</div>
+      <div class="c-ttl" style="color:#c084fc">Prompt Maestro</div>
+      <div class="c-bdy">Define las reglas generales: qué producto, qué estilo, qué ambiente, qué dirección artística. Es el <strong style="color:#fff">guión de la película</strong> — dice QUÉ se hace y por qué.</div>
+      <div class="c-url" style="background:rgba(168,85,247,.12);color:#c084fc;border-color:rgba(168,85,247,.3);margin-top:12px">Reglas · Nivel alto · Grosso modo</div>
+    </div>
+    <div class="card" style="border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.05)">
+      <div class="c-ico">🗂️</div>
+      <div class="c-ttl" style="color:#60a5fa">JSON Prompt</div>
+      <div class="c-bdy">Especifica cada aspecto de la imagen o el video: cámara, luz, planos, duración, audio. Es el <strong style="color:#fff">plan de rodaje</strong> — dice CÓMO se hace cada detalle.</div>
+      <div class="c-url" style="background:rgba(96,165,250,.12);color:#60a5fa;border-color:rgba(96,165,250,.3);margin-top:12px">Superdetallado · Aspecto por aspecto</div>
+    </div>
+  </div>
+  <div class="hl" style="margin-top:16px">
+    💡 En esta clase: primero extraemos el <strong>JSON de cada foto</strong> por separado — la de referencia y la del producto — y luego los combinamos en un <strong>Prompt Maestro</strong> para Flow o Kling AI.
+  </div>
+</div>
+
+<!-- SLIDE 6 — FLUJO DE TRABAJO -->
+<div class="slide">
+  <div class="tag to">El Flujo</div>
+  <div class="st">El proceso completo</div>
+  <div class="ss">Con dos fotos y ChatGPT construyes el prompt perfecto</div>
+  <div class="flow-diag">
+    <div class="fd-row">
+      <div class="fd-box fd-input">
+        <div class="fd-ico">📌</div>
+        <div class="fd-lbl">Foto referencia</div>
+        <div class="fd-src">Pinterest</div>
+      </div>
+      <div class="fd-box fd-input">
+        <div class="fd-ico">📦</div>
+        <div class="fd-lbl">Foto producto</div>
+        <div class="fd-src">Del cliente</div>
+      </div>
+    </div>
+    <div class="fd-merge">↓ &nbsp; &nbsp; &nbsp; ↓</div>
+    <div class="fd-row">
+      <div class="fd-box fd-gpt">
+        <div class="fd-ico">🤖</div>
+        <div class="fd-lbl">ChatGPT analiza ambas fotos</div>
+        <div class="fd-src">Genera JSON × 2 — uno por foto</div>
+      </div>
+    </div>
+    <div class="fd-arrow">↓</div>
+    <div class="fd-row">
+      <div class="fd-box fd-master">
+        <div class="fd-ico">⚡</div>
+        <div class="fd-lbl">PROMPT MAESTRO</div>
+        <div class="fd-src">Combina los dos JSONs · Para Google Flow</div>
+      </div>
+    </div>
+    <div class="fd-arrow">↓</div>
+    <div class="fd-row">
+      <div class="fd-box fd-result">
+        <div class="fd-ico">✨</div>
+        <div class="fd-lbl">Imagen / Video final</div>
+        <div class="fd-src">Google Flow · Kling AI</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 — SECCIÓN: EL CONCEPTO -->
+<div class="slide">
+  <div class="sec">
+    <div class="sec-n">01</div>
+    <div class="sec-t">El Concepto</div>
+    <div class="sec-s">Inspiración → Producto → Dirección Visual</div>
+    <div class="sec-time">⏱ Hora 1</div>
+  </div>
+</div>
+
+<!-- SLIDE 6 — INSPIRACIÓN EN PINTEREST -->
+<div class="slide">
+  <div class="tag to">Paso 1</div>
+  <div class="st">Inspiración en Pinterest</div>
+  <div class="ss">Primero elige el look visual, luego adaptas el producto</div>
+  <div class="steps">
+    <div class="step">
+      <div class="s-n">1</div>
+      <div>
+        <div class="s-ttl">Busca en Pinterest</div>
+        <div class="s-dsc">Abre pinterest.com y busca: <strong style="color:#a855f7">"[tipo de producto] photography"</strong> o <strong style="color:#a855f7">"[producto] aesthetic"</strong>. Por ejemplo: "coffee photography", "sneaker aesthetic", "jewelry editorial".</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">2</div>
+      <div>
+        <div class="s-ttl">Guarda 3–5 imágenes de referencia</div>
+        <div class="s-dsc">Elige imágenes que te inspiren. No las vas a copiar — son tu <strong>dirección visual</strong>. Guárdalas en tu teléfono o toma capturas.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">3</div>
+      <div>
+        <div class="s-ttl">Observa los detalles</div>
+        <div class="s-dsc">En cada imagen nota: ¿Qué tipo de luz? ¿Qué fondo? ¿Qué ángulos se ven? ¿Qué colores dominan? Eso es lo que le pedirás a Flow después.</div>
+        <div class="s-tip">💡 El objetivo: mejorar la producción de ese producto con IA — sin cámara, sin estudio, sin presupuesto</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">4</div>
+      <div>
+        <div class="s-ttl">Elige tu producto</div>
+        <div class="s-dsc">Puede ser un producto propio que quieras promocionar, o el producto estrella de un negocio local que sea tu potencial cliente.</div>
+        <div class="s-tip">💡 Mejor si ya conoces el negocio — más fácil cerrar la venta después</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 — CONFIGURAR CHATGPT -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag to">Paso 2</div>
+    <div class="p-title">⚙️ Configura tu Proyecto en ChatGPT</div>
+    <div class="p-sub">chatgpt.com → Projects → New Project → Instructions → pega esto · ChatGPT analizará producto + referencia y generará el JSON para Flow</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre>ACTÚA COMO DIRECTOR CREATIVO, FOTÓGRAFO PUBLICITARIO, DISEÑADOR DE SETS, RETOCADOR DIGITAL Y ESPECIALISTA EN PROMPTS PARA GENERACIÓN DE IMÁGENES CON IA.
+
+RECIBIRÁS DOS IMÁGENES:
+
+IMAGEN A: fotografía del producto real del cliente. Este producto debe conservarse como sujeto principal.
+
+IMAGEN B: fotografía de referencia visual. Debe utilizarse únicamente como inspiración de composición, iluminación, fondo, paleta, ambientación, cámara, props y acabado publicitario.
+
+OBJETIVO:
+
+Analiza ambas imágenes por separado, genera un JSON técnico para cada una y crea un MASTER PROMPT final que combine la identidad exacta del producto de la Imagen A con la dirección artística de la Imagen B.
+
+El resultado debe servir para generar una fotografía publicitaria nueva, original, fotorealista y comercial en herramientas como Google Flow, Imagen, Veo, Midjourney, Flux, Firefly, Runway, Kling o modelos similares.
+
+REGLA PRINCIPAL:
+
+El producto de la Imagen A es el único producto protagonista. La Imagen B no debe copiarse literalmente ni transferir su producto, marca, logotipo, texto, empaque, etiqueta o identidad. Solo aporta su lenguaje visual.
+
+━━━ FASE 1: ANÁLISIS DEL PRODUCTO ━━━
+
+Analiza exclusivamente la Imagen A. Describe únicamente información observable. No inventes características ocultas. Si algo no puede determinarse, utiliza "unknown".
+
+Entrega un JSON válido con esta estructura:
+
+{
+"product_analysis": {
+  "category": "",
+  "product_type": "",
+  "brand_visible": true,
+  "brand_name": "",
+  "visible_product_name": "",
+  "main_shape": "",
+  "proportions": {
+    "height_width_ratio": "",
+    "depth": "",
+    "estimated_scale": "",
+    "silhouette": ""
+  },
+  "materials": [
+    {
+      "material": "",
+      "location": "",
+      "finish": "",
+      "texture": "",
+      "reflectivity": "",
+      "transparency": ""
+    }
+  ],
+  "colors": {
+    "primary": "",
+    "secondary": [],
+    "accents": [],
+    "distribution": ""
+  },
+  "surface_details": {
+    "gloss_level": "",
+    "texture": "",
+    "patterns": "",
+    "translucency": "",
+    "visible_marks": ""
+  },
+  "structural_elements": [
+    {
+      "element": "",
+      "position": "",
+      "shape": "",
+      "orientation": "",
+      "relative_size": ""
+    }
+  ],
+  "packaging": {
+    "type": "",
+    "container_shape": "",
+    "cap_or_closure": "",
+    "label_shape": "",
+    "label_position": "",
+    "visible_contents": ""
+  },
+  "branding": {
+    "logo_description": "",
+    "logo_position": "",
+    "typography_style": "",
+    "visible_text": [],
+    "text_colors": []
+  },
+  "camera_view": {
+    "angle": "",
+    "perspective": "",
+    "visible_sides": [],
+    "cropping": "",
+    "product_orientation": ""
+  },
+  "must_preserve": [],
+  "uncertain_details": [],
+  "manual_retouch_risks": []
+}
+}
+
+REGLAS DE LA FASE 1:
+1. Preserva silueta, proporciones, colores, materiales, tapa, etiqueta, logotipo y detalles distintivos.
+2. Transcribe textos únicamente cuando sean claramente legibles.
+3. No inventes ingredientes, funciones, medidas, acabados ni caras ocultas.
+4. Identifica los rasgos que hacen reconocible al producto.
+5. Describe cómo reaccionan a la luz el vidrio, metal, plástico, tela, papel, líquido o superficies transparentes.
+6. Señala elementos que probablemente necesiten retoque manual.
+
+━━━ FASE 2: ANÁLISIS DE LA REFERENCIA ━━━
+
+Analiza exclusivamente la Imagen B como dirección artística. No trates el producto de esa imagen como un objeto que deba copiarse.
+
+Entrega este JSON:
+
+{
+"visual_reference_analysis": {
+  "overall_style": {
+    "visual_category": "",
+    "commercial_style": "",
+    "mood": "",
+    "luxury_level": "",
+    "minimalism_level": "",
+    "realism_level": "",
+    "brand_personality": []
+  },
+  "composition": {
+    "layout": "",
+    "subject_position": "",
+    "visual_balance": "",
+    "symmetry": "",
+    "negative_space": "",
+    "depth_layers": [],
+    "leading_lines": "",
+    "cropping": "",
+    "available_text_space": ""
+  },
+  "camera": {
+    "angle": "",
+    "camera_height": "",
+    "lens_style": "",
+    "focal_length_appearance": "",
+    "perspective": "",
+    "depth_of_field": "",
+    "focus_point": "",
+    "background_blur": ""
+  },
+  "lighting": {
+    "style": "",
+    "key_light_direction": "",
+    "key_light_quality": "",
+    "fill_light": "",
+    "rim_light": "",
+    "backlight": "",
+    "shadow_direction": "",
+    "shadow_softness": "",
+    "highlight_behavior": "",
+    "contrast": "",
+    "exposure": "",
+    "color_temperature": ""
+  },
+  "environment": {
+    "setting": "",
+    "background_type": "",
+    "background_color": "",
+    "surface_type": "",
+    "surface_material": "",
+    "horizon_line": "",
+    "spatial_depth": ""
+  },
+  "props": [
+    {
+      "type": "",
+      "visual_function": "",
+      "position": "",
+      "material": "",
+      "color": "",
+      "scale": "",
+      "reinterpret_not_copy": true
+    }
+  ],
+  "color_grading": {
+    "dominant_palette": [],
+    "accent_palette": [],
+    "saturation": "",
+    "contrast": "",
+    "black_levels": "",
+    "highlight_tint": "",
+    "shadow_tint": "",
+    "overall_grade": ""
+  },
+  "effects": {
+    "mist": "",
+    "particles": "",
+    "condensation": "",
+    "water": "",
+    "smoke": "",
+    "glow": "",
+    "reflections": "",
+    "motion": ""
+  },
+  "postproduction": {
+    "retouching_level": "",
+    "sharpness": "",
+    "microcontrast": "",
+    "surface_cleanup": "",
+    "compositing_style": "",
+    "cgi_influence": "",
+    "advertising_finish": ""
+  },
+  "transferable_elements": [],
+  "elements_not_to_copy": []
+}
+}
+
+REGLAS DE LA FASE 2:
+1. Extrae composición, encuadre, iluminación, fondo, paleta, ambiente y nivel de producción.
+2. No copies marcas, textos, logotipos, envases, personajes o diseños propietarios.
+3. Si aparecen frutas, flores, telas, piedras, líquidos, humo, hielo, madera o metal, explica qué función visual cumplen.
+4. Reinterpreta los props según la categoría del producto del cliente.
+5. Distingue los elementos decorativos, funcionales y narrativos.
+6. Explica qué hace que la referencia se vea premium, editorial, natural, tecnológica, minimalista o artesanal.
+
+━━━ FASE 3: DIRECCIÓN CREATIVA ━━━
+
+Utiliza los dos análisis para proponer una imagen nueva. El producto del cliente debe conservar su identidad y ocupar el rol visual principal.
+
+Entrega:
+
+{
+"creative_direction": {
+  "campaign_concept": "",
+  "core_visual_idea": "",
+  "product_message": "",
+  "target_audience": "",
+  "desired_emotion": "",
+  "visual_hierarchy": "",
+  "product_placement": "",
+  "reference_style_adaptation": "",
+  "commercial_use": "",
+  "recommended_aspect_ratio": ""
+}
+}
+
+Cada elemento añadido debe cumplir una función concreta: comunicar un beneficio, representar un ingrediente o material, reforzar la personalidad de marca, crear emoción, mejorar la composición, elevar la percepción de calidad o dirigir la mirada hacia el producto. No agregues objetos solo porque aparecen en la referencia.
+
+━━━ FASE 4: MASTER PROMPT FINAL ━━━
+
+Genera un JSON listo para copiar con esta estructura:
+
+{
+"final_generation_prompt": {
+  "project_type": "professional commercial product photography",
+  "main_subject": "",
+  "exact_product_identity": "",
+  "scene_description": "",
+  "composition": "",
+  "product_position": "",
+  "camera_angle": "",
+  "camera_and_lens": "",
+  "lighting_setup": "",
+  "background": "",
+  "surface": "",
+  "props": "",
+  "atmosphere": "",
+  "color_palette": "",
+  "material_rendering": "",
+  "reflections_and_shadows": "",
+  "depth_of_field": "",
+  "color_grading": "",
+  "postproduction": "",
+  "brand_feeling": "",
+  "commercial_quality": ""
+}
+}</pre>
+  </div>
+</div>
+
+<!-- SLIDE 8 — CONCEPTO ECONÓMICO -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag to">Paso 3</div>
+    <div class="p-title">💡 Concepto para Fotos Publicitarias con Texto</div>
+    <div class="p-sub">Pega esto en tu proyecto de ChatGPT — rellena los [corchetes] · ChatGPT define el concepto y el texto que irá en cada foto publicitaria</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre><span class="gr">DATOS DEL PRODUCTO — rellena los [corchetes]:</span>
+- Producto: <span class="or">[NOMBRE DEL PRODUCTO]</span>
+- Negocio: <span class="or">[NOMBRE DEL NEGOCIO]</span>
+- Ciudad: <span class="or">[CIUDAD]</span>
+- Precio: <span class="or">[PRECIO]</span>
+- Cliente objetivo: <span class="or">[TIPO DE PERSONA]</span>
+- Qué lo hace especial: <span class="or">[UNA ORACIÓN]</span>
+- Estilo visual que me gustó en Pinterest: <span class="or">[DESCRIBE LAS IMÁGENES QUE ENCONTRASTE]</span>
+
+<span class="gr">Genera el concepto para fotos publicitarias con texto:</span>
+<span class="bl">1. CONCEPTO CREATIVO:</span> 2 oraciones que capturen la esencia visual del producto
+<span class="bl">2. PROPUESTA DE VALOR:</span> Por qué el cliente objetivo lo necesita (1 oración)
+<span class="bl">3. GANCHO EMOCIONAL:</span> La sensación exacta que deben transmitir las fotos
+<span class="bl">4. PALETA VISUAL:</span> 3 colores con hex (fondo, acento, texto)
+<span class="bl">5. ESTILO FOTOGRÁFICO:</span> Tipo de luz, ambiente y composición en 1 oración
+<span class="bl">6. TEXTOS PARA LAS FOTOS — genera 3 variantes de cada uno:</span>
+   · Headline principal: máximo 5 palabras, impacto inmediato
+   · Subtítulo: 1 oración que refuerza el beneficio
+   · CTA (llamado a la acción): máximo 4 palabras (ej: "Pide el tuyo hoy")
+<span class="cm">→ Estos textos se superponen sobre las fotos generadas en Flow</span></pre>
+  </div>
+</div>
+
+<!-- SLIDE 9 — SECCIÓN: LAS IMÁGENES -->
+<div class="slide">
+  <div class="sec">
+    <div class="sec-n">02</div>
+    <div class="sec-t">Las Imágenes</div>
+    <div class="sec-s">Prompts JSON → Flow → Planos de Referencia</div>
+    <div class="sec-time">⏱ Hora 2</div>
+  </div>
+</div>
+
+<!-- SLIDE 10 — PROMPT MAESTRO IMÁGENES -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag tb">Paso 4</div>
+    <div class="p-title">🖼 Prompt Maestro — Imágenes</div>
+    <div class="p-sub">Pega esto en ChatGPT → genera el prompt JSON listo para usar en Google Flow</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre><span class="cm">Usa el concepto creativo que generamos. Crea el prompt JSON
+para generar las imágenes del producto en Google Flow.</span>
+
+<span class="gr">El JSON debe tener esta estructura exacta:</span>
+
+<span class="bl">{
+  "producto": "</span><span class="or">[NOMBRE DEL PRODUCTO]</span><span class="bl">",
+  "marca": "</span><span class="or">[NOMBRE DEL NEGOCIO]</span><span class="bl">",
+  "estilo": "</span><span class="or">[cinematográfico / editorial / lifestyle / minimalista]</span><span class="bl">",
+  "iluminacion": "</span><span class="or">[luz lateral de estudio / luz natural suave / contraluz dramático]</span><span class="bl">",
+  "fondo": "</span><span class="or">[negro texturizado / mármol blanco / madera oscura / degradado oscuro]</span><span class="bl">",
+  "colores_acento": ["</span><span class="or">[COLOR HEX 1]</span><span class="bl">", "</span><span class="or">[COLOR HEX 2]</span><span class="bl">"],
+  "ambiente": "</span><span class="or">[elegante y premium / orgánico y natural / moderno y dinámico]</span><span class="bl">",
+  "calidad": "fotografía comercial de producto, 4K, hiperealista",
+  "planos": [
+    "primer plano extremo: textura y detalles del producto, macro",
+    "primer plano: producto completo centrado sobre fondo",
+    "plano medio: producto con elementos de contexto y ambiente",
+    "ángulo bajo 45°: dramático, aspiracional, luz de fondo"
+  ]
+}</span>
+
+<span class="cm">Genera el JSON completo con los datos reales del producto.
+Sin texto antes ni después del JSON.</span></pre>
+  </div>
+</div>
+
+<!-- SLIDE 11 — LOS PLANOS -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag tb">Paso 4 · Variaciones</div>
+    <div class="p-title">📐 Genera los 4 ángulos del producto</div>
+    <div class="p-sub">Ya tienes la foto con el estilo correcto · Copia uno de estos → pégalo en Flow → genera esa variación</div>
+  </div>
+  <div class="pbox" style="overflow-y:auto;flex:1">
+    <div class="fpb">
+      <div class="fpb-head">
+        <span class="fpb-label">🔍 Primer plano extremo — ECU</span>
+        <button class="copy-btn" onclick="copyFpb(this)">Copiar</button>
+      </div>
+      <pre>Con la misma dirección artística y producto de la fotografía anterior,
+genera una nueva versión cambiando solo el ángulo y encuadre:
+
+PLANO: Primer plano extremo (Extreme Close-Up / ECU)
+- El producto llena el 85-90% del frame
+- Enfoque en textura, material, logo, etiqueta — nitidez máxima
+- Profundidad de campo mínima — fondo completamente desenfocado
+- Ángulo de cámara: al nivel del producto o ligeramente elevado
+- Objetivo: revelar la calidad del material, crear curiosidad inmediata</pre>
+    </div>
+    <div class="fpb">
+      <div class="fpb-head">
+        <span class="fpb-label">📷 Primer plano — CU</span>
+        <button class="copy-btn" onclick="copyFpb(this)">Copiar</button>
+      </div>
+      <pre>Con la misma dirección artística y producto de la fotografía anterior,
+genera una nueva versión cambiando solo el ángulo y encuadre:
+
+PLANO: Primer plano (Close-Up / CU)
+- El producto completo visible, ocupa el 70% del frame
+- Todo el producto perfectamente nítido de arriba a abajo
+- Profundidad de campo moderada — fondo suavemente desenfocado
+- Ángulo de cámara: nivel del producto, perspectiva neutra
+- Objetivo: imagen principal del anuncio, el producto en todo su esplendor</pre>
+    </div>
+    <div class="fpb">
+      <div class="fpb-head">
+        <span class="fpb-label">🖼 Plano medio — MS</span>
+        <button class="copy-btn" onclick="copyFpb(this)">Copiar</button>
+      </div>
+      <pre>Con la misma dirección artística y producto de la fotografía anterior,
+genera una nueva versión cambiando solo el ángulo y encuadre:
+
+PLANO: Plano medio (Medium Shot / MS)
+- Producto con props y elementos de contexto reinterpretados de la referencia
+- Espacio suficiente para mostrar la escena y el ambiente completo
+- Profundidad de campo más amplia — el entorno forma parte de la historia
+- Los props no se copian de la referencia: se adaptan al producto del cliente
+- Objetivo: contar la historia del producto en su contexto natural</pre>
+    </div>
+    <div class="fpb">
+      <div class="fpb-head">
+        <span class="fpb-label">🌅 Ángulo bajo 45° — Low Angle</span>
+        <button class="copy-btn" onclick="copyFpb(this)">Copiar</button>
+      </div>
+      <pre>Con la misma dirección artística y producto de la fotografía anterior,
+genera una nueva versión cambiando solo el ángulo y encuadre:
+
+PLANO: Ángulo bajo 45° (Low Angle / Dramatic)
+- Cámara por debajo del nivel del producto, apuntando hacia arriba
+- Perspectiva dramática y aspiracional — el producto se ve poderoso
+- Luz de fondo más intensa: crea aura o silueta alrededor del producto
+- Fondo: espacio abierto o degradado que da profundidad hacia arriba
+- Objetivo: sensación premium, imponente y deseable</pre>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12 — TIPS FLOW + KLING -->
+<div class="slide">
+  <div class="tag ta">Créditos</div>
+  <div class="st">Cómo usar bien tus créditos</div>
+  <div class="ss">Flow da 50 créditos/día · Kling AI da 66 créditos/día — usa los dos</div>
+  <div class="steps">
+    <div class="step">
+      <div class="s-n">1</div>
+      <div>
+        <div class="s-ttl">Empieza en Flow (flow.google.com)</div>
+        <div class="s-dsc">Genera 1 imagen de prueba de cada plano para validar el estilo. Si no te gusta el resultado, ajusta el prompt antes de gastar más créditos.</div>
+        <div class="s-tip">💡 1 crédito = 1 imagen en Flow</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">2</div>
+      <div>
+        <div class="s-ttl">Una vez que el estilo está bien → genera variaciones</div>
+        <div class="s-dsc">Con el prompt que funciona, genera 2 variaciones de cada plano. Eso es 8 imágenes = 8 créditos. Te quedan créditos para el video.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">3</div>
+      <div>
+        <div class="s-ttl">Si se acaban los créditos de Flow → cambia a Kling AI</div>
+        <div class="s-dsc">Abre kling.ai, crea una cuenta gratuita. Tienes 66 créditos que se recargan cada día. Usa el mismo prompt en formato texto (sin las llaves JSON).</div>
+        <div class="s-tip">💡 Kling también hace text-to-video — guárdalo para el video final si Flow no alcanza</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">4</div>
+      <div>
+        <div class="s-ttl">Selecciona las mejores 4–6 imágenes</div>
+        <div class="s-dsc">De todas las que generaste, elige las mejores. Deben representar distintos planos. Esas son tus "fotos de referencia" para el video.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13 — SECCIÓN: EL VIDEO -->
+<div class="slide">
+  <div class="sec">
+    <div class="sec-n">03</div>
+    <div class="sec-t">El Video</div>
+    <div class="sec-s">Storyboard → Prompt JSON → Video Final</div>
+    <div class="sec-time">⏱ Hora 3</div>
+  </div>
+</div>
+
+<!-- SLIDE 14 — STORYBOARD -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag tp">Paso 5</div>
+    <div class="p-title">🎬 Describe tu idea de video</div>
+    <div class="p-sub">Pega esto en tu proyecto de ChatGPT → describe con tus propias palabras lo que quieres ver → ChatGPT genera todos los prompts de imágenes de referencia</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre>Ahora quiero hacer un video.
+
+En este video quiero que pase:
+<span class="or">[DESCRIBE TU IDEA CON TUS PROPIAS PALABRAS]</span>
+
+Genérame los prompts para todas las imágenes de referencia
+que necesito para producir este video.</pre>
+  </div>
+</div>
+
+<!-- SLIDE 15 — PROMPT JSON VIDEO -->
+<div class="slide p-slide">
+  <div class="p-head">
+    <div class="tag tp">Paso 6</div>
+    <div class="p-title">🎬 Formato JSON para el Video en Flow</div>
+    <div class="p-sub">ChatGPT genera este JSON completo basado en tu storyboard → cópialo y pégalo directo en Google Flow</div>
+  </div>
+  <button class="copy-btn" onclick="copyPre(this)">Copiar</button>
+  <div class="pbox">
+    <pre><span class="bl">{
+  <span class="hdr">"video_settings"</span>: {
+    "duration": "</span><span class="or">[DURACIÓN TOTAL DEL VIDEO]</span><span class="bl">",
+    "aspect_ratio": "</span><span class="or">[RELACIÓN DE ASPECTO]</span><span class="bl">",
+    "resolution": "</span><span class="or">[RESOLUCIÓN]</span><span class="bl">",
+    "frame_rate": "</span><span class="or">[FOTOGRAMAS POR SEGUNDO]</span><span class="bl">",
+    "style": "</span><span class="or">[ESTÉTICA GENERAL, CALIDAD, GÉNERO COMERCIAL Y TIPO DE ILUMINACIÓN]</span><span class="bl">"
+  },
+
+  <span class="hdr">"audio_track"</span>: {
+    "background_music": "</span><span class="or">[GÉNERO, RITMO, ATMÓSFERA Y PERSONALIDAD DE LA MÚSICA]</span><span class="bl">",
+    "sound_design": "</span><span class="or">[TIPO DE EFECTOS, SINCRONIZACIÓN Y TRATAMIENTO SONORO]</span><span class="bl">"
+  },
+
+  <span class="hdr">"timeline_sequence"</span>: [
+    {
+      "time_stamp": "</span><span class="or">[TIEMPO DE INICIO - TIEMPO FINAL]</span><span class="bl">",
+      "visuals": "</span><span class="or">[DESCRIPCIÓN DETALLADA DE LA ESCENA, PRODUCTO, FONDO,
+       PERSONAJES, ACCIONES, COMPOSICIÓN Y ELEMENTOS VISIBLES]</span><span class="bl">",
+      "camera_movement": "</span><span class="or">[TIPO DE PLANO, ÁNGULO, LENTE, ENFOQUE
+       Y MOVIMIENTO DE CÁMARA]</span><span class="bl">",
+      "lighting": "</span><span class="or">[DIRECCIÓN, INTENSIDAD, COLOR, CONTRASTE
+       Y COMPORTAMIENTO DE LA ILUMINACIÓN]</span><span class="bl">",
+      "audio_effects": "</span><span class="or">[SONIDO ESPECÍFICO SINCRONIZADO CON LA ACCIÓN]</span><span class="bl">"
+    },
+    {
+      "time_stamp": "</span><span class="or">[SIGUIENTE INTERVALO]</span><span class="bl">",
+      "visuals": "</span><span class="or">[DESCRIPCIÓN DE LA SIGUIENTE ESCENA]</span><span class="bl">",
+      "camera_movement": "</span><span class="or">[MOVIMIENTO Y COMPORTAMIENTO DE CÁMARA]</span><span class="bl">",
+      "lighting": "</span><span class="or">[ILUMINACIÓN DE LA ESCENA]</span><span class="bl">",
+      "audio_effects": "</span><span class="or">[EFECTOS SONOROS DE LA ESCENA]</span><span class="bl">"
+    }
+  ]
+}</span>
+
+<span class="cm">ChatGPT rellena todos los [corchetes] usando el concepto
+y el storyboard que ya generaron juntos en el proyecto.</span></pre>
+  </div>
+</div>
+
+<!-- SLIDE 16 — SECCIÓN: PUBLICAR Y VENDER -->
+<div class="slide">
+  <div class="sec">
+    <div class="sec-n">04</div>
+    <div class="sec-t">Publicar y Vender</div>
+    <div class="sec-s">Plataformas · Pitch · Precios</div>
+    <div class="sec-time">⏱ Hora 4</div>
+  </div>
+</div>
+
+<!-- SLIDE 17 — DÓNDE PUBLICAR -->
+<div class="slide">
+  <div class="tag tg">Publicar</div>
+  <div class="st">Dónde publicar el video</div>
+  <div class="ss">Formato 9:16 · hasta 10 segundos · Sin texto en pantalla necesario</div>
+  <div class="cards c2">
+    <div class="card">
+      <div class="c-ico">📸</div>
+      <div class="c-ttl">Instagram Reels</div>
+      <div class="c-bdy">Mayor alcance orgánico para negocios locales. Etiqueta la ubicación y usa 3-5 hashtags de nicho. Mejor horario: 11am–1pm o 7pm–9pm.</div>
+    </div>
+    <div class="card">
+      <div class="c-ico">🎵</div>
+      <div class="c-ttl">TikTok</div>
+      <div class="c-bdy">Audiencia más joven y videos de producto viralizan bien. Añade texto en pantalla con el nombre del producto y precio al final.</div>
+    </div>
+    <div class="card">
+      <div class="c-ico">▶️</div>
+      <div class="c-ttl">YouTube Shorts</div>
+      <div class="c-bdy">Menos competencia que TikTok e Instagram. Ideal para negocios que quieren posicionamiento en búsquedas de Google.</div>
+    </div>
+    <div class="card">
+      <div class="c-ico">📤</div>
+      <div class="c-ttl">Enviar al cliente</div>
+      <div class="c-bdy">Comparte el video por WhatsApp antes de reunirte. "Este es el video que le haría para su negocio esta semana." Cierra antes de la reunión.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 18 — CÓMO VENDER -->
+<div class="slide">
+  <div class="tag tg">Ventas</div>
+  <div class="st">Cómo vender este servicio</div>
+  <div class="ss">Sus competidores muestran fotos. Usted mostrará cine.</div>
+  <div class="prices">
+    <div class="pc s">
+      <div class="pc-lbl">Video único</div>
+      <div class="pc-amt">$50–100</div>
+      <div class="pc-desc">1 video · hasta 10 seg<br>Producto estrella<br>Entrega en 24 horas</div>
+    </div>
+    <div class="pc m">
+      <div class="pc-lbl">Pack mensual ⭐</div>
+      <div class="pc-amt">$200–350</div>
+      <div class="pc-desc">4 videos al mes<br>1 producto por video<br>Estrategia incluida</div>
+    </div>
+    <div class="pc s">
+      <div class="pc-lbl">Pack premium</div>
+      <div class="pc-amt">$400–600</div>
+      <div class="pc-desc">8 videos al mes<br>Múltiples productos<br>Gestión de publicación</div>
+    </div>
+  </div>
+  <div class="warn-box" style="margin-top:14px">
+    💡 <strong>Pitch en 10 segundos:</strong> "Le muestro cómo se vería su [producto] en un video cinematográfico de hasta 10 segundos, completamente gratis esta vez. Si le gusta, hablamos de hacer uno mensual."
+  </div>
+</div>
+
+<!-- SLIDE 19 — RESULTADO FINAL -->
+<div class="slide">
+  <div class="tag to">Resultado</div>
+  <div class="st">¿Qué tienes al terminar la clase?</div>
+  <div class="ss">Todo lo necesario para conseguir tu primer cliente de contenido</div>
+  <div class="steps">
+    <div class="step">
+      <div class="s-n">✓</div>
+      <div>
+        <div class="s-ttl">Proyecto ChatGPT configurado</div>
+        <div class="s-dsc">Listo para generar conceptos, briefings y storyboards de cualquier producto en minutos.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">✓</div>
+      <div>
+        <div class="s-ttl">4–6 imágenes cinematográficas del producto</div>
+        <div class="s-dsc">Plano detalle, primer plano, plano medio y ángulo dramático. Generadas con Flow o Kling AI.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">✓</div>
+      <div>
+        <div class="s-ttl">Video de hasta 10 segundos listo para publicar</div>
+        <div class="s-dsc">Formato 9:16 para Reels y TikTok. Con storyboard coherente y movimientos de cámara cinematográficos.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="s-n">✓</div>
+      <div>
+        <div class="s-ttl">Tu propuesta de ventas</div>
+        <div class="s-dsc">Sabes cuánto cobrar, cómo hacer el pitch y tienes el video de muestra para enviárselo al cliente por WhatsApp hoy mismo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav">
+  <button class="nb" onclick="prev()">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="nb" onclick="next()">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const N = slides.length;
+let cur = 0;
+
+function go(i) {
+  slides[cur].classList.remove('active');
+  if (i < 0) i = N-1;
+  else if (i >= N) i = 0;
+  cur = i;
+  slides[cur].classList.add('active');
+  document.getElementById('prog').style.width = ((cur+1)/N*100)+'%';
+  document.getElementById('cnt').textContent = (cur+1)+' / '+N;
+  document.querySelectorAll('.dot').forEach((d,j)=>d.classList.toggle('on',j===cur));
+  window.scrollTo(0,0);
+}
+function next() { go(cur+1); }
+function prev() { go(cur-1); }
+
+const dc = document.getElementById('dots');
+for(let i=0;i<N;i++){
+  const d=document.createElement('div');
+  d.className='dot'+(i===0?' on':'');
+  d.onclick=()=>go(i);
+  dc.appendChild(d);
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
+  if(e.key==='ArrowLeft'){e.preventDefault();prev();}
+  if(e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen?.();}
+});
+
+let sx=0,sy=0;
+document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-sx;
+  const dy=e.changedTouches[0].clientY-sy;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>44){ dx>0?prev():next(); }
+},{passive:true});
+
+function copyFpb(btn) {
+  const pre=btn.closest('.fpb').querySelector('pre');
+  if(!pre)return;
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='✓';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok');},2000);
+  });
+}
+function copyPre(btn) {
+  const pre=btn.closest('.p-slide')?.querySelector('.pbox pre')||btn.closest('.pbox')?.querySelector('pre');
+  if(!pre)return;
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='✓ Copiado';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copiar';btn.classList.remove('ok');},2000);
+  });
+}
+
+go(0);
+</script>
+</body>
+</html>
