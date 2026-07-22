@@ -245,7 +245,28 @@ body {
   .herr-url { font-size:15px; }
   .herr-dsc  { font-size:17px; }
   .home-link { width:46px; height:46px; top:14px; left:14px; font-size:20px; }
+
+  .fd-box  { padding:20px 22px; }
+  .fd-ico  { font-size:36px; margin-bottom:10px; }
+  .fd-lbl  { font-size:20px; margin-bottom:6px; }
+  .fd-src  { font-size:15px; }
+  .fd-arrow { font-size:36px; }
+  .fd-merge { font-size:28px; }
 }
+
+/* ── FLOW DIAGRAM ──────────────────── */
+.flow-diag { display:flex; flex-direction:column; align-items:center; gap:6px; padding:4px 0; }
+.fd-row    { display:flex; gap:10px; width:100%; justify-content:center; }
+.fd-box    { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:14px 12px; text-align:center; flex:1; }
+.fd-input  { border-color:rgba(168,85,247,.35); background:rgba(168,85,247,.07); }
+.fd-gpt    { border-color:rgba(96,165,250,.35); background:rgba(96,165,250,.07); }
+.fd-master { border-color:rgba(168,85,247,.5); background:rgba(168,85,247,.15); }
+.fd-result { border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.07); }
+.fd-ico    { font-size:26px; margin-bottom:6px; }
+.fd-lbl    { font-size:13px; font-weight:900; line-height:1.3; margin-bottom:3px; }
+.fd-src    { font-size:11px; color:rgba(255,255,255,.5); }
+.fd-arrow  { font-size:22px; color:#a855f7; line-height:1; }
+.fd-merge  { font-size:20px; color:rgba(255,255,255,.3); line-height:1; }
 </style>
 </head>
 <body>
@@ -352,7 +373,76 @@ body {
   </div>
 </div>
 
-<!-- SLIDE 5 — SECCIÓN: EL CONCEPTO -->
+<!-- SLIDE 5 — MASTER PROMPT vs JSON PROMPT -->
+<div class="slide">
+  <div class="tag to">Conceptos clave</div>
+  <div class="st">Dos tipos de prompt</div>
+  <div class="ss">Entiende esto primero — todo lo demás tiene sentido después</div>
+  <div class="two">
+    <div class="card" style="border-color:rgba(168,85,247,.45);background:rgba(168,85,247,.06)">
+      <div class="c-ico">📋</div>
+      <div class="c-ttl" style="color:#c084fc">Prompt Maestro</div>
+      <div class="c-bdy">Define las reglas generales: qué producto, qué estilo, qué ambiente, qué dirección artística. Es el <strong style="color:#fff">guión de la película</strong> — dice QUÉ se hace y por qué.</div>
+      <div class="c-url" style="background:rgba(168,85,247,.12);color:#c084fc;border-color:rgba(168,85,247,.3);margin-top:12px">Reglas · Nivel alto · Grosso modo</div>
+    </div>
+    <div class="card" style="border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.05)">
+      <div class="c-ico">🗂️</div>
+      <div class="c-ttl" style="color:#60a5fa">JSON Prompt</div>
+      <div class="c-bdy">Especifica cada aspecto de la imagen o el video: cámara, luz, planos, duración, audio. Es el <strong style="color:#fff">plan de rodaje</strong> — dice CÓMO se hace cada detalle.</div>
+      <div class="c-url" style="background:rgba(96,165,250,.12);color:#60a5fa;border-color:rgba(96,165,250,.3);margin-top:12px">Superdetallado · Aspecto por aspecto</div>
+    </div>
+  </div>
+  <div class="hl" style="margin-top:16px">
+    💡 En esta clase: primero extraemos el <strong>JSON de cada foto</strong> por separado — la de referencia y la del producto — y luego los combinamos en un <strong>Prompt Maestro</strong> para Flow o Kling AI.
+  </div>
+</div>
+
+<!-- SLIDE 6 — FLUJO DE TRABAJO -->
+<div class="slide">
+  <div class="tag to">El Flujo</div>
+  <div class="st">El proceso completo</div>
+  <div class="ss">Con dos fotos y ChatGPT construyes el prompt perfecto</div>
+  <div class="flow-diag">
+    <div class="fd-row">
+      <div class="fd-box fd-input">
+        <div class="fd-ico">📌</div>
+        <div class="fd-lbl">Foto referencia</div>
+        <div class="fd-src">Pinterest</div>
+      </div>
+      <div class="fd-box fd-input">
+        <div class="fd-ico">📦</div>
+        <div class="fd-lbl">Foto producto</div>
+        <div class="fd-src">Del cliente</div>
+      </div>
+    </div>
+    <div class="fd-merge">↓ &nbsp; &nbsp; &nbsp; ↓</div>
+    <div class="fd-row">
+      <div class="fd-box fd-gpt">
+        <div class="fd-ico">🤖</div>
+        <div class="fd-lbl">ChatGPT analiza ambas fotos</div>
+        <div class="fd-src">Genera JSON × 2 — uno por foto</div>
+      </div>
+    </div>
+    <div class="fd-arrow">↓</div>
+    <div class="fd-row">
+      <div class="fd-box fd-master">
+        <div class="fd-ico">⚡</div>
+        <div class="fd-lbl">PROMPT MAESTRO</div>
+        <div class="fd-src">Combina los dos JSONs · Para Google Flow</div>
+      </div>
+    </div>
+    <div class="fd-arrow">↓</div>
+    <div class="fd-row">
+      <div class="fd-box fd-result">
+        <div class="fd-ico">✨</div>
+        <div class="fd-lbl">Imagen / Video final</div>
+        <div class="fd-src">Google Flow · Kling AI</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7 — SECCIÓN: EL CONCEPTO -->
 <div class="slide">
   <div class="sec">
     <div class="sec-n">01</div>
@@ -965,7 +1055,7 @@ y el storyboard que ya generaron juntos en el proyecto.</span></pre>
 <div class="slide">
   <div class="tag tg">Publicar</div>
   <div class="st">Dónde publicar el video</div>
-  <div class="ss">Formato 9:16 · 20-30 segundos · Sin texto en pantalla necesario</div>
+  <div class="ss">Formato 9:16 · hasta 10 segundos · Sin texto en pantalla necesario</div>
   <div class="cards c2">
     <div class="card">
       <div class="c-ico">📸</div>
@@ -999,7 +1089,7 @@ y el storyboard que ya generaron juntos en el proyecto.</span></pre>
     <div class="pc s">
       <div class="pc-lbl">Video único</div>
       <div class="pc-amt">$50–100</div>
-      <div class="pc-desc">1 video · 20-30 seg<br>Producto estrella<br>Entrega en 24 horas</div>
+      <div class="pc-desc">1 video · hasta 10 seg<br>Producto estrella<br>Entrega en 24 horas</div>
     </div>
     <div class="pc m">
       <div class="pc-lbl">Pack mensual ⭐</div>
@@ -1013,7 +1103,7 @@ y el storyboard que ya generaron juntos en el proyecto.</span></pre>
     </div>
   </div>
   <div class="warn-box" style="margin-top:14px">
-    💡 <strong>Pitch en 10 segundos:</strong> "Le muestro cómo se vería su [producto] en un video cinematográfico de 20 segundos, completamente gratis esta vez. Si le gusta, hablamos de hacer uno mensual."
+    💡 <strong>Pitch en 10 segundos:</strong> "Le muestro cómo se vería su [producto] en un video cinematográfico de hasta 10 segundos, completamente gratis esta vez. Si le gusta, hablamos de hacer uno mensual."
   </div>
 </div>
 
@@ -1040,7 +1130,7 @@ y el storyboard que ya generaron juntos en el proyecto.</span></pre>
     <div class="step">
       <div class="s-n">✓</div>
       <div>
-        <div class="s-ttl">Video de 20–30 segundos listo para publicar</div>
+        <div class="s-ttl">Video de hasta 10 segundos listo para publicar</div>
         <div class="s-dsc">Formato 9:16 para Reels y TikTok. Con storyboard coherente y movimientos de cámara cinematográficos.</div>
       </div>
     </div>
